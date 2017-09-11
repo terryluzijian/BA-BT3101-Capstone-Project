@@ -1,1 +1,1 @@
-# BA-BT3101
+# BT3101 Business Analytics Capstone Project
