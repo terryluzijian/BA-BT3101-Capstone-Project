@@ -1,6 +1,6 @@
-# Business Analytics Capstone Project (Group 7)
+## Business Analytics Capstone Project (Group 7)
 
-## Group Member
+### Group Member
 
 - Le My Uyen
 - Liu Yiying
