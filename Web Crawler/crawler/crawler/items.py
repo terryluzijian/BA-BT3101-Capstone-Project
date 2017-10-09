@@ -14,6 +14,7 @@ class SchoolWebPageItem(scrapy.Item):
     page_link = scrapy.Field()
     page_text_content = scrapy.Field()
     crawled_email_list = scrapy.Field()
+    crawled_pdf_link = scrapy.Field()
     last_updated = scrapy.Field(serializer=str)
 
     def __repr__(self):
