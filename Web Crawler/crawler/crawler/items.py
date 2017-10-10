@@ -19,4 +19,4 @@ class SchoolWebPageItem(scrapy.Item):
 
     def __repr__(self):
         return repr({'Page Link': self['page_link'],
-                     'Crawled Email List': self['crawled_email_list']})
+                     'Page Title': self['page_title']})
