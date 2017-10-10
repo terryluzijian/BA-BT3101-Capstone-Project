@@ -1,0 +1,402 @@
+{
+  "University of Oxford": {
+    "Homepage": "http://www.ox.ac.uk/",
+    "Rank": "1"
+  },
+  "University of Chicago": {
+    "Homepage": "http://www.uchicago.edu/",
+    "Rank": "9"
+  },
+  "ETH Zurich \u2013 Swiss Federal Institute of Technology Zurich": {
+    "Homepage": "http://www.ethz.ch/",
+    "Rank": "=10"
+  },
+  "California Institute of Technology": {
+    "Homepage": "http://www.caltech.edu/",
+    "Rank": "=3"
+  },
+  "Princeton University": {
+    "Homepage": "http://www.princeton.edu/main/",
+    "Rank": "7"
+  },
+  "Imperial College London": {
+    "Homepage": "http://www3.imperial.ac.uk/",
+    "Rank": "8"
+  },
+  "Massachusetts Institute of Technology": {
+    "Homepage": "http://web.mit.edu/",
+    "Rank": "5"
+  },
+  "University of Cambridge": {
+    "Homepage": "http://www.cam.ac.uk/",
+    "Rank": "2"
+  },
+  "Harvard University": {
+    "Homepage": "http://www.harvard.edu/index.php",
+    "Rank": "6"
+  },
+  "Stanford University": {
+    "Homepage": "http://www.stanford.edu/",
+    "Rank": "=3"
+  },
+  "University of Pennsylvania": {
+    "Homepage": "http://www.upenn.edu/",
+    "Rank": "=10"
+  },
+  "Johns Hopkins University": {
+    "Homepage": "http://www.jhu.edu/",
+    "Rank": "13"
+  },
+  "University of California, Los Angeles": {
+    "Homepage": "http://www.ucla.edu/",
+    "Rank": "15"
+  },
+  "Columbia University": {
+    "Homepage": "http://www.columbia.edu/",
+    "Rank": "14"
+  },
+  "Duke University": {
+    "Homepage": "http://www.duke.edu/",
+    "Rank": "17"
+  },
+  "University College London": {
+    "Homepage": "http://www.ucl.ac.uk/",
+    "Rank": "16"
+  },
+  "University of California, Berkeley": {
+    "Homepage": "http://www.berkeley.edu/",
+    "Rank": "18"
+  },
+  "Yale University": {
+    "Homepage": "http://www.yale.edu/",
+    "Rank": "12"
+  },
+  "Cornell University": {
+    "Homepage": "http://www.cornell.edu/",
+    "Rank": "19"
+  },
+  "National University of Singapore": {
+    "Homepage": "http://www.nus.edu.sg/",
+    "Rank": "=22"
+  },
+  "University of Toronto": {
+    "Homepage": "http://www.utoronto.ca/",
+    "Rank": "=22"
+  },
+  "Carnegie Mellon University": {
+    "Homepage": "http://www.cmu.edu/",
+    "Rank": "24"
+  },
+  "London School of Economics and Political Science": {
+    "Homepage": "http://www2.lse.ac.uk/home.aspx",
+    "Rank": "=25"
+  },
+  "University of Washington": {
+    "Homepage": "http://www.washington.edu/",
+    "Rank": "=25"
+  },
+  "Northwestern University": {
+    "Homepage": "http://www.northwestern.edu/",
+    "Rank": "20"
+  },
+  "University of Michigan": {
+    "Homepage": "http://www.umich.edu/",
+    "Rank": "21"
+  },
+  "University of Edinburgh": {
+    "Homepage": "http://www.ed.ac.uk/home",
+    "Rank": "=27"
+  },
+  "Georgia Institute of Technology": {
+    "Homepage": "http://www.gatech.edu/",
+    "Rank": "33"
+  },
+  "University of British Columbia": {
+    "Homepage": "http://www.ubc.ca/",
+    "Rank": "=34"
+  },
+  "LMU Munich": {
+    "Homepage": "http://www.en.lmu.de",
+    "Rank": "=34"
+  },
+  "New York University": {
+    "Homepage": "http://www.nyu.edu/",
+    "Rank": "=27"
+  },
+  "Peking University": {
+    "Homepage": "http://www.pku.edu.cn/",
+    "Rank": "=27"
+  },
+  "Tsinghua University": {
+    "Homepage": "http://www.tsinghua.edu.cn/publish/newthuen/index.html",
+    "Rank": "30"
+  },
+  "University of Melbourne": {
+    "Homepage": "http://www.unimelb.edu.au/",
+    "Rank": "32"
+  },
+  "University of California, San Diego": {
+    "Homepage": "http://www.ucsd.edu/",
+    "Rank": "31"
+  },
+  "University of Illinois at Urbana-Champaign": {
+    "Homepage": "http://illinois.edu/",
+    "Rank": "37"
+  },
+  "Karolinska Institute": {
+    "Homepage": "http://ki.se/",
+    "Rank": "=38"
+  },
+  "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne": {
+    "Homepage": "http://www.epfl.ch/index.fr.html",
+    "Rank": "=38"
+  },
+  "University of Hong Kong": {
+    "Homepage": "http://www.hku.hk/international",
+    "Rank": "40"
+  },
+  "Technical University of Munich": {
+    "Homepage": "http://www.tum.de/",
+    "Rank": "41"
+  },
+  "University of Wisconsin-Madison": {
+    "Homepage": "http://www.wisc.edu/",
+    "Rank": "43"
+  },
+  "McGill University": {
+    "Homepage": "http://www.mcgill.ca/",
+    "Rank": "42"
+  },
+  "King\u2019s College London": {
+    "Homepage": "http://www.kcl.ac.uk/",
+    "Rank": "36"
+  },
+  "Heidelberg University": {
+    "Homepage": "http://www.uni-heidelberg.de/",
+    "Rank": "45"
+  },
+  "University of Tokyo": {
+    "Homepage": null,
+    "Rank": "46"
+  },
+  "KU Leuven": {
+    "Homepage": "http://www.kuleuven.be/english",
+    "Rank": "47"
+  },
+  "University of Texas at Austin": {
+    "Homepage": "http://www.utexas.edu/",
+    "Rank": "49"
+  },
+  "Australian National University": {
+    "Homepage": "http://www.anu.edu.au/index.html",
+    "Rank": "48"
+  },
+  "Brown University": {
+    "Homepage": "http://www.brown.edu/",
+    "Rank": "=50"
+  },
+  "Washington University in St Louis": {
+    "Homepage": "http://www.wustl.edu/",
+    "Rank": "=50"
+  },
+  "Hong Kong University of Science and Technology": {
+    "Homepage": "http://www.ust.hk",
+    "Rank": "44"
+  },
+  "Nanyang Technological University, Singapore": {
+    "Homepage": "http://www.ntu.edu.sg",
+    "Rank": "52"
+  },
+  "University of California, Santa Barbara": {
+    "Homepage": "http://www.ucsb.edu/",
+    "Rank": "53"
+  },
+  "University of California, Davis": {
+    "Homepage": "http://www.ucdavis.edu",
+    "Rank": "=54"
+  },
+  "University of Manchester": {
+    "Homepage": "http://www.manchester.ac.uk/",
+    "Rank": "=54"
+  },
+  "University of Minnesota": {
+    "Homepage": "http://www1.umn.edu/twincities/index.php",
+    "Rank": "=56"
+  },
+  "University of North Carolina at Chapel Hill": {
+    "Homepage": "http://www.unc.edu/",
+    "Rank": "=56"
+  },
+  "Chinese University of Hong Kong": {
+    "Homepage": "http://www.cuhk.edu.hk/",
+    "Rank": "58"
+  },
+  "University of Amsterdam": {
+    "Homepage": "http://www.uva.nl/en",
+    "Rank": "59"
+  },
+  "University of Southern California": {
+    "Homepage": "http://www.usc.edu/",
+    "Rank": "66"
+  },
+  "Leiden University": {
+    "Homepage": "http://www.leiden.edu/",
+    "Rank": "67"
+  },
+  "Purdue University": {
+    "Homepage": "http://www.purdue.edu/",
+    "Rank": "60"
+  },
+  "University of Sydney": {
+    "Homepage": "http://www.sydney.edu.au",
+    "Rank": "61"
+  },
+  "Humboldt University of Berlin": {
+    "Homepage": "http://www.hu-berlin.de/",
+    "Rank": "62"
+  },
+  "Delft University of Technology": {
+    "Homepage": "http://www.tudelft.nl/en/",
+    "Rank": "63"
+  },
+  "Wageningen University & Research": {
+    "Homepage": "http://www.wur.nl/NL/",
+    "Rank": "64"
+  },
+  "University of Queensland": {
+    "Homepage": null,
+    "Rank": "65"
+  },
+  "Utrecht University": {
+    "Homepage": "https://www.uu.nl/en?utm_source=timeshighereducation.com&utm_campaign=uu.dcm.int.master.general&utm_medium=cpc&utm_term=university-website-english",
+    "Rank": "68"
+  },
+  "University of Maryland, College Park": {
+    "Homepage": "http://www.umd.edu/",
+    "Rank": "69"
+  },
+  "Erasmus University Rotterdam": {
+    "Homepage": "https://www.eur.nl/english/",
+    "Rank": "=72"
+  },
+  "Boston University": {
+    "Homepage": "http://www.bu.edu/",
+    "Rank": "=70"
+  },
+  "Paris Sciences et Lettres \u2013 PSL Research University Paris": {
+    "Homepage": "https://www.univ-psl.fr/en",
+    "Rank": "=72"
+  },
+  "Ohio State University": {
+    "Homepage": "http://www.osu.edu/",
+    "Rank": "=70"
+  },
+  "Kyoto University": {
+    "Homepage": "http://www.kyoto-u.ac.jp/en",
+    "Rank": "=74"
+  },
+  "Seoul National University": {
+    "Homepage": "http://en.snu.ac.kr",
+    "Rank": "=74"
+  },
+  "University of Bristol": {
+    "Homepage": "http://www.bristol.ac.uk/",
+    "Rank": "76"
+  },
+  "Pennsylvania State University": {
+    "Homepage": "http://www.psu.edu/",
+    "Rank": "77"
+  },
+  "University of New South Wales": {
+    "Homepage": "http://www.international.unsw.edu.au/",
+    "Rank": "85"
+  },
+  "Michigan State University": {
+    "Homepage": "http://www.msu.edu/",
+    "Rank": "=83"
+  },
+  "University of Glasgow": {
+    "Homepage": "http://www.glasgow.ac.uk",
+    "Rank": "=80"
+  },
+  "RWTH Aachen University": {
+    "Homepage": "http://www.rwth-aachen.de/go/id/hi/",
+    "Rank": "79"
+  },
+  "McMaster University": {
+    "Homepage": "http://www.mcmaster.ca/",
+    "Rank": "78"
+  },
+  "Monash University": {
+    "Homepage": "http://www.monash.edu",
+    "Rank": "=80"
+  },
+  "University of Freiburg": {
+    "Homepage": "http://www.uni-freiburg.de/",
+    "Rank": "82"
+  },
+  "University of Groningen": {
+    "Homepage": "http://www.rug.nl/",
+    "Rank": "=83"
+  },
+  "Rice University": {
+    "Homepage": "http://www.rice.edu/",
+    "Rank": "=86"
+  },
+  "Uppsala University": {
+    "Homepage": "http://www.uu.se/",
+    "Rank": "=86"
+  },
+  "University of Warwick": {
+    "Homepage": "http://www2.warwick.ac.uk/",
+    "Rank": "91"
+  },
+  "Dartmouth College": {
+    "Homepage": "http://www.dartmouth.edu/",
+    "Rank": "89"
+  },
+  "Technical University of Berlin": {
+    "Homepage": "http://www.tu-berlin.de",
+    "Rank": "92"
+  },
+  "Lund University": {
+    "Homepage": "http://www.lu.se/lund-university",
+    "Rank": "93"
+  },
+  "University of California, Irvine": {
+    "Homepage": "http://www.uci.edu/",
+    "Rank": "99"
+  },
+  "Durham University": {
+    "Homepage": "http://www.dur.ac.uk/",
+    "Rank": "97"
+  },
+  "Emory University": {
+    "Homepage": "http://www.emory.edu/home/index.html",
+    "Rank": "98"
+  },
+  "University of Basel": {
+    "Homepage": "http://www.unibas.ch/",
+    "Rank": "=95"
+  },
+  "Korea Advanced Institute of Science and Technology (KAIST)": {
+    "Homepage": "http://www.kaist.edu",
+    "Rank": "=95"
+  },
+  "University of T\u00fcbingen": {
+    "Homepage": "http://www.uni-tuebingen.de/",
+    "Rank": "94"
+  },
+  "University of Bonn": {
+    "Homepage": "http://www3.uni-bonn.de/",
+    "Rank": "=100"
+  },
+  "University of Helsinki": {
+    "Homepage": "http://www.helsinki.fi/en/studying",
+    "Rank": "90"
+  },
+  "Free University of Berlin": {
+    "Homepage": "http://www.fu-berlin.de/",
+    "Rank": "88"
+  }
+}

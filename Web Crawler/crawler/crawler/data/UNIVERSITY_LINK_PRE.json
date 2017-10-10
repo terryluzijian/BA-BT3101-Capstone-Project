@@ -1,0 +1,402 @@
+{
+  "University of Oxford": {
+    "Rank": "1",
+    "Url": "/world-university-rankings/university-oxford#ranking-dataset/629337"
+  },
+  "University of Cambridge": {
+    "Rank": "2",
+    "Url": "/world-university-rankings/university-cambridge#ranking-dataset/629337"
+  },
+  "California Institute of Technology": {
+    "Rank": "=3",
+    "Url": "/world-university-rankings/california-institute-technology#ranking-dataset/629337"
+  },
+  "Stanford University": {
+    "Rank": "=3",
+    "Url": "/world-university-rankings/stanford-university#ranking-dataset/629337"
+  },
+  "Massachusetts Institute of Technology": {
+    "Rank": "5",
+    "Url": "/world-university-rankings/massachusetts-institute-technology#ranking-dataset/629337"
+  },
+  "Harvard University": {
+    "Rank": "6",
+    "Url": "/world-university-rankings/harvard-university#ranking-dataset/629337"
+  },
+  "Princeton University": {
+    "Rank": "7",
+    "Url": "/world-university-rankings/princeton-university#ranking-dataset/629337"
+  },
+  "Imperial College London": {
+    "Rank": "8",
+    "Url": "/world-university-rankings/imperial-college-london#ranking-dataset/629337"
+  },
+  "University of Chicago": {
+    "Rank": "9",
+    "Url": "/world-university-rankings/university-chicago#ranking-dataset/629337"
+  },
+  "ETH Zurich \u2013 Swiss Federal Institute of Technology Zurich": {
+    "Rank": "=10",
+    "Url": "/world-university-rankings/eth-zurich-swiss-federal-institute-technology-zurich#ranking-dataset/629337"
+  },
+  "University of Pennsylvania": {
+    "Rank": "=10",
+    "Url": "/world-university-rankings/university-pennsylvania#ranking-dataset/629337"
+  },
+  "Yale University": {
+    "Rank": "12",
+    "Url": "/world-university-rankings/yale-university#ranking-dataset/629337"
+  },
+  "Johns Hopkins University": {
+    "Rank": "13",
+    "Url": "/world-university-rankings/johns-hopkins-university#ranking-dataset/629337"
+  },
+  "Columbia University": {
+    "Rank": "14",
+    "Url": "/world-university-rankings/columbia-university#ranking-dataset/629337"
+  },
+  "University of California, Los Angeles": {
+    "Rank": "15",
+    "Url": "/world-university-rankings/university-california-los-angeles#ranking-dataset/629337"
+  },
+  "University College London": {
+    "Rank": "16",
+    "Url": "/world-university-rankings/university-college-london#ranking-dataset/629337"
+  },
+  "Duke University": {
+    "Rank": "17",
+    "Url": "/world-university-rankings/duke-university#ranking-dataset/629337"
+  },
+  "University of California, Berkeley": {
+    "Rank": "18",
+    "Url": "/world-university-rankings/university-california-berkeley#ranking-dataset/629337"
+  },
+  "Cornell University": {
+    "Rank": "19",
+    "Url": "/world-university-rankings/cornell-university#ranking-dataset/629337"
+  },
+  "Northwestern University": {
+    "Rank": "20",
+    "Url": "/world-university-rankings/northwestern-university#ranking-dataset/629337"
+  },
+  "University of Michigan": {
+    "Rank": "21",
+    "Url": "/world-university-rankings/university-michigan#ranking-dataset/629337"
+  },
+  "National University of Singapore": {
+    "Rank": "=22",
+    "Url": "/world-university-rankings/national-university-singapore#ranking-dataset/629337"
+  },
+  "University of Toronto": {
+    "Rank": "=22",
+    "Url": "/world-university-rankings/university-toronto#ranking-dataset/629337"
+  },
+  "Carnegie Mellon University": {
+    "Rank": "24",
+    "Url": "/world-university-rankings/carnegie-mellon-university#ranking-dataset/629337"
+  },
+  "London School of Economics and Political Science": {
+    "Rank": "=25",
+    "Url": "/world-university-rankings/london-school-economics-and-political-science#ranking-dataset/629337"
+  },
+  "University of Washington": {
+    "Rank": "=25",
+    "Url": "/world-university-rankings/university-washington#ranking-dataset/629337"
+  },
+  "University of Edinburgh": {
+    "Rank": "=27",
+    "Url": "/world-university-rankings/university-edinburgh#ranking-dataset/629337"
+  },
+  "New York University": {
+    "Rank": "=27",
+    "Url": "/world-university-rankings/new-york-university#ranking-dataset/629337"
+  },
+  "Peking University": {
+    "Rank": "=27",
+    "Url": "/world-university-rankings/peking-university#ranking-dataset/629337"
+  },
+  "Tsinghua University": {
+    "Rank": "30",
+    "Url": "/world-university-rankings/tsinghua-university#ranking-dataset/629337"
+  },
+  "University of California, San Diego": {
+    "Rank": "31",
+    "Url": "/world-university-rankings/university-california-san-diego#ranking-dataset/629337"
+  },
+  "University of Melbourne": {
+    "Rank": "32",
+    "Url": "/world-university-rankings/university-melbourne#ranking-dataset/629337"
+  },
+  "Georgia Institute of Technology": {
+    "Rank": "33",
+    "Url": "/world-university-rankings/georgia-institute-technology#ranking-dataset/629337"
+  },
+  "University of British Columbia": {
+    "Rank": "=34",
+    "Url": "/world-university-rankings/university-british-columbia#ranking-dataset/629337"
+  },
+  "LMU Munich": {
+    "Rank": "=34",
+    "Url": "/world-university-rankings/lmu-munich#ranking-dataset/629337"
+  },
+  "King\u2019s College London": {
+    "Rank": "36",
+    "Url": "/world-university-rankings/kings-college-london#ranking-dataset/629337"
+  },
+  "University of Illinois at Urbana-Champaign": {
+    "Rank": "37",
+    "Url": "/world-university-rankings/university-illinois-urbana-champaign#ranking-dataset/629337"
+  },
+  "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne": {
+    "Rank": "=38",
+    "Url": "/world-university-rankings/ecole-polytechnique-federale-de-lausanne#ranking-dataset/629337"
+  },
+  "Karolinska Institute": {
+    "Rank": "=38",
+    "Url": "/world-university-rankings/karolinska-institute#ranking-dataset/629337"
+  },
+  "University of Hong Kong": {
+    "Rank": "40",
+    "Url": "/world-university-rankings/university-hong-kong#ranking-dataset/629337"
+  },
+  "Technical University of Munich": {
+    "Rank": "41",
+    "Url": "/world-university-rankings/technical-university-munich#ranking-dataset/629337"
+  },
+  "McGill University": {
+    "Rank": "42",
+    "Url": "/world-university-rankings/mcgill-university#ranking-dataset/629337"
+  },
+  "University of Wisconsin-Madison": {
+    "Rank": "43",
+    "Url": "/world-university-rankings/university-wisconsin-madison#ranking-dataset/629337"
+  },
+  "Hong Kong University of Science and Technology": {
+    "Rank": "44",
+    "Url": "/world-university-rankings/hong-kong-university-science-and-technology#ranking-dataset/629337"
+  },
+  "Heidelberg University": {
+    "Rank": "45",
+    "Url": "/world-university-rankings/heidelberg-university-0#ranking-dataset/629337"
+  },
+  "University of Tokyo": {
+    "Rank": "46",
+    "Url": "/world-university-rankings/university-tokyo#ranking-dataset/629337"
+  },
+  "KU Leuven": {
+    "Rank": "47",
+    "Url": "/world-university-rankings/ku-leuven#ranking-dataset/629337"
+  },
+  "Australian National University": {
+    "Rank": "48",
+    "Url": "/world-university-rankings/australian-national-university#ranking-dataset/629337"
+  },
+  "University of Texas at Austin": {
+    "Rank": "49",
+    "Url": "/world-university-rankings/university-texas-austin#ranking-dataset/629337"
+  },
+  "Brown University": {
+    "Rank": "=50",
+    "Url": "/world-university-rankings/brown-university#ranking-dataset/629337"
+  },
+  "Washington University in St Louis": {
+    "Rank": "=50",
+    "Url": "/world-university-rankings/washington-university-st-louis-0#ranking-dataset/629337"
+  },
+  "Nanyang Technological University, Singapore": {
+    "Rank": "52",
+    "Url": "/world-university-rankings/nanyang-technological-university-singapore#ranking-dataset/629337"
+  },
+  "University of California, Santa Barbara": {
+    "Rank": "53",
+    "Url": "/world-university-rankings/university-california-santa-barbara#ranking-dataset/629337"
+  },
+  "University of California, Davis": {
+    "Rank": "=54",
+    "Url": "/world-university-rankings/university-california-davis#ranking-dataset/629337"
+  },
+  "University of Manchester": {
+    "Rank": "=54",
+    "Url": "/world-university-rankings/university-manchester#ranking-dataset/629337"
+  },
+  "University of Minnesota": {
+    "Rank": "=56",
+    "Url": "/world-university-rankings/university-minnesota-0#ranking-dataset/629337"
+  },
+  "University of North Carolina at Chapel Hill": {
+    "Rank": "=56",
+    "Url": "/world-university-rankings/university-north-carolina-chapel-hill#ranking-dataset/629337"
+  },
+  "Chinese University of Hong Kong": {
+    "Rank": "58",
+    "Url": "/world-university-rankings/chinese-university-hong-kong#ranking-dataset/629337"
+  },
+  "University of Amsterdam": {
+    "Rank": "59",
+    "Url": "/world-university-rankings/university-amsterdam#ranking-dataset/629337"
+  },
+  "Purdue University": {
+    "Rank": "60",
+    "Url": "/world-university-rankings/purdue-university#ranking-dataset/629337"
+  },
+  "University of Sydney": {
+    "Rank": "61",
+    "Url": "/world-university-rankings/university-sydney#ranking-dataset/629337"
+  },
+  "Humboldt University of Berlin": {
+    "Rank": "62",
+    "Url": "/world-university-rankings/humboldt-university-berlin#ranking-dataset/629337"
+  },
+  "Delft University of Technology": {
+    "Rank": "63",
+    "Url": "/world-university-rankings/delft-university-technology#ranking-dataset/629337"
+  },
+  "Wageningen University & Research": {
+    "Rank": "64",
+    "Url": "/world-university-rankings/wageningen-university-research#ranking-dataset/629337"
+  },
+  "University of Queensland": {
+    "Rank": "65",
+    "Url": "/world-university-rankings/university-queensland#ranking-dataset/629337"
+  },
+  "University of Southern California": {
+    "Rank": "66",
+    "Url": "/world-university-rankings/university-southern-california#ranking-dataset/629337"
+  },
+  "Leiden University": {
+    "Rank": "67",
+    "Url": "/world-university-rankings/leiden-university#ranking-dataset/629337"
+  },
+  "Utrecht University": {
+    "Rank": "68",
+    "Url": "/world-university-rankings/utrecht-university#ranking-dataset/629337"
+  },
+  "University of Maryland, College Park": {
+    "Rank": "69",
+    "Url": "/world-university-rankings/university-maryland-college-park#ranking-dataset/629337"
+  },
+  "Boston University": {
+    "Rank": "=70",
+    "Url": "/world-university-rankings/boston-university#ranking-dataset/629337"
+  },
+  "Ohio State University": {
+    "Rank": "=70",
+    "Url": "/world-university-rankings/ohio-state-university#ranking-dataset/629337"
+  },
+  "Erasmus University Rotterdam": {
+    "Rank": "=72",
+    "Url": "/world-university-rankings/erasmus-university-rotterdam#ranking-dataset/629337"
+  },
+  "Paris Sciences et Lettres \u2013 PSL Research University Paris": {
+    "Rank": "=72",
+    "Url": "/world-university-rankings/paris-sciences-et-lettres-psl-research-university-paris#ranking-dataset/629337"
+  },
+  "Kyoto University": {
+    "Rank": "=74",
+    "Url": "/world-university-rankings/kyoto-university#ranking-dataset/629337"
+  },
+  "Seoul National University": {
+    "Rank": "=74",
+    "Url": "/world-university-rankings/seoul-national-university#ranking-dataset/629337"
+  },
+  "University of Bristol": {
+    "Rank": "76",
+    "Url": "/world-university-rankings/university-bristol#ranking-dataset/629337"
+  },
+  "Pennsylvania State University": {
+    "Rank": "77",
+    "Url": "/world-university-rankings/pennsylvania-state-university#ranking-dataset/629337"
+  },
+  "McMaster University": {
+    "Rank": "78",
+    "Url": "/world-university-rankings/mcmaster-university#ranking-dataset/629337"
+  },
+  "RWTH Aachen University": {
+    "Rank": "79",
+    "Url": "/world-university-rankings/rwth-aachen-university#ranking-dataset/629337"
+  },
+  "University of Glasgow": {
+    "Rank": "=80",
+    "Url": "/world-university-rankings/university-glasgow#ranking-dataset/629337"
+  },
+  "Monash University": {
+    "Rank": "=80",
+    "Url": "/world-university-rankings/monash-university#ranking-dataset/629337"
+  },
+  "University of Freiburg": {
+    "Rank": "82",
+    "Url": "/world-university-rankings/university-freiburg#ranking-dataset/629337"
+  },
+  "University of Groningen": {
+    "Rank": "=83",
+    "Url": "/world-university-rankings/university-groningen#ranking-dataset/629337"
+  },
+  "Michigan State University": {
+    "Rank": "=83",
+    "Url": "/world-university-rankings/michigan-state-university#ranking-dataset/629337"
+  },
+  "University of New South Wales": {
+    "Rank": "85",
+    "Url": "/world-university-rankings/university-new-south-wales#ranking-dataset/629337"
+  },
+  "Rice University": {
+    "Rank": "=86",
+    "Url": "/world-university-rankings/rice-university#ranking-dataset/629337"
+  },
+  "Uppsala University": {
+    "Rank": "=86",
+    "Url": "/world-university-rankings/uppsala-university#ranking-dataset/629337"
+  },
+  "Free University of Berlin": {
+    "Rank": "88",
+    "Url": "/world-university-rankings/free-university-berlin#ranking-dataset/629337"
+  },
+  "Dartmouth College": {
+    "Rank": "89",
+    "Url": "/world-university-rankings/dartmouth-college#ranking-dataset/629337"
+  },
+  "University of Helsinki": {
+    "Rank": "90",
+    "Url": "/world-university-rankings/university-helsinki#ranking-dataset/629337"
+  },
+  "University of Warwick": {
+    "Rank": "91",
+    "Url": "/world-university-rankings/university-warwick#ranking-dataset/629337"
+  },
+  "Technical University of Berlin": {
+    "Rank": "92",
+    "Url": "/world-university-rankings/technical-university-berlin#ranking-dataset/629337"
+  },
+  "Lund University": {
+    "Rank": "93",
+    "Url": "/world-university-rankings/lund-university#ranking-dataset/629337"
+  },
+  "University of T\u00fcbingen": {
+    "Rank": "94",
+    "Url": "/world-university-rankings/university-tubingen#ranking-dataset/629337"
+  },
+  "University of Basel": {
+    "Rank": "=95",
+    "Url": "/world-university-rankings/university-basel#ranking-dataset/629337"
+  },
+  "Korea Advanced Institute of Science and Technology (KAIST)": {
+    "Rank": "=95",
+    "Url": "/world-university-rankings/korea-advanced-institute-science-and-technology-kaist#ranking-dataset/629337"
+  },
+  "Durham University": {
+    "Rank": "97",
+    "Url": "/world-university-rankings/durham-university#ranking-dataset/629337"
+  },
+  "Emory University": {
+    "Rank": "98",
+    "Url": "/world-university-rankings/emory-university#ranking-dataset/629337"
+  },
+  "University of California, Irvine": {
+    "Rank": "99",
+    "Url": "/world-university-rankings/university-california-irvine#ranking-dataset/629337"
+  },
+  "University of Bonn": {
+    "Rank": "=100",
+    "Url": "/world-university-rankings/university-bonn#ranking-dataset/629337"
+  }
+}

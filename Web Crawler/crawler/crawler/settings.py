@@ -11,7 +11,7 @@
 
 BOT_NAME = 'crawler'
 
-LOG_LEVEL = 'ERROR'
+LOG_LEVEL = 'INFO'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
