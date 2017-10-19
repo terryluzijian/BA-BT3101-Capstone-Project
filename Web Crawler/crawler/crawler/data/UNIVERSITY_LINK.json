@@ -1,46 +1,57 @@
 {
   "University of Oxford": {
     "Homepage": "http://www.ox.ac.uk/",
+    "Department": "http://www.ox.ac.uk/about/divisions-and-departments",
     "Rank": "1"
   },
   "University of Chicago": {
     "Homepage": "http://www.uchicago.edu/",
+    "Department": "https://www.uchicago.edu/academics/departments/",
     "Rank": "9"
   },
   "ETH Zurich \u2013 Swiss Federal Institute of Technology Zurich": {
-    "Homepage": "http://www.ethz.ch/",
+    "Homepage": "https://www.ethz.ch",
+    "Department": "https://www.ethz.ch/en/research/departments-and-competence-centres/departments.html",
     "Rank": "=10"
   },
   "California Institute of Technology": {
     "Homepage": "http://www.caltech.edu/",
+    "Department": "http://www.caltech.edu/content/academic-divisions-0",
     "Rank": "=3"
   },
   "Princeton University": {
     "Homepage": "http://www.princeton.edu/main/",
+    "Department": "https://www.princeton.edu/academics/areas-of-study",
     "Rank": "7"
   },
   "Imperial College London": {
-    "Homepage": "http://www3.imperial.ac.uk/",
+    "Homepage": "http://www.imperial.ac.uk/",
+    "Department": "https://www.imperial.ac.uk/faculties-and-departments/",
     "Rank": "8"
   },
   "Massachusetts Institute of Technology": {
     "Homepage": "http://web.mit.edu/",
+    "Department": "http://web.mit.edu/facts/academic.html",
     "Rank": "5"
   },
   "University of Cambridge": {
     "Homepage": "http://www.cam.ac.uk/",
+    "Department": "https://www.cam.ac.uk/colleges-and-departments/department-a-z",
     "Rank": "2"
   },
   "Harvard University": {
     "Homepage": "http://www.harvard.edu/index.php",
+    "Department": "https://www.harvard.edu/schools",
     "Rank": "6"
   },
   "Stanford University": {
     "Homepage": "http://www.stanford.edu/",
+    "Department": "https://www.stanford.edu/list/academic/",
     "Rank": "=3"
   },
   "University of Pennsylvania": {
     "Homepage": "http://www.upenn.edu/",
+    "Department": "https://www.upenn.edu/programs/academics-schools",
     "Rank": "=10"
   },
   "Johns Hopkins University": {
@@ -176,7 +187,7 @@
     "Rank": "45"
   },
   "University of Tokyo": {
-    "Homepage": null,
+    "Homepage": "http://www.u-tokyo.ac.jp/en/",
     "Rank": "46"
   },
   "KU Leuven": {
@@ -264,7 +275,7 @@
     "Rank": "64"
   },
   "University of Queensland": {
-    "Homepage": null,
+    "Homepage": "https://www.uq.edu.au/",
     "Rank": "65"
   },
   "Utrecht University": {
@@ -388,7 +399,7 @@
     "Rank": "94"
   },
   "University of Bonn": {
-    "Homepage": "http://www3.uni-bonn.de/",
+    "Homepage": "http://www.uni-bonn.de/",
     "Rank": "=100"
   },
   "University of Helsinki": {
