@@ -40,22 +40,22 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-	'Accept-Language': 'en',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'en',
 }
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-	'scrapy.spidermiddlewares.offsite.OffsiteMiddleware': 100,
-	'scrapy.spidermiddlewares.depth.DepthMiddleware': 100
+    'scrapy.spidermiddlewares.offsite.OffsiteMiddleware': 100,
+    'scrapy.spidermiddlewares.depth.DepthMiddleware': 100
 }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-	'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 500,
-	'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': 700,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 500,
+    'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': 700,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 

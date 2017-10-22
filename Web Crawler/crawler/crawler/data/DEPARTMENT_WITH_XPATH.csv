@@ -15,7 +15,7 @@ UCL (University College London),MS,http://www.ucl.ac.uk/medical-sciences,http://
 UCL (University College London),PS,http://www.ucl.ac.uk/populationhealth-sciences,http://www.ucl.ac.uk/populationhealth-sciences/our-institutes,"/div[@id=""top-columns""]//a/@href",
 Imperial College London,,,https://www.imperial.ac.uk/faculties-and-departments/,"//div[h2[@class=""fake-h3""]]//li//a/@href",
 University of Chicago,,,https://www.uchicago.edu/academics/departments/,"//div[@id=""a-z""]//table//a/@href",
-ETH Zurich - Swiss Federal Institute of Technology,,,https://www.ethz.ch/en/research/departments-and-competence-centres/departments.html,//tr[count(td)>=3]//@href,
+ETH Zurich - Swiss Federal Institute of Technology,,,https://www.ethz.ch/en/research/departments-and-competence-centres/departments.html,//tr[count(td)>=3]//a/@href,
 "Nanyang Technological University, Singapore (NTU)",,,http://www.ntu.edu.sg/AboutNTU/organisation/Pages/CollegesandSchools.aspx,"//div[p[strong=""Colleges and Schools""]]//ul[1]//a/@href",
 Ecole Polytechnique Fédérale de Lausanne (EPFL),,,https://www.epfl.ch/,"//div[@id=""school-pane""]//nav//a[strong]/@href",
 Princeton University,,,https://www.princeton.edu/academics/areas-of-study,"//div[h3=""Academic Units""]/ul//a/@href",
