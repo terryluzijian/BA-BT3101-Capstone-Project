@@ -16,3 +16,8 @@ class DirectoryItem(Item):
     initial_url = Field()
     href = Field()
     text = Field()
+
+class DepeartmentItem(Item):
+    url = Field()
+    school_name = Field()
+    title = Field()

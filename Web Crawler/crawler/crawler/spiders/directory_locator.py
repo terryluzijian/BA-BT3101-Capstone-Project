@@ -4,7 +4,6 @@ import re
 import sys
 import scrapy
 from crawler.items import DirectoryItem
-from crawler.settings import DEPTH_LIMIT
 from datetime import datetime
 from lxml import html
 from random import shuffle
@@ -14,13 +13,20 @@ from scrapy.utils.url import url_has_any_extension, parse_url
 from tld import get_tld
 from urllib.parse import urljoin
 
+
 class UniversityDirectoryLocator(scrapy.Spider):
 
     name = 'directory'
     SCHOOL_HOMEPAGE_DATA = 'UNIVERSITY_LINK.json'
-    MAX_DEPTH = DEPTH_LIMIT
     IGNORED_REGEX = [r'[^a-zA-Z]?(%s)[^a-zA-Z]?' % s for s in \
                      ('news', 'library', 'privacy', 'policies', 'events')]
+
+    custom_settings = {
+        'DEPTH_LIMIT': 1,
+        'DEPTH_PRIORITY': 1,
+        'DEPTH_STATS_VERBOSE': True
+    }
+    MAX_DEPTH = custom_settings['DEPTH_LIMIT']
 
     def __init__(self, *args, **kwargs):
         super(UniversityDirectoryLocator, self).__init__(*args, **kwargs)
