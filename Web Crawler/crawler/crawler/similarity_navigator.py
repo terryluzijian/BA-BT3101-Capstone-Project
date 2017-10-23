@@ -23,7 +23,7 @@ class SimilarityNavigator(object):
 
     def get_content(self, response, target, extract_func, ratio=0.7, top=3):
         # Use the extraction inherited from crawler.xpath_generic_extractor
-        menu = extract_func(response).items()
+        menu = [[key, value] for key, value in extract_func(response).items()]
         menu_with_similarity = []
 
         # Iterate through each item pair and obtain the similarity with the target keyword
