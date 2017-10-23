@@ -44,7 +44,7 @@ TEXT_MENU_XPATH = 'ancestor::*[count(a)=1]/a[not(descendant::script) ' + \
                   'and not(descendant::style)]/text()[normalize-space(.)]'
 
 # Menu specific element to pass
-MENU_TEXT_FILTER = frozenset(['resource', 'event', 'news', 'calendar'])
+MENU_TEXT_FILTER = frozenset(['resource', 'event', 'news', 'calendar', 'student', 'curriculum'])
 
 
 def generic_get_anchor_and_text(response, content_xpath, href_xpath):
@@ -86,6 +86,14 @@ def get_header(response):
 
 
 def get_menu(response):
+    # Check whether certain keyword should be filtered
+    def check_word_filter(target_string, filter_set):
+        target_string_lower = target_string.lower()
+        for word in filter_set:
+            if word in target_string_lower:
+                return True
+        return False
+
     # Get menu through a more specific method as it is a special case where we
     # want to understand the hierarchy as well
     original_dict = generic_get_anchor_and_text(response, MENU_XPATH, MENU_HREF_XPATH)
@@ -101,7 +109,8 @@ def get_menu(response):
 
     # Get the href and zip together
     href = response.xpath(MENU_HREF_XPATH).extract()
-    href_temp_list = [[text, link] for text, link in zip(content_text, href) if text.lower() not in MENU_TEXT_FILTER]
+    href_temp_list = [[text, link] for text, link in zip(content_text, href) if not check_word_filter(text,
+                                                                                                      MENU_TEXT_FILTER)]
     href_dict = {}
     for tuple_pair in href_temp_list:
 
