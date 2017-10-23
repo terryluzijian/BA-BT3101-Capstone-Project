@@ -8,6 +8,9 @@ from scrapy import Request
 
 class DepartmentParser(scrapy.Spider):
 
+    # This class is intended to read department faculty website and extract
+    # link from given xpath, including some exception handling
+
     name = 'department'
     FACULTY_DATA = 'DEPARTMENT_FACULTY_WITH_XPATH.csv'
 
@@ -26,13 +29,13 @@ class DepartmentParser(scrapy.Spider):
             school_url = value['URL']
             url_xpath = value['XPATH']
             remark = value['Remark']
-            sub_request = Request(school_url, self.parse_init)
+            sub_request = Request(school_url, self.parse)
             sub_request.meta['school'] = school
             sub_request.meta['url_xpath'] = url_xpath
             sub_request.meta['remark'] = remark
             yield sub_request
 
-    def parse_init(self, response):
+    def parse(self, response):
         # Fetch meta data
         school = response.meta['school']
         url_xpath = response.meta['url_xpath']
@@ -61,7 +64,7 @@ class DepartmentParser(scrapy.Spider):
         if remark == 'Pagination':
             if response.url[-1] == 'A':
                 for index in range(1, 26):
-                    sub_request = Request(response.url[:-1] + '%c' % (65 + index), self.parse_init)
+                    sub_request = Request(response.url[:-1] + '%c' % (65 + index), self.parse)
                     sub_request.meta['school'] = school
                     sub_request.meta['url_xpath'] = url_xpath
                     sub_request.meta['remark'] = ''

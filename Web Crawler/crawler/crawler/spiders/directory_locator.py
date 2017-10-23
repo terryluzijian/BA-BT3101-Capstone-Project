@@ -16,6 +16,9 @@ from urllib.parse import urljoin
 
 class UniversityDirectoryLocator(scrapy.Spider):
 
+    # This class has deprecated due to availability of department website list, but
+    # it is a sample coding practice to follow for the rest of the repository
+
     name = 'directory'
     SCHOOL_HOMEPAGE_DATA = 'UNIVERSITY_LINK.json'
     IGNORED_REGEX = [r'[^a-zA-Z]?(%s)[^a-zA-Z]?' % s for s in \
@@ -105,7 +108,7 @@ class UniversityDirectoryLocator(scrapy.Spider):
             directory_item['text'] = text
             yield directory_item
 
-        # Yield reqeust accordingly within the specified extension and regex
+        # Yield request accordingly within the specified extension and regex
         for href_key in href_text_dict:
             if not url_has_any_extension(href_key, self.denied_extension):
                 if self.iterate_through_regex(href_key):
@@ -136,10 +139,12 @@ class UniversityDirectoryLocator(scrapy.Spider):
         sys.stdout.write('\n')
         return final_string_line
 
-    def return_file_path(self, data_file_name=SCHOOL_HOMEPAGE_DATA):
+    @staticmethod
+    def return_file_path(data_file_name=SCHOOL_HOMEPAGE_DATA):
         parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         file_path = parent_path + '/data/%s' % data_file_name
         return file_path
 
-    def __name__(self):
+    @staticmethod
+    def __name__():
         return 'UniversityDirectoryLocator'
