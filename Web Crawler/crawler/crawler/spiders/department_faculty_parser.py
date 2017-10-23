@@ -9,7 +9,7 @@ from scrapy import Request
 class DepartmentParser(scrapy.Spider):
 
     name = 'department'
-    FACULTY_DATA = 'DEPARTMENT_WITH_XPATH.csv'
+    FACULTY_DATA = 'DEPARTMENT_FACULTY_WITH_XPATH.csv'
 
     def __init__(self, *args, **kwargs):
         # Get faculty link for each university
@@ -52,7 +52,7 @@ class DepartmentParser(scrapy.Spider):
         link_element = self.generic_extractor.generic_get_anchor_and_text(response, url_xpath_ex_href, url_xpath)
         department_item = DepartmentItem()
         for href, text in link_element.items():
-            department_item['url'] = href
+            department_item['url'] = response.follow(href.split()[0]).url
             department_item['school_name'] = school
             department_item['title'] = text
             yield department_item
