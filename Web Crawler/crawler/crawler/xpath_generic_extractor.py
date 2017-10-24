@@ -23,13 +23,13 @@ COND_COMBINE = ' and '.join(frozenset([HEADER_IMPLIED, HEADER_TAGGED, FOOTER_TAG
                                        FOOTER_IMPLIED, OTHERS_IMPLIED]))
 
 MAIN_CONTENT_XPATH = '//a[%s][@href]' % COND_COMBINE
-MAIN_CONTENT_HREF_XPATH = '%s/@href' % MAIN_CONTENT_XPATH
+MAIN_CONTENT_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MAIN_CONTENT_XPATH
 
 # Get strictly header content for future filtering
 IS_HEADER = '(ancestor::header or ancestor::*[contains(@*, "header")] or ancestor::*[contains(@*, "Header")])'
 IS_HEADER_COND = 'and'.join(frozenset([IS_HEADER, FOOTER_TAGGED, FOOTER_IMPLIED, OTHERS_IMPLIED]))
 HEADER_XPATH = '//a[%s][@href]' % IS_HEADER_COND
-HEADER_HREF_XPATH = '%s/@href' % HEADER_XPATH
+HEADER_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % HEADER_XPATH
 
 # Get menu-level link
 EXCEPTIONS = 'ancestor::*[contains(@*, "sticky")]'
@@ -44,13 +44,13 @@ MENU_EMBEDDED = '(%s) or (%s)' % (EXCEPTIONS,
                                                 '(%s)' % MENU_IMPLIED]))
 MENU_COND_COMBINE = '(%s) or (%s)' % (MENU, MENU_EMBEDDED)
 MENU_XPATH = '//a[%s][@href]' % MENU_COND_COMBINE
-MENU_HREF_XPATH = '%s/@href' % MENU_XPATH
+MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MENU_XPATH
 
 # Get menu-excluded main-content xpath
 MENU_EXCLUDED = ' and '.join(list(map(lambda cond: 'not(%s)' % cond, MENU_COND_COMBINE.split(' or '))))
 
 MAIN_CONTENT_NO_MENU_XPATH = MAIN_CONTENT_XPATH + '[%s]' % MENU_EXCLUDED
-MAIN_CONTENT_NO_MENU_HREF_XPATH = '%s/@href' % MAIN_CONTENT_NO_MENU_XPATH
+MAIN_CONTENT_NO_MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MAIN_CONTENT_NO_MENU_XPATH
 
 TEXT_XPATH = '//*[not(self::script) and not(self::style)]/text()[normalize-space(.)]'
 TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descendant::script) ' + \
@@ -58,15 +58,19 @@ TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descenda
 
 # Menu specific element to pass
 MENU_TEXT_FILTER = frozenset(['calendar', 'curriculum', 'event', 'news', 'resource', 'student'])
-MENU_TOKEN_FILTER = frozenset(['hide', 'main', 'menu', 'more', 'show', 'skip'])
+MENU_TOKEN_FILTER = frozenset(['hide', 'main', 'menu', 'more', 'show', 'skip', 'back', 'top', 'to'])
 FILE_EXTENSION = IGNORED_EXTENSIONS + ['htm', 'html']
+
+
+def normalize_string(target_string, separator=''):
+    return separator.join(target_string.split())
 
 
 def generic_get_anchor_and_text(response, content_xpath, href_xpath):
     content = response.xpath(content_xpath).extract()
     content_text = map(lambda html_string: ' '.join(html.fromstring(html_string).xpath(TEXT_XPATH)), content)
     content_text = list(map(lambda text: ' '.join(text.split()), list(content_text)))
-    href = response.xpath(href_xpath).extract()
+    href = list(map(lambda each_string: normalize_string(each_string), response.xpath(href_xpath).extract()))
     text_freq_dict = {}
 
     # Avoid redundancy
@@ -103,7 +107,7 @@ def get_header(response):
 def get_general(response):
     return generic_get_anchor_and_text(response=response,
                                        content_xpath='//a[@href]',
-                                       href_xpath='//a[@href]/@href')
+                                       href_xpath='//a[@href]/@href[not(contains(., "#"))]')
 
 
 def get_menu(response):
@@ -132,7 +136,7 @@ def get_menu(response):
                             list(content)))
 
     # Get the href and zip together
-    href = response.xpath(MENU_HREF_XPATH).extract()
+    href = list(map(lambda each_string: normalize_string(each_string), response.xpath(MENU_HREF_XPATH).extract()))
     href_temp_list = [[text, link] for text, link in zip(content_text, href) if not check_word_filter(text,
                                                                                                       MENU_TEXT_FILTER)]
     href_dict = {}

@@ -1,6 +1,6 @@
 import spacy
 import sys
-from xpath_generic_extractor import get_menu, get_general
+from .xpath_generic_extractor import get_menu, get_general
 from difflib import SequenceMatcher
 
 
@@ -16,7 +16,8 @@ class SimilarityNavigator(object):
     # academic units, research etc. WE solely get either department content or staff
     # directories
 
-    DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of'])
+    DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of',
+                                   'academic unit', 'schools and departments'])
     PEOPLE_TARGET = frozenset(['academic staff', 'directory', 'faculty', 'faculty staff', 'faculty people',
                                'faculty directory', 'our people', 'people', 'research staff',
                                'staff directory', 'teaching staff'])
@@ -81,7 +82,7 @@ class SimilarityNavigator(object):
             link_set.add(element_pair[1])
 
         # Fallback to general href crawling and try again
-        if len(result_list) == 0:
+        if (len(result_list) == 0) and (extract_func != get_general):
             sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
             sys.stdout.write('\n')
             return self.get_target_content(response, get_general, ratio=ratio,
