@@ -1,5 +1,6 @@
 import spacy
-from crawler.xpath_generic_extractor import get_menu
+import sys
+from xpath_generic_extractor import get_menu, get_general
 from difflib import SequenceMatcher
 
 
@@ -15,13 +16,16 @@ class SimilarityNavigator(object):
     # academic units, research etc. WE solely get either department content or staff
     # directories
 
-    DEPARTMENT_TARGET = frozenset(['department', 'school', 'area of study'])
-    PEOPLE_TARGET = frozenset(['people', 'faculty', 'staff directory'])
+    DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of'])
+    PEOPLE_TARGET = frozenset(['academic staff', 'directory', 'faculty', 'faculty staff', 'faculty people',
+                               'faculty directory', 'our people', 'people', 'research staff',
+                               'staff directory', 'teaching staff'])
+    SEQUENTIAL_THRESHOLD = 0.8
 
     def __init__(self):
-        self.model_en = spacy.load('en')
+        self.model_en = spacy.load('en_core_web_md')
 
-    def get_content(self, response, target, extract_func, ratio=0.8, top=3):
+    def get_content(self, response, target, target_class, extract_func, ratio=0.8, top=3):
         # Use the extraction inherited from crawler.xpath_generic_extractor
         menu = [[key, value] for key, value in extract_func(response).items()]
         menu_with_similarity = []
@@ -30,7 +34,7 @@ class SimilarityNavigator(object):
         for item_pair in menu:
             menu_with_similarity.append(item_pair + self.get_similarity(first_string=item_pair[0],
                                                                         second_string=target,
-                                                                        ratio=ratio))
+                                                                        ratio=ratio) + [target_class])
 
         # Return the sorted list and by default the top three content
         return sorted(menu_with_similarity, key=lambda x: x[2], reverse=True)[:top]
@@ -43,19 +47,44 @@ class SimilarityNavigator(object):
 
         # Get the sequential similarity between two strings, i.e. how many characters are shared
         s = SequenceMatcher(None, first_string.lower(), second_string.lower())
+        if s.ratio() >= self.SEQUENTIAL_THRESHOLD:
+            # If the sequence similarity is extremely high, stop before calculating semantic similarity
+            return [s.ratio()]
 
         # Output a weighted similarity metric by the given ratio
         return [first_string_nlp.similarity(second_string_nlp) * ratio + s.ratio() * (1 - ratio)]
 
-    def get_target_content(self, response, ratio=0.8, top_from_each=2, threshold=0.7):
+    def get_target_content(self, response, extract_func=get_menu, ratio=0.8, top_from_each=1, threshold=0.65):
         # Iterate through the target lists and get the most similar contents
-        combined_list = list(self.DEPARTMENT_TARGET) + list(self.PEOPLE_TARGET)
+        combined_list = {
+            'DEPARTMENT': list(self.DEPARTMENT_TARGET),
+            'PEOPLE': list(self.PEOPLE_TARGET)
+        }
         target_list = []
-        for target_word in combined_list:
-            target_list += self.get_content(response=response, target=target_word, extract_func=get_menu,
-                                            ratio=ratio,
-                                            top=top_from_each)
+        for target_class, target_words in combined_list.items():
+            for target_word in target_words:
+                target_list += self.get_content(response=response,
+                                                target=target_word, target_class=target_class,
+                                                extract_func=extract_func,
+                                                ratio=ratio,
+                                                top=top_from_each)
 
         # Output the sorted target list within the specified threshold
         sorted_list = sorted(target_list, key=lambda x: x[2], reverse=True)
-        return [element_pair for element_pair in sorted_list if element_pair[2] >= threshold]
+        result_list = []
+        link_set = set()
+        for element_pair in sorted_list:
+
+            # Remove redundant link element
+            if (element_pair[1] not in link_set) & (element_pair[2] >= threshold):
+                result_list.append(element_pair)
+            link_set.add(element_pair[1])
+
+        # Fallback to general href crawling and try again
+        if len(result_list) == 0:
+            sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
+            sys.stdout.write('/n')
+            return self.get_target_content(response, get_general, ratio=ratio,
+                                           top_from_each=top_from_each, threshold=threshold)
+
+        return result_list

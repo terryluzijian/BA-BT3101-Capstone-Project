@@ -1,7 +1,8 @@
 import os
 import pandas as pd
+import re
 import scrapy
-from crawler.xpath_generic_extractor import GenericExtractor
+from crawler.xpath_generic_extractor import generic_get_anchor_and_text
 from crawler.items import DepartmentItem
 from scrapy import Request
 
@@ -20,7 +21,6 @@ class DepartmentParser(scrapy.Spider):
         parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         file_path = parent_path + '/data/%s' % self.FACULTY_DATA
         self.faculty_data = pd.read_csv(file_path).dropna(subset=['XPATH'])
-        self.generic_extractor = GenericExtractor()
 
     def start_requests(self):
         # Iterate and yield request respectively
@@ -52,13 +52,22 @@ class DepartmentParser(scrapy.Spider):
 
         # Parse the corresponding links and yield items
         url_xpath_ex_href = url_xpath.replace('/@href', '')
-        link_element = self.generic_extractor.generic_get_anchor_and_text(response, url_xpath_ex_href, url_xpath)
+        link_element = generic_get_anchor_and_text(response, url_xpath_ex_href, url_xpath)
         department_item = DepartmentItem()
-        for href, text in link_element.items():
-            department_item['url'] = response.follow(href.split()[0]).url
-            department_item['school_name'] = school
-            department_item['title'] = text
-            yield department_item
+        for text, href in link_element.items():
+            real_url = response.follow(href.split()[0]).url
+
+            # If the title is not available, accordingly visit the page to get the tile
+            # Yield the item otherwise
+            if re.sub(r'\([1-9]+\)', '', text) != '':
+                department_item['url'] = real_url
+                department_item['school_name'] = school
+                department_item['title'] = text
+                yield department_item
+            else:
+                sub_request = Request(real_url, self.parse_link)
+                sub_request.meta['school'] = school
+                yield sub_request
 
         # If there is pagination
         if remark == 'Pagination':
@@ -73,6 +82,7 @@ class DepartmentParser(scrapy.Spider):
     def parse_link(self, response):
         # Fetch meta data
         school = response.meta['school']
+        self.logger.info('Visiting %s (%s) for extra information' % (response.url, school))
 
         # Yield item
         department_item = DepartmentItem()
