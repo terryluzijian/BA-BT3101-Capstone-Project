@@ -83,7 +83,7 @@ class SimilarityNavigator(object):
         # Fallback to general href crawling and try again
         if len(result_list) == 0:
             sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
-            sys.stdout.write('/n')
+            sys.stdout.write('\n')
             return self.get_target_content(response, get_general, ratio=ratio,
                                            top_from_each=top_from_each, threshold=threshold)
 

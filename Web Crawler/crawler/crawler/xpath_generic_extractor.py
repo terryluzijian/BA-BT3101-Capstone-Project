@@ -17,7 +17,8 @@ FOOTER_IMPLIED = 'not(ancestor::*[contains(@*, "bottom")]) and not(ancestor::*[c
                  'not(ancestor::*[contains(@*, "Bottom")]) and not(ancestor::*[contains(@*, "Foot")])'
 OTHERS_IMPLIED = 'not(ancestor::*[contains(@*, "banner")]) and not(ancestor::*[contains(@*, "crumb")]) and ' + \
                  'not(ancestor::*[contains(@*, "quick")]) and not(ancestor::*[contains(@*, "Banner")]) and ' + \
-                 'not(ancestor::*[contains(@*, "Crumb")]) and not(ancestor::*[contains(@*, "Quick")])'
+                 'not(ancestor::*[contains(@*, "Crumb")]) and not(ancestor::*[contains(@*, "Quick")]) and ' + \
+                 'not(ancestor::*[contains(@*, "off-canvas")])'
 COND_COMBINE = ' and '.join(frozenset([HEADER_IMPLIED, HEADER_TAGGED, FOOTER_TAGGED,
                                        FOOTER_IMPLIED, OTHERS_IMPLIED]))
 
@@ -32,9 +33,9 @@ HEADER_HREF_XPATH = '%s/@href' % HEADER_XPATH
 
 # Get menu-level link
 EXCEPTIONS = 'ancestor::*[contains(@*, "sticky")]'
-MENU = '(ancestor::nav or ' + \
-       '(ancestor::*[contains(@*, "nav")] or ancestor::*[contains(@*, "Nav")])) ' + \
-       'and not(ancestor::*[contains(@*, "off-canvas")])'
+MENU = ' and '.join(['(ancestor::nav or (ancestor::*[contains(@*, "nav")] or ancestor::*[contains(@*, "Nav")])) ' +
+                     'and not(ancestor::*[contains(@*, "off-canvas")])',
+                     FOOTER_TAGGED, FOOTER_IMPLIED, OTHERS_IMPLIED])
 MENU_IMPLIED = 'ancestor::*[contains(@*, "menu")] or ancestor::*[contains(@*, "Menu")]'
 MENU_EMBEDDED = '(%s) or (%s)' % (EXCEPTIONS,
                                   ' and '.join([FOOTER_IMPLIED,
