@@ -1,0 +1,19 @@
+.RowABT
+{
+    display: table;
+    width: 100%; /*Optional*/
+    border-spacing: 50px; /*Optional*/
+}
+.ColumnABT
+{
+    display: table-cell;
+    background-color: #EAE9E9; /*Optional*/
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    color: #2C3E50;
+    vertical-align: middle;
+    font-size: 20px;
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    cursor: pointer;
+}
