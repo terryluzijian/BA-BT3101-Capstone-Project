@@ -1,5 +1,4 @@
 import re
-from lxml import html
 from scrapy.linkextractors import IGNORED_EXTENSIONS
 from scrapy.utils.url import parse_url
 
@@ -18,17 +17,18 @@ FOOTER_IMPLIED = 'not(ancestor::*[contains(@*, "bottom")]) and not(ancestor::*[c
 OTHERS_IMPLIED = 'not(ancestor::*[contains(@*, "banner")]) and not(ancestor::*[contains(@*, "crumb")]) and ' + \
                  'not(ancestor::*[contains(@*, "quick")]) and not(ancestor::*[contains(@*, "Banner")]) and ' + \
                  'not(ancestor::*[contains(@*, "Crumb")]) and not(ancestor::*[contains(@*, "Quick")]) and ' + \
-                 'not(ancestor::*[contains(@*, "off-canvas")])'
+                 'not(ancestor::*[contains(@*, "off-canvas")]) and not(ancestor::*[contains(@*, "global")]) and ' + \
+                 'not(ancestor::*[contains(@*, "Global")])'
 COND_COMBINE = ' and '.join(frozenset([HEADER_IMPLIED, HEADER_TAGGED, FOOTER_TAGGED,
                                        FOOTER_IMPLIED, OTHERS_IMPLIED]))
 
-MAIN_CONTENT_XPATH = '//a[%s][@href]' % COND_COMBINE
+MAIN_CONTENT_XPATH = '//a[%s][@href[not(contains(., "#"))]]' % COND_COMBINE
 MAIN_CONTENT_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MAIN_CONTENT_XPATH
 
 # Get strictly header content for future filtering
 IS_HEADER = '(ancestor::header or ancestor::*[contains(@*, "header")] or ancestor::*[contains(@*, "Header")])'
 IS_HEADER_COND = 'and'.join(frozenset([IS_HEADER, FOOTER_TAGGED, FOOTER_IMPLIED, OTHERS_IMPLIED]))
-HEADER_XPATH = '//a[%s][@href]' % IS_HEADER_COND
+HEADER_XPATH = '//a[%s][@href[not(contains(., "#"))]]' % IS_HEADER_COND
 HEADER_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % HEADER_XPATH
 
 # Get menu-level link
@@ -43,7 +43,7 @@ MENU_EMBEDDED = '(%s) or (%s)' % (EXCEPTIONS,
                                                 OTHERS_IMPLIED,
                                                 '(%s)' % MENU_IMPLIED]))
 MENU_COND_COMBINE = '(%s) or (%s)' % (MENU, MENU_EMBEDDED)
-MENU_XPATH = '//a[%s][@href]' % MENU_COND_COMBINE
+MENU_XPATH = '//a[%s][@href[not(contains(., "#"))]]' % MENU_COND_COMBINE
 MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MENU_XPATH
 
 # Get menu-excluded main-content xpath
@@ -52,12 +52,18 @@ MENU_EXCLUDED = ' and '.join(list(map(lambda cond: 'not(%s)' % cond, MENU_COND_C
 MAIN_CONTENT_NO_MENU_XPATH = MAIN_CONTENT_XPATH + '[%s]' % MENU_EXCLUDED
 MAIN_CONTENT_NO_MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MAIN_CONTENT_NO_MENU_XPATH
 
-TEXT_XPATH = '//*[not(self::script) and not(self::style)]/text()[normalize-space(.)]'
+TEXT_XPATH = 'descendant-or-self::*[not(self::script) and not(self::style)]/text()[normalize-space(.)]'
 TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descendant::script) ' + \
                   'and not(descendant::style)]/text()[normalize-space(.)]'
+# NEW_TEXT_XPATH = '%s | preceding-sibling::*/text()[normalize-space(.)] | %s' % (TEXT_MENU_XPATH, TEXT_XPATH)
+
+# H1, H2 and Title
+TITLE_XPATH = '//title/text() | //*[contains(@class, "title")]/text()'
+H1_XPATH = '//h1/text()'
+H2_XPATH = '//h2/text()'
 
 # Menu specific element to pass
-MENU_TEXT_FILTER = frozenset(['calendar', 'curriculum', 'event', 'news', 'resource', 'student'])
+MENU_TEXT_FILTER = frozenset(['calendar', 'curriculum', 'event', 'news', 'resource', 'student', 'log'])
 MENU_TOKEN_FILTER = frozenset(['hide', 'main', 'menu', 'more', 'show', 'skip', 'back', 'top', 'to'])
 FILE_EXTENSION = IGNORED_EXTENSIONS + ['htm', 'html']
 
@@ -66,9 +72,18 @@ def normalize_string(target_string, separator=''):
     return separator.join(target_string.split())
 
 
+def check_word_filter(target_string, filter_set):
+    # Check whether certain keyword should be filtered
+    target_string_lower = target_string.lower()
+    for word in filter_set:
+        if word in target_string_lower:
+            return True
+    return False
+
+
 def generic_get_anchor_and_text(response, content_xpath, href_xpath):
-    content = response.xpath(content_xpath).extract()
-    content_text = map(lambda html_string: ' '.join(html.fromstring(html_string).xpath(TEXT_XPATH)), content)
+    content = response.xpath(content_xpath)
+    content_text = map(lambda html_string: ' '.join(html_string.xpath(TEXT_XPATH).extract()), content)
     content_text = list(map(lambda text: ' '.join(text.split()), list(content_text)))
     href = list(map(lambda each_string: normalize_string(each_string), response.xpath(href_xpath).extract()))
     text_freq_dict = {}
@@ -110,16 +125,31 @@ def get_general(response):
                                        href_xpath='//a[@href]/@href[not(contains(., "#"))]')
 
 
+def get_title_h1_h2(response):
+    # Get H1, H2 and title-tagged text data
+    def get_text(response_fetch, text_xpath, punctuation='!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'):
+        # Capitalize words properly
+        def capitalize_string(target_string):
+            if re.search(r'[A-Z][A-Z]+', target_string):
+                return target_string[:1].upper() + '.'
+            else:
+                return target_string
+
+        title_content = response_fetch.xpath(text_xpath).extract()
+        content_normalized = list(map(lambda text: normalize_string(text, ' '), title_content))
+        final_content = [list(map(lambda y: capitalize_string(y),
+                                  filter(lambda x: x not in punctuation, element.split())))
+                         for element in content_normalized]
+
+        return [' '.join(text_element) for text_element in final_content]
+
+    return {'h1': get_text(response, H1_XPATH),
+            'h2': get_text(response, H2_XPATH),
+            'title': get_text(response, TITLE_XPATH)}
+
+
 def get_menu(response):
     # Core method for school content crawling
-    # Check whether certain keyword should be filtered
-    def check_word_filter(target_string, filter_set):
-        target_string_lower = target_string.lower()
-        for word in filter_set:
-            if word in target_string_lower:
-                return True
-        return False
-
     # Get menu through a more specific method as it is a special case where we
     # want to understand the hierarchy as well
     original_dict = generic_get_anchor_and_text(response, MENU_XPATH, MENU_HREF_XPATH)
@@ -127,7 +157,7 @@ def get_menu(response):
 
     # Select all menu component and the hierarchical text (e.g. About -> Programme -> Undergraduate)
     content_selector = response.xpath(MENU_XPATH)
-    content = map(lambda selector: selector.xpath(TEXT_MENU_XPATH).extract(), content_selector)
+    content = map(lambda selector: selector.xpath(TEXT_XPATH).extract(), content_selector)
 
     # Clean the textual data, which is already tokenized, and join them
     content = map(lambda text_list: list(map(lambda text: ' '.join(text.split()), text_list)), list(content))
@@ -137,15 +167,19 @@ def get_menu(response):
 
     # Get the href and zip together
     href = list(map(lambda each_string: normalize_string(each_string), response.xpath(MENU_HREF_XPATH).extract()))
-    href_temp_list = [[text, link] for text, link in zip(content_text, href) if not check_word_filter(text,
-                                                                                                      MENU_TEXT_FILTER)]
+    href_temp_list = [[text, link] for text, link in zip(content_text, href)
+                      if not(check_word_filter(text, MENU_TEXT_FILTER))]
     href_dict = {}
     for tuple_pair in href_temp_list:
 
         # Check whether hierarchical processing works
         if len(tuple_pair[0]) == 0:
-            ori_name = original_dict[tuple_pair[1]]
-            ori_name_strip = re.sub(r'\([1-9]+\)', '', ori_name)
+            try:
+                ori_name = original_dict[tuple_pair[1]]
+                ori_name_strip = re.sub(r'\([1-9]+\)', '', ori_name)
+            except KeyError:
+                ori_name_strip = ''
+                ori_name = '#pass'
             # If the original name is empty
             if len(ori_name_strip) != 0:
                 href_dict[ori_name] = tuple_pair[1]
