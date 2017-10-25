@@ -22,3 +22,15 @@ class DepartmentItem(Item):
     url = Field()
     school_name = Field()
     title = Field()
+
+
+class DirectoryProfilePageItem(Item):
+    profile_url = Field()
+    university_name = Field()
+    page_title = Field()
+    aggregated_title = Field()
+    starting_url = Field()
+    response_body = Field()
+    main_content = Field()
+    header_content = Field()
+    depth = Field()

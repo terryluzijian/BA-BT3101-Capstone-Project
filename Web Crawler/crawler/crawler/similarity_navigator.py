@@ -1,7 +1,8 @@
+import re
 import spacy
 import sys
-from .xpath_generic_extractor import get_menu, get_general
 from difflib import SequenceMatcher
+from .xpath_generic_extractor import get_menu, get_general
 
 
 class SimilarityNavigator(object):
@@ -17,9 +18,10 @@ class SimilarityNavigator(object):
     # directories
 
     DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of',
-                                   'academic unit', 'schools and departments'])
+                                   'academic unit', 'school & department', 'major and minor', 'major',
+                                   'faculty & department'])
     PEOPLE_TARGET = frozenset(['academic staff', 'directory', 'faculty', 'faculty staff', 'faculty people',
-                               'faculty directory', 'our people', 'people', 'research staff',
+                               'faculty directory', 'our people', 'people', 'research staff', 'staff',
                                'staff directory', 'teaching staff'])
     SEQUENTIAL_THRESHOLD = 0.8
 
@@ -27,8 +29,14 @@ class SimilarityNavigator(object):
         self.model_en = spacy.load('en_core_web_md')
 
     def get_content(self, response, target, target_class, extract_func, ratio=0.8, top=3):
+
+        def normalize_word(target_string):
+            string_replace = re.sub(r'[A-Z][A-Z]+', '', target_string)
+            content_normalized = filter(lambda x: re.search(r'[A-Za-z]+', x), string_replace.split())
+            return ' '.join(list(map(lambda x: str(x), content_normalized)))
+
         # Use the extraction inherited from crawler.xpath_generic_extractor
-        menu = [[key, value] for key, value in extract_func(response).items()]
+        menu = [[normalize_word(key), value] for key, value in extract_func(response).items()]
         menu_with_similarity = []
 
         # Iterate through each item pair and obtain the similarity with the target keyword
@@ -55,7 +63,7 @@ class SimilarityNavigator(object):
         # Output a weighted similarity metric by the given ratio
         return [first_string_nlp.similarity(second_string_nlp) * ratio + s.ratio() * (1 - ratio)]
 
-    def get_target_content(self, response, extract_func=get_menu, ratio=0.8, top_from_each=1, threshold=0.65):
+    def get_target_content(self, response, extract_func=get_menu, ratio=0.8, top_from_each=3, threshold=0.65):
         # Iterate through the target lists and get the most similar contents
         combined_list = {
             'DEPARTMENT': list(self.DEPARTMENT_TARGET),
