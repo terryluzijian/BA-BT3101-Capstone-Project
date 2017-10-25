@@ -4,8 +4,9 @@ import re
 import scrapy
 from crawler.items import DirectoryProfilePageItem
 from crawler.similarity_navigator import SimilarityNavigator
-from crawler.xpath_generic_extractor import check_word_filter, MENU_TEXT_FILTER, get_title_h1_h2, \
-                                            get_main_content, get_main_content_excluding_menu, get_header, get_menu
+from crawler.xpath_generic_extractor import check_word_filter, MENU_TEXT_FILTER, get_title_h1_h2, get_main_content, \
+                                            get_main_content_text, get_main_content_excluding_menu, \
+                                            get_header, get_menu
 from random import shuffle
 from scrapy import Request
 from scrapy.http import Response
@@ -43,8 +44,8 @@ class UniversityWebCrawler(scrapy.Spider):
         'DEPTH_PRIORITY': -1,
         'DEPTH_STATS_VERBOSE': True,
 
-        'CONCURRENT_REQUESTS': 1,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+        'CONCURRENT_REQUESTS': 16,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
         'DOWNLOAD_DELAY': 1,
     }
 
@@ -60,7 +61,7 @@ class UniversityWebCrawler(scrapy.Spider):
     def start_requests(self):
         # Use normal request by default for department homepage for faster rendering speed
         # Use splash request by default otherwise for possible AJAX-inclusive pages
-        for individual_index in self.shuffled_index[:1]:
+        for individual_index in self.shuffled_index:
             individual_data = UniversityWebCrawler.department_data.loc[individual_index]
             university_name = individual_data['school_name']
             url_link = individual_data['url']
@@ -137,7 +138,7 @@ class UniversityWebCrawler(scrapy.Spider):
                 'dept depth': visiting_depth if target_content_dict['Tag'] != 'DEPARTMENT' else visiting_depth + 1,
                 'people depth': visiting_depth if target_content_dict['Tag'] != 'PEOPLE' else visiting_depth + 1,
 
-                'Start from Url': response.meta['Start from Url']
+                'Start from Url': response.meta['Start from Url'] if not fall_back else url_link_passed
             }
             # Use splash-request by default
             request = SplashRequest(response.urljoin(target_content_dict['Target Url']),
@@ -232,6 +233,33 @@ class UniversityWebCrawler(scrapy.Spider):
         entity_list_person = [(' '.join(filter(lambda x: valid_person_name(x), key_dict.keys())), value)
                               for key_dict, value in entity_parsed if 'PERSON' in key_dict.values()]
 
+        # Detect personal profile page through title, h1 and h2
+        h1_h2_title = get_title_h1_h2(response)
+        for tag in h1_h2_title:
+            parsed_list = list(map(lambda target_string: parse_entity(target_string), h1_h2_title[tag]))
+            h1_h2_title[tag] = [entity
+                                for parsed_dict in parsed_list
+                                for name, entity in parsed_dict.items() if entity == 'PERSON']
+
+        # Locate personal profile page
+        if ('PERSON' in h1_h2_title['title']) and (
+           ('PERSON' in h1_h2_title['h1'] or 'PERSON' in h1_h2_title['h2'])):
+            directory_item = DirectoryProfilePageItem()
+            directory_item['profile_url'] = splash_meta['args']['url']
+            directory_item['university_name'] = pre_meta['University Name']
+            directory_item['page_title'] = response.xpath('//title/text()[normalize-space(.)]').extract_first()
+            directory_item['aggregated_title'] = pre_meta['Link Title Passed']
+            directory_item['starting_url'] = pre_meta['Start from Url']
+            directory_item['response_body'] = response.body
+            directory_item['main_content'] = pre_meta['Main Content']
+            directory_item['header_content'] = pre_meta['Header Content']
+            directory_item['depth'] = pre_meta['depth']
+            directory_item['previous_link'] = pre_meta['Previous Link']
+            self.logger.info('Found 1 possible item at %s: %s' % (splash_meta['args']['url'],
+                                                                  directory_item['page_title']))
+            yield directory_item
+            return
+
         # Yield following splash request
         for page_title, page_link in current_main_content.items():
 
@@ -262,28 +290,6 @@ class UniversityWebCrawler(scrapy.Spider):
             request = SplashRequest(Response(splash_meta['args']['url']).urljoin(page_link),
                                     self.parse, meta=next_level_meta)
             yield request
-
-        # Detect personal profile page through title, h1 and h2
-        h1_h2_title = get_title_h1_h2(response)
-        for tag in h1_h2_title:
-            parsed_list = list(map(lambda target_string: parse_entity(target_string), h1_h2_title[tag]))
-            h1_h2_title[tag] = [entity
-                                for parsed_dict in parsed_list
-                                for name, entity in parsed_dict.items() if entity == 'PERSON']
-
-        # Locate personal profile page
-        if ('PERSON' in h1_h2_title['title']) or ('PERSON' in h1_h2_title['h1']) or ('PERSON' in h1_h2_title['h2']):
-            directory_item = DirectoryProfilePageItem()
-            directory_item['profile_url'] = splash_meta['args']['url']
-            directory_item['university_name'] = pre_meta['University Name']
-            directory_item['page_title'] = response.xpath('//title/text()[normalize-space(.)]').extract_first()
-            directory_item['aggregated_title'] = pre_meta['Link Title Passed']
-            directory_item['starting_url'] = pre_meta['Start from Url']
-            directory_item['response_body'] = response.body
-            directory_item['main_content'] = pre_meta['Main Content']
-            directory_item['header_content'] = pre_meta['Header Content']
-            directory_item['depth'] = pre_meta['depth']
-            yield directory_item
 
 
 def combine_duplicate_in_dict(some_dict):

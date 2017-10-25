@@ -32,7 +32,7 @@ HEADER_XPATH = '//a[%s][@href[not(contains(., "#"))]]' % IS_HEADER_COND
 HEADER_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % HEADER_XPATH
 
 # Get menu-level link
-EXCEPTIONS = 'ancestor::*[contains(@*, "sticky")]'
+EXCEPTIONS = 'ancestor::*[contains(@*, "sticky")] or ancestor::*[contains(@*, "no-bottom")]'
 MENU = ' and '.join(['(ancestor::nav or (ancestor::*[contains(@*, "nav")] or ancestor::*[contains(@*, "Nav")])) ' +
                      'and not(ancestor::*[contains(@*, "off-canvas")])',
                      FOOTER_TAGGED, FOOTER_IMPLIED, OTHERS_IMPLIED])
@@ -57,10 +57,12 @@ TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descenda
                   'and not(descendant::style)]/text()[normalize-space(.)]'
 # NEW_TEXT_XPATH = '%s | preceding-sibling::*/text()[normalize-space(.)] | %s' % (TEXT_MENU_XPATH, TEXT_XPATH)
 
-# H1, H2 and Title
+# h1, h2, title and text
 TITLE_XPATH = '//title/text() | //*[contains(@class, "title")]/text()'
 H1_XPATH = '//h1/text()'
 H2_XPATH = '//h2/text()'
+MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]/text()' \
+                          % (MENU_EXCLUDED, COND_COMBINE)
 
 # Menu specific element to pass
 MENU_TEXT_FILTER = frozenset(['calendar', 'curriculum', 'event', 'news', 'resource', 'student', 'log'])
@@ -113,6 +115,11 @@ def get_main_content_excluding_menu(response):
                                        href_xpath=MAIN_CONTENT_NO_MENU_HREF_XPATH)
 
 
+def get_main_content_text(response):
+    text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH).extract()
+    return list(filter(lambda y: len(y) > 3, map(lambda x: ' '.join(x.split()), text_content)))
+
+
 def get_header(response):
     return generic_get_anchor_and_text(response=response,
                                        content_xpath=HEADER_XPATH,
@@ -131,7 +138,7 @@ def get_title_h1_h2(response):
         # Capitalize words properly
         def capitalize_string(target_string):
             if re.search(r'[A-Z][A-Z]+', target_string):
-                return target_string[:1].upper() + '.'
+                return target_string[:1].upper() + target_string.lower()
             else:
                 return target_string
 

@@ -34,3 +34,4 @@ class DirectoryProfilePageItem(Item):
     main_content = Field()
     header_content = Field()
     depth = Field()
+    previous_link = Field()
