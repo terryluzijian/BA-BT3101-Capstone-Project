@@ -1,4 +1,5 @@
 import re
+from scrapy.http import Response
 from scrapy.linkextractors import IGNORED_EXTENSIONS
 from scrapy.utils.url import parse_url
 
@@ -47,6 +48,8 @@ MENU_XPATH = '//a[%s][@href[not(contains(., "#"))]]' % MENU_COND_COMBINE
 MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MENU_XPATH
 
 # Get menu-excluded main-content xpath
+# TODO: refine menu excluded condition in the future due to lack of robustness
+# TODO: double-check any function related to this variable
 MENU_EXCLUDED = ' and '.join(list(map(lambda cond: 'not(%s)' % cond, MENU_COND_COMBINE.split(' or '))))
 
 MAIN_CONTENT_NO_MENU_XPATH = MAIN_CONTENT_XPATH + '[%s]' % MENU_EXCLUDED
@@ -70,20 +73,10 @@ MENU_TOKEN_FILTER = frozenset(['hide', 'main', 'menu', 'more', 'show', 'skip', '
 FILE_EXTENSION = IGNORED_EXTENSIONS + ['htm', 'html']
 
 
-def normalize_string(target_string, separator=''):
-    return separator.join(target_string.split())
-
-
-def check_word_filter(target_string, filter_set):
-    # Check whether certain keyword should be filtered
-    target_string_lower = target_string.lower()
-    for word in filter_set:
-        if word in target_string_lower:
-            return True
-    return False
-
+# Generic functions
 
 def generic_get_anchor_and_text(response, content_xpath, href_xpath):
+    # Get content text list, normalize and concatenate
     content = response.xpath(content_xpath)
     content_text = map(lambda html_string: ' '.join(html_string.xpath(TEXT_XPATH).extract()), content)
     content_text = list(map(lambda text: ' '.join(text.split()), list(content_text)))
@@ -100,33 +93,71 @@ def generic_get_anchor_and_text(response, content_xpath, href_xpath):
             text_freq_dict[text_ele] = 1
 
     # Zip text and href
-    return {text: link for text, link in zip(content_text, href)}
+    text_link_dict = {text: link for text, link in zip(content_text, href)}
+    return text_link_dict
 
+
+def generic_get_unique_content(response, past_response, extract_func):
+    # Get unique content by comparing with previous response
+    def get_main_and_menu(one_response):
+        # Help function to get main content with menu (including all navigation, header and secondary menu)
+        content = get_main_content(one_response)
+        content.update(get_menu(one_response))
+        return content
+
+    # Deal with list or a single Response object
+    if isinstance(past_response, Response):
+        general_past_content = get_main_and_menu(past_response)
+    elif type(past_response) is list:
+        general_past_content = {key: value
+                                for element in past_response
+                                for key, value in get_main_and_menu(element).items()}
+    else:
+        general_past_content = {}
+
+    # Return unique content
+    response_content = extract_func(response)
+    return {text: link for text, link in response_content.items()
+            if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+
+
+# Specific get functions
 
 def get_main_content(response):
+    # Main content can include secondary menu
     return generic_get_anchor_and_text(response=response,
                                        content_xpath=MAIN_CONTENT_XPATH,
                                        href_xpath=MAIN_CONTENT_HREF_XPATH)
 
 
 def get_main_content_excluding_menu(response):
-    return generic_get_anchor_and_text(response=response,
-                                       content_xpath=MAIN_CONTENT_NO_MENU_XPATH,
-                                       href_xpath=MAIN_CONTENT_NO_MENU_HREF_XPATH)
+    # Rewrite main content with menu content as main content can include secondary menu
+    # Delete secondary menu here
+    main_content = get_main_content(response)
+    menu_content = get_menu(response)
+    return {text: link for text, link in main_content.items() if (text not in menu_content.keys())
+            | (link not in menu_content.values())}
 
 
 def get_main_content_text(response):
+    # Get main content text
     text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH).extract()
+    menu_content = get_menu(response)
+
+    # Double-check there is no menu component
+    text_content = [text for text in text_content if text not in menu_content.keys()]
     return list(filter(lambda y: len(y) > 3, map(lambda x: ' '.join(x.split()), text_content)))
 
 
 def get_header(response):
+    # Get header content
     return generic_get_anchor_and_text(response=response,
                                        content_xpath=HEADER_XPATH,
                                        href_xpath=HEADER_HREF_XPATH)
 
 
 def get_general(response):
+    # Get all anchor object for current response
     return generic_get_anchor_and_text(response=response,
                                        content_xpath='//a[@href]',
                                        href_xpath='//a[@href]/@href[not(contains(., "#"))]')
@@ -135,13 +166,14 @@ def get_general(response):
 def get_title_h1_h2(response):
     # Get H1, H2 and title-tagged text data
     def get_text(response_fetch, text_xpath, punctuation='!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'):
-        # Capitalize words properly
+        # Help function to capitalize words properly
         def capitalize_string(target_string):
             if re.search(r'[A-Z][A-Z]+', target_string):
                 return target_string[:1].upper() + target_string.lower()
             else:
                 return target_string
 
+        # Get normalized text
         title_content = response_fetch.xpath(text_xpath).extract()
         content_normalized = list(map(lambda text: normalize_string(text, ' '), title_content))
         final_content = [list(map(lambda y: capitalize_string(y),
@@ -206,3 +238,19 @@ def get_menu(response):
             href_dict[tuple_pair[0]] = tuple_pair[1]
 
     return href_dict
+
+
+# Help functions
+
+def normalize_string(target_string, separator=''):
+    # Normalize string with
+    return separator.join(target_string.split())
+
+
+def check_word_filter(target_string, filter_set):
+    # Check whether certain keyword should be filtered
+    target_string_lower = target_string.lower()
+    for word in filter_set:
+        if word in target_string_lower:
+            return True
+    return False
