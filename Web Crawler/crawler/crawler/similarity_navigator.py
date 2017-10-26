@@ -19,7 +19,7 @@ class SimilarityNavigator(object):
 
     DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of',
                                    'academic unit', 'school & department', 'major and minor', 'major',
-                                   'faculty & department'])
+                                   'faculty & department', 'academics', 'departments and programs'])
     PEOPLE_TARGET = frozenset(['academic staff', 'directory', 'faculty', 'faculty staff', 'faculty people',
                                'faculty directory', 'our people', 'people', 'staff',
                                'staff directory', 'teaching staff'])
