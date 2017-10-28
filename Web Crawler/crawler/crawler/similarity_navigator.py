@@ -20,9 +20,9 @@ class SimilarityNavigator(object):
     DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of',
                                    'academic unit', 'school & department', 'major and minor', 'major',
                                    'faculty & department', 'academics', 'departments and programs'])
-    PEOPLE_TARGET = frozenset(['academic staff', 'directory', 'faculty', 'faculty staff', 'faculty people',
+    PEOPLE_TARGET = frozenset(['academic staff', 'faculty', 'faculty staff', 'faculty people',
                                'faculty directory', 'our people', 'people', 'staff',
-                               'staff directory', 'teaching staff'])
+                               'staff directory', 'teaching staff', 'emeritus'])
     SEQUENTIAL_THRESHOLD = 0.8
 
     def __init__(self):
@@ -66,12 +66,20 @@ class SimilarityNavigator(object):
         # Output a weighted similarity metric by the given ratio
         return [first_string_nlp.similarity(second_string_nlp) * ratio + s.ratio() * (1 - ratio)]
 
-    def get_target_content(self, response, extract_func=get_menu, ratio=0.8, top_from_each=3, threshold=0.7):
+    def get_target_content(self, response,
+                           parse_only_people=False, parse_only_department=False,
+                           fall_back_to_general=True, extract_func=get_menu,
+                           ratio=0.8, top_from_each=3, threshold=0.7):
         # Iterate through the target lists and get the most similar contents
         combined_list = {
             'DEPARTMENT': list(self.DEPARTMENT_TARGET),
             'PEOPLE': list(self.PEOPLE_TARGET)
         }
+        if parse_only_department:
+            del combined_list['PEOPLE']
+        if parse_only_people:
+            del combined_list['DEPARTMENT']
+
         target_list = []
         for target_class, target_words in combined_list.items():
             for target_word in target_words:
@@ -93,10 +101,11 @@ class SimilarityNavigator(object):
             link_set.add(element_pair[1])
 
         # Fallback to general href crawling and try again
-        if (len(result_list) == 0) and (extract_func != get_general):
-            sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
-            sys.stdout.write('\n')
-            return self.get_target_content(response, get_general, ratio=ratio,
-                                           top_from_each=top_from_each, threshold=threshold)
+        if fall_back_to_general:
+            if (len(result_list) == 0) and (extract_func != get_general):
+                sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
+                sys.stdout.write('\n')
+                return self.get_target_content(response, extract_func=get_general, ratio=ratio,
+                                               top_from_each=top_from_each, threshold=threshold)
 
         return result_list

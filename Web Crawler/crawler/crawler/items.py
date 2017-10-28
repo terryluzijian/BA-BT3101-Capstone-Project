@@ -30,7 +30,7 @@ class DirectoryProfilePageItem(Item):
     page_title = Field()
     aggregated_title = Field()
     starting_url = Field()
-    response_body = Field()
+    # response_body = Field()
     main_content = Field()
     header_content = Field()
     depth = Field()

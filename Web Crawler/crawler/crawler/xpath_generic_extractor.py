@@ -16,8 +16,8 @@ FOOTER_TAGGED = 'not(ancestor::footer)'
 FOOTER_IMPLIED = 'not(ancestor::*[contains(@*, "bottom")]) and not(ancestor::*[contains(@*, "foot")]) and ' + \
                  'not(ancestor::*[contains(@*, "Bottom")]) and not(ancestor::*[contains(@*, "Foot")])'
 OTHERS_IMPLIED = 'not(ancestor::*[contains(@*, "banner")]) and not(ancestor::*[contains(@*, "crumb")]) and ' + \
-                 'not(ancestor::*[contains(@*, "quick")]) and not(ancestor::*[contains(@*, "Banner")]) and ' + \
-                 'not(ancestor::*[contains(@*, "Crumb")]) and not(ancestor::*[contains(@*, "Quick")]) and ' + \
+                 'not(ancestor::*[contains(@*, "Banner")]) and ' + \
+                 'not(ancestor::*[contains(@*, "Crumb")]) and ' + \
                  'not(ancestor::*[contains(@*, "off-canvas")]) and not(ancestor::*[contains(@*, "global")]) and ' + \
                  'not(ancestor::*[contains(@*, "Global")])'
 COND_COMBINE = ' and '.join(frozenset([HEADER_IMPLIED, HEADER_TAGGED, FOOTER_TAGGED,
@@ -93,7 +93,7 @@ def generic_get_anchor_and_text(response, content_xpath, href_xpath):
             text_freq_dict[text_ele] = 1
 
     # Zip text and href
-    text_link_dict = {text: link for text, link in zip(content_text, href)}
+    text_link_dict = {text: response.urljoin(link) for text, link in zip(content_text, href)}
     return text_link_dict
 
 
@@ -128,6 +128,10 @@ def get_main_content(response):
     return generic_get_anchor_and_text(response=response,
                                        content_xpath=MAIN_CONTENT_XPATH,
                                        href_xpath=MAIN_CONTENT_HREF_XPATH)
+
+
+def get_main_content_unique(response, past_response):
+    return generic_get_unique_content(response, past_response, get_main_content)
 
 
 def get_main_content_excluding_menu(response):
@@ -206,7 +210,7 @@ def get_menu(response):
 
     # Get the href and zip together
     href = list(map(lambda each_string: normalize_string(each_string), response.xpath(MENU_HREF_XPATH).extract()))
-    href_temp_list = [[text, link] for text, link in zip(content_text, href)
+    href_temp_list = [[text, response.urljoin(link)] for text, link in zip(content_text, href)
                       if not(check_word_filter(text, MENU_TEXT_FILTER))]
     href_dict = {}
     for tuple_pair in href_temp_list:

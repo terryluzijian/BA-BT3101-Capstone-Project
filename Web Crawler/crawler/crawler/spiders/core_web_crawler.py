@@ -44,7 +44,7 @@ class UniversityWebCrawler(scrapy.Spider):
         'DEPTH_PRIORITY': -1,
         'DEPTH_STATS_VERBOSE': True,
 
-        'CONCURRENT_REQUESTS': 16,
+        'CONCURRENT_REQUESTS': 32,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
         'DOWNLOAD_DELAY': 1,
     }
@@ -215,8 +215,6 @@ class UniversityWebCrawler(scrapy.Spider):
                 request.meta['Start from Url'] = pre_meta['Start from Url']
                 yield request
 
-            return
-
         # Get previous menu content and check redundancy
         previous_main_content = set(pre_meta['Main Content'].values())
         current_main_content = get_main_content_excluding_menu(response)
@@ -250,7 +248,7 @@ class UniversityWebCrawler(scrapy.Spider):
             directory_item['page_title'] = response.xpath('//title/text()[normalize-space(.)]').extract_first()
             directory_item['aggregated_title'] = pre_meta['Link Title Passed']
             directory_item['starting_url'] = pre_meta['Start from Url']
-            directory_item['response_body'] = response.body
+            # directory_item['response_body'] = response.body
             directory_item['main_content'] = pre_meta['Main Content']
             directory_item['header_content'] = pre_meta['Header Content']
             directory_item['depth'] = pre_meta['depth']
