@@ -163,7 +163,7 @@ def get_header(response):
 def get_general(response):
     # Get all anchor object for current response
     return generic_get_anchor_and_text(response=response,
-                                       content_xpath='//a[@href]',
+                                       content_xpath='//a[@href[not(contains(., "#"))]]',
                                        href_xpath='//a[@href]/@href[not(contains(., "#"))]')
 
 
