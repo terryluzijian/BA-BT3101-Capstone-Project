@@ -44,12 +44,12 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     custom_settings = {
         # Take a depth-first search algorithm by setting a negative priority or positive otherwise
         'DEPTH_LIMIT': 4,
-        'DEPTH_PRIORITY': 2,
+        'DEPTH_PRIORITY': -3,
         'DEPTH_STATS_VERBOSE': True,
 
-        'CONCURRENT_REQUESTS': 128,
+        'CONCURRENT_REQUESTS': 256,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
-        'DOWNLOAD_DELAY': 1,
+        'DOWNLOAD_DELAY': 0.5,
     }
     PRINT_VERBOSE = False
     TESTING = False
