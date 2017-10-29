@@ -2,7 +2,6 @@ import os
 import pandas
 import re
 import scrapy
-from crawler.items import DirectoryProfilePageItem
 from crawler.similarity_navigator import SimilarityNavigator
 from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2, get_main_content, \
                                             get_main_content_text, get_main_content_excluding_menu, \
@@ -10,9 +9,7 @@ from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2, 
 from difflib import SequenceMatcher
 from random import shuffle
 from scrapy import Request
-from scrapy.http import Response
-from scrapy.linkextractor import LinkExtractor
-from scrapy_splash import SplashRequest
+from scrapy.linkextractors import LinkExtractor
 from scrapy.utils.url import parse_url
 from tld import get_tld
 
@@ -29,7 +26,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     # Shuffle the link for a random start to avoid over-frequent crawling
     DEPARTMENT_DATE_FILE_NAME = 'DEPARTMENT_FACULTY.csv'
     data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/data/'
+
     # TODO: ADD DEPARTMENT/FACULTY TAG FOR EACH ROW FOR REMOVING UNNECESSARY REQUEST
+
     department_data = pandas.read_csv(data_file_path + DEPARTMENT_DATE_FILE_NAME)
     department_data_index = department_data.index
 
@@ -52,6 +51,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
         'DOWNLOAD_DELAY': 1,
     }
+    PRINT_VERBOSE = False
+    TESTING = False
 
     def __init__(self, *args, **kwargs):
         # Initiate spider object and shuffling urls to start crawling
@@ -69,35 +70,37 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Use normal request by default for department homepage for faster loading speed
         # Use splash request by default otherwise for possible AJAX-inclusive pages with rendering
         # For testing:
-        request = Request('http://www.ucl.ac.uk/mathematical-physical-sciences', callback=self.parse_menu)
-        request.meta['depth'] = 0
-        request.meta['Link'] = 'http://www.ucl.ac.uk/mathematical-physical-sciences'
-        request.meta['University Name'] = 'UCL'
-        request.meta['Original Start'] = 'http://www.ucl.ac.uk/mathematical-physical-sciences'
-        request.meta['Previous Link'] = ''
-        yield request
-
-        for individual_index in self.shuffled_index:
-            break
-            # Get data from the specific row
-            individual_data = UniversityWebCrawlerRefined.department_data.loc[individual_index]
-            university_name = individual_data['school_name']
-            url_link = individual_data['url']
-            link_title = individual_data['title']
-
-            # Yield request corresponding with preliminary meta data including university name and page title
-            request = Request(url_link, callback=self.parse_menu)
-
-            # Link-related data
-            request.meta['Link'] = url_link  # Link read as input
-            request.meta['Title'] = link_title  # Title read as input
+        if UniversityWebCrawlerRefined.TESTING:
+            test_link = 'http://www.geog.ucl.ac.uk'
+            request = Request(test_link, callback=self.parse_menu, errback=self.errback_report)
             request.meta['depth'] = 0
-
-            # Some basic record-based data
-            request.meta['University Name'] = university_name
-            request.meta['Original Start'] = url_link
+            request.meta['Link'] = test_link
+            request.meta['University Name'] = 'Test School'
+            request.meta['Original Start'] = test_link
             request.meta['Previous Link'] = ''
             yield request
+
+        else:
+            for individual_index in self.shuffled_index:
+                # Get data from the specific row
+                individual_data = UniversityWebCrawlerRefined.department_data.loc[individual_index]
+                university_name = individual_data['school_name']
+                url_link = individual_data['url']
+                link_title = individual_data['title']
+
+                # Yield request corresponding with preliminary meta data including university name and page title
+                request = Request(url_link, callback=self.parse_menu, errback=self.errback_report)
+
+                # Link-related data
+                request.meta['Link'] = url_link  # Link read as input
+                request.meta['Title'] = link_title  # Title read as input
+                request.meta['depth'] = 0
+
+                # Some basic record-based data
+                request.meta['University Name'] = university_name
+                request.meta['Original Start'] = url_link
+                request.meta['Previous Link'] = ''
+                yield request
 
     def parse_menu(self, response):
         # Parse menu content of the current page to locate department or people components
@@ -113,8 +116,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             target_content = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_target_content(response,
                                                                                                  parse_only_people=True)
 
-        self.logger.info('Requesting %s at depth %s with content %s at parse_menu from %s'
-                         % (response.url, response.meta['depth'], str(target_content), response.meta['Previous Link']))
+        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+            self.logger.info('Requesting %s at depth %s with content %s at parse_menu from %s'
+                             % (response.url, response.meta['depth'], target_content, response.meta['Previous Link']))
 
         # Iterate through each target content and get relevant attribute to store in meta data and
         # pass to next level of parsing
@@ -141,10 +145,11 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             }
             if target_tag == 'PEOPLE':
                 target_meta['Original Start'] = response.url
-                target_request = Request(target_link, self.parse_people, meta=target_meta)
+                target_request = Request(target_link, self.parse_people, meta=target_meta, errback=self.errback_report)
                 yield target_request
             elif target_tag == 'DEPARTMENT':
-                target_request = Request(target_link, self.parse_department, meta=target_meta)
+                target_request = Request(target_link, self.parse_department, meta=target_meta,
+                                         errback=self.errback_report)
                 yield target_request
 
     def parse_department(self, response):
@@ -158,15 +163,20 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         if basics['Redirected']:
             previous_parsed = self.get_netloc_and_path_level(response.meta['Previous Link'])
             if (current_parsed[2] < previous_parsed[2]) | (current_parsed[0] != previous_parsed[0]):
-                self.logger.info('Going back to parse_menu from parse_department for %s at depth %s' %
-                                 (response.url, response.meta['depth']))
+                if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                    self.logger.info('Going back to parse_menu from parse_department for %s at depth %s' %
+                                     (response.url, response.meta['depth']))
                 response.meta['depth'] = -1
                 response.meta['Previous Link'] = response.url
                 response.meta['From parse_department'] = True
-                target_request = Request(response.url, self.parse_menu, meta=response.meta)
+                target_request = Request(response.url, self.parse_menu, meta=response.meta, errback=self.errback_report)
                 target_request.dont_filter = True
                 yield target_request
                 return
+
+        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+            self.logger.info('Requesting %s at depth %s at parse_people from %s' %
+                             (response.url, response.meta['depth'], response.meta['Previous Link']))
 
         # Start core content analysis including main content parsing
         current_response = response
@@ -207,14 +217,15 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 response.meta['depth'] = -1
                 content_meta['depth'] = response.meta['depth']
                 content_meta['From parse_department'] = True
-                target_request = Request(content_link, self.parse_menu, meta=content_meta)
+                target_request = Request(content_link, self.parse_menu, meta=content_meta, errback=self.errback_report)
                 yield target_request
             else:
                 # Recursively yield request at parse_department level otherwise until reaching certain depth
                 content_meta['Past Response'] = response.meta['Past Response'] + [current_response]
                 response.meta['depth'] = current_depth
                 content_meta['depth'] = response.meta['depth']
-                target_request = Request(content_link, self.parse_department, meta=content_meta)
+                target_request = Request(content_link, self.parse_department, meta=content_meta,
+                                         errback=self.errback_report)
                 yield target_request
 
     def parse_people(self, response):
@@ -229,7 +240,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             new_meta = response.meta.copy()
             new_meta['iframe'] = True
             new_meta['depth'] = response.meta['depth']
-            yield Request(response.urljoin(iframe_link), self.parse, meta=new_meta)
+            yield Request(response.urljoin(iframe_link), self.parse, meta=new_meta, errback=self.errback_report)
             return
 
         # Core part of parse_people with call on processing named entity for the response
@@ -245,14 +256,13 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                     string=current.replace(current[match.a: match.a + match.size], ''))
 
             # Combine all the conditions
-            if is_personal | ((len(self.parse_entity(response.meta['Title'], including_org=False)) >= 1) |
-                              (len(self.parse_entity(current_unique, including_org=False)) >= 1)):
+            if (len(self.parse_entity(response.meta['Title'], including_org=False)) >= 1) | is_personal |\
+               (len(self.parse_entity(current_unique, including_org=False)) >= 1):
                 self.logger.info('FOUND 1 ITEM at %s' % response.url)
-                return
 
         # If header/menu content differs, go back to parse_menu
         current_header = ' '.join(get_header(response).keys())
-        previous_header = ' '.join(get_header(response.meta['Previous Link'][-1]).keys())
+        previous_header = ' '.join(get_header(response.meta['Past Response'][-1]).keys())
         if (UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_similarity(
                 first_string=current_header, second_string=previous_header)[0] < 0.7):
             if not response.meta.get('Fall Back', False):
@@ -261,11 +271,13 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 new_meta = response.meta.copy()
                 new_meta['Fall Back'] = True
                 new_meta['depth'] = response.meta['depth']
-                yield Request(response.url, self.parse_menu, meta=new_meta, dont_filter=True)
+                yield Request(response.url, self.parse_menu, meta=new_meta, dont_filter=True,
+                              errback=self.errback_report)
                 return
 
-        self.logger.info('Requesting %s at depth %s at parse_people from %s' %
-                         (response.url, response.meta['depth'], response.meta['Previous Link']))
+        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+            self.logger.info('Requesting %s at depth %s at parse_people from %s' %
+                             (response.url, response.meta['depth'], response.meta['Previous Link']))
 
         # Parse unique main content of current page
         # Recursively yield request at current call back
@@ -290,34 +302,42 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
             # If the text contains person name, it is highly possible it directs to a
             # personal profile page
-            content_request = Request(content_href, self.parse_people, meta=content_meta)
+            content_request = Request(content_href, self.parse_people, meta=content_meta, errback=self.errback_report)
             yield content_request
 
     @staticmethod
     def process_possible_named_entity(response):
         # Text-wise comparison
         text_content = generic_get_unique_content(response, response.meta['Past Response'], get_text=True)
-        have_publication = list(filter(lambda x: 'publicati' in x.lower(), text_content))
-        have_research_interest = list(filter(lambda x: 'interest' in x.lower(), text_content))
-        return (len(have_publication) > 0) | (len(have_research_interest) > 0)
+        have_publication = list(filter(lambda x: ('publicati' in x.lower()) & (len(x.split(' ')) <= 5), text_content))
+        have_research_interest = list(filter(lambda x: ('interest' in x.lower()) & (len(x.split(' ')) <= 5),
+                                             text_content))
+        have_bio = list(filter(lambda x: 'biograp' in x.lower() and len(x.split(' ')) <= 5, text_content))
+        return (len(have_publication) > 0) | (len(have_research_interest) > 0) | (len(have_bio) > 0)
 
     def parse(self, response):
         # Compulsory override but skipped for this class
         pass
+
+    def errback_report(self, failure):
+        # Log all failures
+        self.logger.info('Error occurs at %s / %s' % (failure.request, failure.value.response))
 
     def report_basic_information(self, response, response_meta):
         # Report redirecting information
         is_redirected = (response.url != response_meta['Link'])
         is_404 = (response.status == 404)
         if is_redirected:
-            self.logger.info('Redirecting from %s to %s for %s, %s' % (response_meta['Link'], response.url,
-                                                                       response_meta['Title'],
-                                                                       response_meta['University Name']))
+            if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                self.logger.info('Redirecting from %s to %s for %s, %s' % (response_meta['Link'], response.url,
+                                                                           response_meta['Title'],
+                                                                           response_meta['University Name']))
 
         # Report 404 Error
         if is_404:
-            self.logger.error('404 Visiting Error for link %s (%s, %s)' % (response.url, response_meta['Title'],
-                                                                           response_meta['University Name']))
+            if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                self.logger.info('404 Visiting Error for link %s (%s, %s)' % (response.url, response_meta['Title'],
+                                                                              response_meta['University Name']))
 
         # Return back 404 Error
         return {
