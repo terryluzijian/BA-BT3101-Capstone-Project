@@ -48,8 +48,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         'DEPTH_STATS_VERBOSE': True,
 
         'CONCURRENT_REQUESTS': 256,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
-        'DOWNLOAD_DELAY': 0.5,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 8,
+        'DOWNLOAD_DELAY': 2,
     }
     PRINT_VERBOSE = False
     TESTING = False
@@ -257,6 +257,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             # Compare the title
             current = response.xpath('//title/text()').extract_first()
             previous = response.meta['Past Response'][-1].xpath('//title/text()').extract_first()
+            current = '' if current is None else current
+            previous = response.meta['Title'] if previous is None else previous
             match = SequenceMatcher(None, current, previous).find_longest_match(0, len(current), 0, len(previous))
             current_unique = re.sub(pattern=r'[^ \.A-Za-z\-]', repl=' ',
                                     string=current.replace(current[match.a: match.a + match.size], ''))
