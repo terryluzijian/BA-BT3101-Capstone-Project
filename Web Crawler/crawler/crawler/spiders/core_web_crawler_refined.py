@@ -9,8 +9,8 @@ from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2, 
 from difflib import SequenceMatcher
 from random import shuffle
 from scrapy import Request
-from scrapy.linkextractors import LinkExtractor
-from scrapy.utils.url import parse_url
+from scrapy.linkextractors import LinkExtractor, IGNORED_EXTENSIONS
+from scrapy.utils.url import parse_url, url_has_any_extension
 from tld import get_tld
 
 
@@ -65,6 +65,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
         self.shuffled_index = list(UniversityWebCrawlerRefined.department_data_index)
         shuffle(self.shuffled_index)
+
+        # Get file extensions to deny
+        self.denied_extension = list(map(lambda x: '.%s' % x, IGNORED_EXTENSIONS))
 
     def start_requests(self):
         # Use normal request by default for department homepage for faster loading speed
@@ -198,6 +201,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             content_netloc = content_item[2]
             content_path_pair = (content_item[3], content_item[4])
 
+            if url_has_any_extension(content_link, self.denied_extension):
+                continue
+
             content_meta = {
                 # Link-related data
                 'Link': content_link,
@@ -258,7 +264,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             # Combine all the conditions
             if (len(self.parse_entity(response.meta['Title'], including_org=False)) >= 1) | is_personal |\
                (len(self.parse_entity(current_unique, including_org=False)) >= 1):
-                self.logger.info('FOUND 1 ITEM at %s' % response.url)
+                self.logger.info('FOUND 1 ITEM at %s (depth: %s)' % (response.url, current_depth))
 
         # If header/menu content differs, go back to parse_menu
         current_header = ' '.join(get_header(response).keys())
@@ -287,6 +293,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
         # Iterate through each component
         for content_text, content_href in main_content.items():
+            if url_has_any_extension(content_href, self.denied_extension):
+                continue
             content_meta = {
                 # Link-related data
                 'Link': content_href,
