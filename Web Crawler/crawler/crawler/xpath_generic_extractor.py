@@ -64,6 +64,8 @@ TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descenda
 TITLE_XPATH = '//title/text() | //*[contains(@class, "title")]/text()'
 H1_XPATH = '//h1/text()'
 H2_XPATH = '//h2/text()'
+MAIN_CONTENT_TEXT_XPATH_RAW = '//*[not(self::script) and not(self::style) and not(self::a)]' \
+                              + '[text()[normalize-space(.)]]/text()'
 MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]/text()' \
                           % (MENU_EXCLUDED, COND_COMBINE)
 
@@ -97,16 +99,8 @@ def generic_get_anchor_and_text(response, content_xpath, href_xpath):
     return text_link_dict
 
 
-def generic_get_unique_content(response, past_response, extract_func):
+def generic_get_unique_content(response, past_response, extract_func=None, get_text=False):
     # Get unique content by comparing with previous response
-    def get_main_and_menu(one_response):
-        # Help function to get main content with menu (including all navigation, header and secondary menu)
-        content = get_main_content(one_response)
-        content.update(get_menu(one_response))
-        if len(content) <= 0:
-            content = get_general(one_response)
-        return content
-
     # Deal with list or a single Response object
     if isinstance(past_response, Response):
         general_past_content = get_main_and_menu(past_response)
@@ -117,12 +111,19 @@ def generic_get_unique_content(response, past_response, extract_func):
     else:
         general_past_content = {}
 
-    # Return unique content
-    response_content = extract_func(response)
-    if len(response_content) <= 0:
-        response_content = get_general(response)
-    return {text: link for text, link in response_content.items()
-            if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+    if not get_text:
+        # Return unique content
+        assert extract_func is not None
+        response_content = extract_func(response)
+        if len(response_content) <= 0:
+            response_content = get_general(response)
+        return {text: link for text, link in response_content.items()
+                if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+    else:
+        text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()
+        text_content_normalized = list(filter(lambda y: len(y) >= 3, map(lambda x: ' '.join(x.split()), text_content)))
+        return [text_element for text_element in text_content_normalized
+                if text_element not in general_past_content.keys()]
 
 
 # Specific get functions
@@ -262,3 +263,12 @@ def check_word_filter(target_string, filter_set):
         if word in target_string_lower:
             return True
     return False
+
+
+def get_main_and_menu(one_response):
+    # Help function to get main content with menu (including all navigation, header and secondary menu)
+    content = get_main_content(one_response)
+    content.update(get_menu(one_response))
+    if len(content) <= 0:
+        content = get_general(one_response)
+    return content

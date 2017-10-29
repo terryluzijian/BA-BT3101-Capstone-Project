@@ -4,9 +4,10 @@ import re
 import scrapy
 from crawler.items import DirectoryProfilePageItem
 from crawler.similarity_navigator import SimilarityNavigator
-from crawler.xpath_generic_extractor import check_word_filter, MENU_TEXT_FILTER, get_title_h1_h2, get_main_content, \
+from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2, get_main_content, \
                                             get_main_content_text, get_main_content_excluding_menu, \
-                                            get_header, get_menu, get_main_content_unique
+                                            get_header, get_menu, get_main_content_unique, generic_get_unique_content
+from difflib import SequenceMatcher
 from random import shuffle
 from scrapy import Request
 from scrapy.http import Response
@@ -106,7 +107,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
         # Start core content analysis including menu and navigation content parsing
         current_response = response
-        if not response.meta.get('From parse_department', False):
+        if (not response.meta.get('From parse_department', False)) & (not response.meta.get('Fall Back', False)):
             target_content = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_target_content(response)
         else:
             target_content = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_target_content(response,
@@ -166,10 +167,6 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 target_request.dont_filter = True
                 yield target_request
                 return
-
-        self.logger.info('Requesting %s at depth %s at parse_department from %s' % (response.url,
-                                                                                    response.meta['depth'],
-                                                                                    response.meta['Previous Link']))
 
         # Start core content analysis including main content parsing
         current_response = response
@@ -233,13 +230,31 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             new_meta['iframe'] = True
             new_meta['depth'] = response.meta['depth']
             yield Request(response.urljoin(iframe_link), self.parse, meta=new_meta)
-            response.meta['depth'] += 1
+            return
+
+        # Core part of parse_people with call on processing named entity for the response
+        current_response = response
+        current_depth = response.meta.copy()['depth']
+        is_personal = self.process_possible_named_entity(response)
+        if current_depth > 1:
+            # Compare the title
+            current = response.xpath('//title/text()').extract_first()
+            previous = response.meta['Past Response'][-1].xpath('//title/text()').extract_first()
+            match = SequenceMatcher(None, current, previous).find_longest_match(0, len(current), 0, len(previous))
+            current_unique = re.sub(pattern=r'[^ \.A-Za-z\-]', repl=' ',
+                                    string=current.replace(current[match.a: match.a + match.size], ''))
+
+            # Combine all the conditions
+            if is_personal | ((len(self.parse_entity(response.meta['Title'], including_org=False)) >= 1) |
+                              (len(self.parse_entity(current_unique, including_org=False)) >= 1)):
+                self.logger.info('FOUND 1 ITEM at %s' % response.url)
+                return
 
         # If header/menu content differs, go back to parse_menu
         current_header = ' '.join(get_header(response).keys())
         previous_header = ' '.join(get_header(response.meta['Previous Link'][-1]).keys())
-        if (UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_similarity(first_string=current_header,
-                                                                            second_string=previous_header)[0] < 0.7):
+        if (UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_similarity(
+                first_string=current_header, second_string=previous_header)[0] < 0.7):
             if not response.meta.get('Fall Back', False):
                 # Allow only one-time fall-back
                 response.meta['depth'] = -1
@@ -249,20 +264,17 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 yield Request(response.url, self.parse_menu, meta=new_meta, dont_filter=True)
                 return
 
-        self.logger.info('Requesting %s at depth %s at parse_people from %s' % (response.url,
-                                                                                response.meta['depth'],
-                                                                                response.meta['Previous Link']))
+        self.logger.info('Requesting %s at depth %s at parse_people from %s' %
+                         (response.url, response.meta['depth'], response.meta['Previous Link']))
 
         # Parse unique main content of current page
-        # Recursively yield request at current call back if text title does not contain name entity
-        # Go to next call back level of request if a name entity is identified
-        current_response = response
-        current_depth = response.meta.copy()['depth']
+        # Recursively yield request at current call back
+        # Get current response metadata
+        # Get unique content of current response
         main_content = get_main_content_unique(response, response.meta['Past Response'])
+
+        # Iterate through each component
         for content_text, content_href in main_content.items():
-            normalize_content_text = re.sub(pattern=r'[^ \.\-a-zA-Z]', repl='', string=content_text)
-            name_entity = self.parse_entity(normalize_content_text)
-            is_name_entity = (len(name_entity) == 1)
             content_meta = {
                 # Link-related data
                 'Link': content_href,
@@ -276,21 +288,21 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 'Previous Link': response.url,
             }
 
-            # If the text contains solely one person name, it is highly possible it directs to a
+            # If the text contains person name, it is highly possible it directs to a
             # personal profile page
-            if is_name_entity:
-                name_entity = list(name_entity.keys())[0]
-                content_meta['Title'] = name_entity
-                # TODO: Consider using Splash request
-                content_request = Request(content_href, self.parse, meta=content_meta)
-                yield content_request
-            else:
-                content_request = Request(content_href, self.parse_people, meta=content_meta)
-                yield content_request
+            content_request = Request(content_href, self.parse_people, meta=content_meta)
+            yield content_request
+
+    @staticmethod
+    def process_possible_named_entity(response):
+        # Text-wise comparison
+        text_content = generic_get_unique_content(response, response.meta['Past Response'], get_text=True)
+        have_publication = list(filter(lambda x: 'publicati' in x.lower(), text_content))
+        have_research_interest = list(filter(lambda x: 'interest' in x.lower(), text_content))
+        return (len(have_publication) > 0) | (len(have_research_interest) > 0)
 
     def parse(self, response):
-
-        # TODO: Fall back if no keyword found
+        # Compulsory override but skipped for this class
         pass
 
     def report_basic_information(self, response, response_meta):
@@ -320,7 +332,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         return parsed.netloc, path, len(path)
 
     @staticmethod
-    def parse_entity(target_string):
+    def parse_entity(target_string, including_org=True):
 
         def normalize_string_space(string_before):
             return ' '.join(string_before.split())
@@ -328,7 +340,11 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         parsed = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.model_en(target_string).ents
 
         # Include ORG here as spacy is not capable of identifying all kinds of names
-        entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
-                       if entity.label_ in ['PERSON', 'ORG']}
+        if including_org:
+            entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
+                           if entity.label_ in ['PERSON', 'ORG']}
+        else:
+            entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
+                           if entity.label_ in ['PERSON']}
         return entity_dict
 
