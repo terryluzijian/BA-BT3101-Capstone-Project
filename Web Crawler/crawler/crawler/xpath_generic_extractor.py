@@ -103,6 +103,8 @@ def generic_get_unique_content(response, past_response, extract_func):
         # Help function to get main content with menu (including all navigation, header and secondary menu)
         content = get_main_content(one_response)
         content.update(get_menu(one_response))
+        if len(content) <= 0:
+            content = get_general(one_response)
         return content
 
     # Deal with list or a single Response object
@@ -117,6 +119,8 @@ def generic_get_unique_content(response, past_response, extract_func):
 
     # Return unique content
     response_content = extract_func(response)
+    if len(response_content) <= 0:
+        response_content = get_general(response)
     return {text: link for text, link in response_content.items()
             if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
 
@@ -173,7 +177,7 @@ def get_title_h1_h2(response):
         # Help function to capitalize words properly
         def capitalize_string(target_string):
             if re.search(r'[A-Z][A-Z]+', target_string):
-                return target_string[:1].upper() + target_string.lower()
+                return target_string[:1].upper() + target_string[1:].lower()
             else:
                 return target_string
 

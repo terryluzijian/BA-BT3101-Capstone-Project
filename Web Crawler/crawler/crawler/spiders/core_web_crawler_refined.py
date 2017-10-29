@@ -10,6 +10,7 @@ from crawler.xpath_generic_extractor import check_word_filter, MENU_TEXT_FILTER,
 from random import shuffle
 from scrapy import Request
 from scrapy.http import Response
+from scrapy.linkextractor import LinkExtractor
 from scrapy_splash import SplashRequest
 from scrapy.utils.url import parse_url
 from tld import get_tld
@@ -27,6 +28,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     # Shuffle the link for a random start to avoid over-frequent crawling
     DEPARTMENT_DATE_FILE_NAME = 'DEPARTMENT_FACULTY.csv'
     data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/data/'
+    # TODO: ADD DEPARTMENT/FACULTY TAG FOR EACH ROW FOR REMOVING UNNECESSARY REQUEST
     department_data = pandas.read_csv(data_file_path + DEPARTMENT_DATE_FILE_NAME)
     department_data_index = department_data.index
 
@@ -55,6 +57,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         super(UniversityWebCrawlerRefined, self).__init__(*args, **kwargs)
 
         # TODO: Log basic information
+
+        self.iframe_extractor = LinkExtractor(allow=self.allowed_domains, tags=['iframe'], attrs=['src'],
+                                              unique=False, canonicalize=False)
 
         self.shuffled_index = list(UniversityWebCrawlerRefined.department_data_index)
         shuffle(self.shuffled_index)
@@ -130,7 +135,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 # Some basic record-based data
                 'University Name': response.meta['University Name'],
                 'Original Start': response.meta['Original Start'],
-                'Previous Link': response.url
+                'Previous Link': response.url,
+                'Fall Back': response.meta.get('Fall Back', False)
             }
             if target_tag == 'PEOPLE':
                 target_meta['Original Start'] = response.url
@@ -167,7 +173,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
         # Start core content analysis including main content parsing
         current_response = response
-        current_depth = response.meta['depth']
+        current_depth = response.meta.copy()['depth']
         current_response_parsed_dict = {
             name: element
             for name, element in zip(['Title', 'Link', 'Netloc', 'Path', 'Path Level'],
@@ -189,7 +195,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 # Link-related data
                 'Link': content_link,
                 'Title': content_title,
-                'depth': response.meta['depth'] + 1,
+                'depth': current_depth + 1,
 
                 # Some basic record-based data
                 'University Name': response.meta['University Name'],
@@ -202,21 +208,89 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 # Yield back to page menu parsing at parse_menu
                 # Set depth back to 0
                 response.meta['depth'] = -1
-                content_meta['depth'] = -1
+                content_meta['depth'] = response.meta['depth']
                 content_meta['From parse_department'] = True
                 target_request = Request(content_link, self.parse_menu, meta=content_meta)
                 yield target_request
             else:
                 # Recursively yield request at parse_department level otherwise until reaching certain depth
                 content_meta['Past Response'] = response.meta['Past Response'] + [current_response]
-                content_meta['depth'] = current_depth + 1
+                response.meta['depth'] = current_depth
+                content_meta['depth'] = response.meta['depth']
                 target_request = Request(content_link, self.parse_department, meta=content_meta)
                 yield target_request
 
     def parse_people(self, response):
-        pass
+        # Parse main content of the current page recursively
+        basics = self.report_basic_information(response, response.meta)
+        if basics['404']:
+            return
+
+        # If current page is an iframe (e.g. NUS Department of Japanese Studies)
+        for iframe_link in self.iframe_extractor.extract_links(response):
+            response.meta['depth'] -= 1
+            new_meta = response.meta.copy()
+            new_meta['iframe'] = True
+            new_meta['depth'] = response.meta['depth']
+            yield Request(response.urljoin(iframe_link), self.parse, meta=new_meta)
+            response.meta['depth'] += 1
+
+        # If header/menu content differs, go back to parse_menu
+        current_header = ' '.join(get_header(response).keys())
+        previous_header = ' '.join(get_header(response.meta['Previous Link'][-1]).keys())
+        if (UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.get_similarity(first_string=current_header,
+                                                                            second_string=previous_header)[0] < 0.7):
+            if not response.meta.get('Fall Back', False):
+                # Allow only one-time fall-back
+                response.meta['depth'] = -1
+                new_meta = response.meta.copy()
+                new_meta['Fall Back'] = True
+                new_meta['depth'] = response.meta['depth']
+                yield Request(response.url, self.parse_menu, meta=new_meta, dont_filter=True)
+                return
+
+        self.logger.info('Requesting %s at depth %s at parse_people from %s' % (response.url,
+                                                                                response.meta['depth'],
+                                                                                response.meta['Previous Link']))
+
+        # Parse unique main content of current page
+        # Recursively yield request at current call back if text title does not contain name entity
+        # Go to next call back level of request if a name entity is identified
+        current_response = response
+        current_depth = response.meta.copy()['depth']
+        main_content = get_main_content_unique(response, response.meta['Past Response'])
+        for content_text, content_href in main_content.items():
+            normalize_content_text = re.sub(pattern=r'[^ \.\-a-zA-Z]', repl='', string=content_text)
+            name_entity = self.parse_entity(normalize_content_text)
+            is_name_entity = (len(name_entity) == 1)
+            content_meta = {
+                # Link-related data
+                'Link': content_href,
+                'Title': content_text,
+                'depth': current_depth + 1,
+                'Past Response': response.meta['Past Response'] + [current_response],
+
+                # Some basic record-based data
+                'University Name': response.meta['University Name'],
+                'Original Start': response.meta['Original Start'],
+                'Previous Link': response.url,
+            }
+
+            # If the text contains solely one person name, it is highly possible it directs to a
+            # personal profile page
+            if is_name_entity:
+                name_entity = list(name_entity.keys())[0]
+                content_meta['Title'] = name_entity
+                # TODO: Consider using Splash request
+                content_request = Request(content_href, self.parse, meta=content_meta)
+                yield content_request
+            else:
+                content_request = Request(content_href, self.parse_people, meta=content_meta)
+                yield content_request
 
     def parse(self, response):
+
+        # TODO: Fall back if no keyword found
         pass
 
     def report_basic_information(self, response, response_meta):
@@ -244,3 +318,17 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         parsed = parse_url(target_url)
         path = list(filter(lambda x: len(x) > 0, parsed.path.split('/')))
         return parsed.netloc, path, len(path)
+
+    @staticmethod
+    def parse_entity(target_string):
+
+        def normalize_string_space(string_before):
+            return ' '.join(string_before.split())
+
+        parsed = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.model_en(target_string).ents
+
+        # Include ORG here as spacy is not capable of identifying all kinds of names
+        entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
+                       if entity.label_ in ['PERSON', 'ORG']}
+        return entity_dict
+
