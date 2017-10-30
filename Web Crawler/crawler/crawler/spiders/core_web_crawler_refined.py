@@ -52,7 +52,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         'DOWNLOAD_DELAY': 2,
     }
     PRINT_VERBOSE = False
-    TESTING = False
+    TESTING = True
 
     def __init__(self, *args, **kwargs):
         # Initiate spider object and shuffling urls to start crawling
@@ -246,7 +246,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             new_meta = response.meta.copy()
             new_meta['iframe'] = True
             new_meta['depth'] = response.meta['depth']
-            yield Request(response.urljoin(iframe_link), self.parse, meta=new_meta, errback=self.errback_report)
+            yield Request(response.urljoin(iframe_link.url), self.parse, meta=new_meta, errback=self.errback_report)
             return
 
         # Core part of parse_people with call on processing named entity for the response

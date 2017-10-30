@@ -22,6 +22,7 @@ class DepartmentItem(Item):
     url = Field()
     school_name = Field()
     title = Field()
+    department_or_faculty = Field()
 
 
 class DirectoryProfilePageItem(Item):

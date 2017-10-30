@@ -20,7 +20,7 @@ class DepartmentParser(scrapy.Spider):
         super(DepartmentParser, self).__init__(*args, **kwargs)
         parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         file_path = parent_path + '/data/%s' % self.FACULTY_DATA
-        self.faculty_data = pd.read_csv(file_path).dropna(subset=['XPATH'])
+        self.faculty_data = pd.read_csv(file_path, encoding='latin-1').dropna(subset=['XPATH'])
 
     def start_requests(self):
         # Iterate and yield request respectively
@@ -29,10 +29,12 @@ class DepartmentParser(scrapy.Spider):
             school_url = value['URL']
             url_xpath = value['XPATH']
             remark = value['Remark']
+            department_or_faculty = value['Department or Faculty']
             sub_request = Request(school_url, self.parse)
             sub_request.meta['school'] = school
             sub_request.meta['url_xpath'] = url_xpath
             sub_request.meta['remark'] = remark
+            sub_request.meta['department_or_faculty'] = department_or_faculty
             yield sub_request
 
     def parse(self, response):
@@ -40,6 +42,7 @@ class DepartmentParser(scrapy.Spider):
         school = response.meta['school']
         url_xpath = response.meta['url_xpath']
         remark = response.meta['remark']
+        department_or_faculty = response.meta['department_or_faculty']
 
         # If link has been extracted and no xpath is presented
         if url_xpath == '-':
@@ -47,6 +50,7 @@ class DepartmentParser(scrapy.Spider):
             for dept_url in url_list:
                 sub_request = Request(dept_url, self.parse_link)
                 sub_request.meta['school'] = school
+                sub_request.meta['department_or_faculty'] = department_or_faculty
                 yield sub_request
             return
 
@@ -63,10 +67,12 @@ class DepartmentParser(scrapy.Spider):
                 department_item['url'] = real_url
                 department_item['school_name'] = school
                 department_item['title'] = text
+                department_item['department_or_faculty'] = department_or_faculty
                 yield department_item
             else:
                 sub_request = Request(real_url, self.parse_link)
                 sub_request.meta['school'] = school
+                sub_request.meta['department_or_faculty'] = department_or_faculty
                 yield sub_request
 
         # If there is pagination
@@ -77,6 +83,7 @@ class DepartmentParser(scrapy.Spider):
                     sub_request.meta['school'] = school
                     sub_request.meta['url_xpath'] = url_xpath
                     sub_request.meta['remark'] = ''
+                    sub_request.meta['department_or_faculty'] = department_or_faculty
                     yield sub_request
 
     def parse_link(self, response):
@@ -89,4 +96,5 @@ class DepartmentParser(scrapy.Spider):
         department_item['url'] = response.url
         department_item['school_name'] = school
         department_item['title'] = response.xpath('//title/text()').extract_first()
+        department_item['department_or_faculty'] = response.meta['department_or_faculty']
         yield department_item

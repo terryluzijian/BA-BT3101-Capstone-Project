@@ -1,0 +1,57 @@
+department_or_faculty,school_name,title,url,tag
+
+department,UCL (University College London),Geography,http://www.geog.ucl.ac.uk,peer
+
+department,University of Colorado - Boulder,Geography,https://www.colorado.edu/geography/,peer
+
+department,The University of Manchester,Geography,http://www.seed.manchester.ac.uk/geography/,peer
+
+department,University of Toronto,Geography,http://geography.utoronto.ca,peer
+
+department,Queen Mary London,Geography,http://www.geog.qmul.ac.uk,peer
+
+department,University of Cambridge,Geography,https://www.geog.cam.ac.uk,aspirant
+
+department,University of British Columbia,Geography,http://www.geog.ubc.ca,aspirant
+
+department,University of Oxford,Geography,http://www.geog.ox.ac.uk,aspirant
+
+department,University of Chicago,Biochemistry,https://chemistry.uchicago.edu,peer
+
+department,The University of Hong Kong,Biochemistry,http://www.sbms.hku.hk,peer
+
+department,New York University,Biochemistry,https://med.nyu.edu/biomolpharm/,peer
+
+department,Monash University,Biochemistry,http://www.med.monash.edu.au/biochem/,peer
+
+department,"University of California, San Francisco",Biochemistry,http://biochemistry.ucsf.edu,aspirant
+
+department,UCL (University College London),Biochemistry,https://www.ucl.ac.uk/biosciences/departments/smb,aspirant
+
+department,University of Illinois at Urbana-Champaign,Biochemistry,http://mcb.illinois.edu/departments/biochemistry/,aspirant
+
+department,McGill University,Biochemistry,http://www.mcgill.ca/biochemistry/,aspirant
+
+department,Columbia University,BME,http://bme.columbia.edu,peer
+
+department,Northwestern University,BME,http://www.mccormick.northwestern.edu/biomedical/,peer
+
+department,Rice University,BME,http://bioe.rice.edu,peer
+
+department,"University of California, Los Angeles (UCLA)",BME,http://www.bioeng.ucla.edu,peer
+
+department,University of Michigan,BME,http://bme.umich.edu,peer
+
+department,University of Toronto,BME,http://www.ibbme.utoronto.ca,peer
+
+department,Johns Hopkins University,BME,https://www.bme.jhu.edu,aspirant
+
+department,Georgia Institute of Technology,BME,https://www.bme.gatech.edu,aspirant
+
+department,"University of California, San Diego (UCSD)",BME,http://be.ucsd.edu,aspirant
+
+department,Duke University,BME,https://bme.duke.edu,aspirant
+
+department,Massachusetts Institute of Technology,BME,https://be.mit.edu,aspirant
+
+department,Stanford University,BME,https://bioengineering.stanford.edu,aspirant
