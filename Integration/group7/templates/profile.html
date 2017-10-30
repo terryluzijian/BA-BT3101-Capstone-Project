@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Profile - Identifying Young and Rising Stars for Promotion</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
+
+    <!-- Custom styles for this template -->
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Group 7</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/main_loggedin/">WELCOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/profile/">PROFILE<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Function Buttons -->
+    <div class="container mt-3 pt-5 text-center">
+      <div class="btn-group" role="group" aria-label="Function buttons">
+        <button class="btn btn-secondary btn-light">
+          <img src="img/Crawling Icon.png">Crawling
+        </button>
+        <button class="btn btn-secondary btn-light">
+          <img src="img/Database Icon.png">Database
+        </button>
+        <button class="btn btn-secondary btn-light">
+          <img src="img/Logout Icon.png">Log-out
+        </button>
+      </div>
+    </div>
+
+    <!-- Profile Card and Activity History-->
+    <div class="container pt-5">
+      <div class="row d-flex justify-content-center">
+        <div class="col-5 border text-center pt-5">
+          <img class="img-fluid" src="img/Profile Icon.png" alt="User Profile Pic">
+          <h4>Cindy Tay</h4>
+          <p><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp; REA Team</p>
+          <p><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp; cindytay@nus.edu.sg</p>
+          <p><i class="fa fa-university" aria-hidden="true"></i>&nbsp; National University of Singapore</p>
+        </div>
+        <div class="col-7 pt-2">
+          <h5>Recent Activities</h5>
+          <table class="table border">
+            <thead>
+              <tr>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Activity Name</th>
+                <th scope="col">Remark</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>7:42:47 PM 2017-09-29</td>
+                <td>User Log in</td>
+                <td>User Login to the website normally.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Database Query History -->
+    <div class="container pt-5">
+      <div class="row">
+        <h5>Recent Activities</h5>
+        <table class="table border ">
+          <thead>
+            <tr>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Professor Name</th>
+              <th scope="col">Faculty</th>
+              <th scope="col">Research Interest</th>
+              <th scope="col">Benchmarking Metrics Chosen</th>
+              <th scope="col">Search Again</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>8:30:12 PM 2017-09-29</td>
+              <td>Best Prof Ever</td>
+              <td>Department of Physics</td>
+              <td>Quantum Theory; Dark Matter</td>
+              <td>PhD Year; Phd University; Research Area Similarity; Promotion Year</td>
+              <td><a href="#">
+                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-5">
+      <div class="container">
+        <div class="text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-github"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-wechat"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+          <p class="text-muted">Copyright &copy; BT3101 Group 7 2017</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
+</html>

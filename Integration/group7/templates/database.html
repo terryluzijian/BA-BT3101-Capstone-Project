@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Database Manager - Identifying Young and Rising Stars for Promotion</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
+
+    <!-- Custom styles for this template -->
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Group 7</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/main_loggedin/">WELCOME<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/profile/">PROFILE</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Function Buttons -->
+    <div class="container mt-3 pt-5 text-center">
+      <div class="btn-group" role="group" aria-label="Function buttons">
+        <a class="btn btn-secondary btn-light" href="/crawler/">
+          <img src="{{ url_for('static', filename='img/Crawling Icon.png') }}">Crawling
+        </a>
+        <a class="btn btn-secondary btn-light active" href="/database/">
+          <img src="{{ url_for('static', filename='img/Database Icon.png') }}">Database
+        </a>
+        <a class="btn btn-secondary btn-light" href=/>
+          <img src="{{ url_for('static', filename='img/Logout Icon.png') }}">Log Out
+        </a>
+      </div>
+    </div>
+
+    <!-- Crawler Criteria Picker -->
+    <div class="container pt-5">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="professor"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp;Profess Name</label>
+            <input type="text" class="form-control" id="professor" placeholder="Best Professor Ever">
+          </div>
+          <div class="form-group col-6">
+            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
+            <select id="faculty" class="form-control custom-select">
+              <option selected>Biochemistry</option>
+              <option>Biomedical Engineering</option>
+              <option>Geography</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label for="phd_year"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;PhD Year</label>
+            <input type="text" class="form-control" id="professor" placeholder="2006"readonly>
+          </div>
+          <div class="form-group col-4">
+            <label for="phd_university"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;PhD University</label>
+            <input type="text" class="form-control" id="professor" placeholder="Harvard University"readonly>
+          </div>
+          <div class="form-group col-4">
+            <label for="research_areas"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Research Areas</label>
+            <textarea type="text" class="form-control" id="professor" placeholder="Quantum Theories"readonly></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="promotion_level"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Promotion Level</label>
+            <select id="faculty" class="form-control custom-select">
+              <option selected>Associate Professor</option>
+              <option>Professor</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="metrics"><i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Benchmarking Metrics</label>
+            <select multiple id="metrics" class="form-control custom-select">
+              <option selected>PhD Year</option>
+              <option selected>PhD University</option>
+              <option selected>PhD Promotion Year</option>
+              <option>Research Area Similarity</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger d-flex mx-auto" disabled>Start Benchmarking</button>
+      </form>
+    </div>
+
+    <!-- Crawler Result -->
+    <div class="container pt-5">
+      <div class="card-deck">
+        <div class="card text-center">
+          <div class="card-body">
+            <h4 class="card-title">Professor 1</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card text-center">
+          <div class="card-body">
+            <h4 class="card-title">Professor 2</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card text-center">
+          <div class="card-body">
+            <h4 class="card-title">Professor 3</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Coolest Science</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="text-center pt-5">
+        <button type="button" class="btn btn-warning">Load More</button>
+        <button type="button" class="btn btn-warning">Export Result</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-5">
+      <div class="container">
+        <div class="text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-github"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-wechat"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-social btn-outline-info" href="#">
+                <i class="fa fa-fw fa-2x fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+          <p class="text-muted">Copyright &copy; BT3101 Group 7 2017</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
+</html>
