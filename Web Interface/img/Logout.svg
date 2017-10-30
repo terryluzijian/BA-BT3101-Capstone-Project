@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>exit</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-9.5%" y="-8.5%" width="119.0%" height="119.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Profile-Page-Desktop-HD" transform="translate(-842.000000, -148.000000)" fill-rule="nonzero">
+            <g id="Navi" transform="translate(-1.000000, 127.000000)">
+                <g id="Group-7" transform="translate(450.000000, 22.000000)">
+                    <g id="Group-5" transform="translate(396.000000, 1.000000)">
+                        <g id="exit" filter="url(#filter-1)">
+                            <circle id="Oval" fill="#366796" cx="25" cy="25" r="25"></circle>
+                            <path d="M17,37.6801665 L28.2309008,49 C38.9242155,47.3524689 47.3731741,38.8312283 49,28.0507931 L32.0833581,11 L17,37.6801665 Z" id="Shape" fill="#273B7A"></path>
+                            <path d="M29.8719729,39 L18.1278396,39 C16.9526856,39 16,37.9996766 16,36.7655637 L16,13.2342394 C16,12.0003234 16.9526856,11 18.1278396,11 L29.8719729,11 C31.0472206,11 32,12.0003234 32,13.2342394 L32,36.7656621 C31.9999063,37.9996766 31.0472206,39 29.8719729,39 Z" id="Shape" fill="#FDE085"></path>
+                            <path d="M16,25 L16,36.7745767 C16,38.0036135 16.9526745,39 18.1280022,39 L29.8719978,39 C31.0472318,39 32,38.0037115 32,36.7745767 L32,25 L16,25 L16,25 Z" id="Shape" fill="#FFC91B"></path>
+                            <path d="M25.743661,36.3486652 L17.6977738,37.9736897 C16.7706255,38.1608638 16,37.3295079 16,36.1118565 L16,12.8924618 C16,11.6748105 16.7706255,10.8410263 17.6979671,11.0255778 L25.7438543,12.6264163 C26.4441944,12.7657041 27,13.7057511 27,14.7290406 L27,34.2421556 C26.9998066,35.2654451 26.4441944,36.2073376 25.743661,36.3486652 Z" id="Shape" fill="#D48B07"></path>
+                            <path d="M16,25 L16,37.0499965 C16,38.307541 16.7706255,39.1661341 17.6979671,38.9728277 L25.7438543,37.2945636 C26.4441944,37.1484052 27,36.1758546 27,35.1190398 L27,25 L16,25 L16,25 Z" id="Shape" fill="#AF6E05"></path>
+                            <polygon id="Shape" fill="#273B7A" points="16 25.5511009 26.4525286 25.5509943 24.6047295 28 25.736552 28 28 25 25.736552 22 24.6047295 22 26.4525286 24.4490057 16 24.4492187"></polygon>
+                            <polygon id="Shape" fill="#121149" points="16 25 16 25.6000209 26.4525286 25.5999165 24.6047295 28 25.736552 28 28 25.059929 27.953773 25"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
