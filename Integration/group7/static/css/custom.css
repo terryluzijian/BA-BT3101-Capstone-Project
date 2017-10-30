@@ -18,10 +18,6 @@ body {
 	font-size: 1.6em;
 }
 
-.card {
-	background-color: #F4F5FD;
-}
-
 .footer {
 	background-color: #4D566A;
 }
@@ -38,4 +34,9 @@ body {
 	background-color: #F4F5FD;
 	position: relative;
   bottom: 4em;
+}
+
+.signin {
+	background-color: #F4F5FD;
+	width: 15em;
 }
