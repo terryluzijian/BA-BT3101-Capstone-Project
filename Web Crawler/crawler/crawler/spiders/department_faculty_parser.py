@@ -63,7 +63,7 @@ class DepartmentParser(scrapy.Spider):
 
             # If the title is not available, accordingly visit the page to get the tile
             # Yield the item otherwise
-            if re.sub(r'\([1-9]+\)', '', text) != '':
+            if not re.search(r'\([0-9]+\)', text):
                 department_item['url'] = real_url
                 department_item['school_name'] = school
                 department_item['title'] = text

@@ -47,8 +47,12 @@ DUPEFILTER_CLASS = 'scrapy.dupefilters.RFPDupeFilter'
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'none',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive',
 }
 
 # Enable or disable spider middlewares

@@ -1,4 +1,39 @@
 department_or_faculty,school_name,title,url
+department,Massachusetts Institute of Technology (MIT),Architecture,http://architecture.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Media Arts and Sciences,http://www.media.mit.edu/admissions/program-overview/freshman-year-program
+department,Massachusetts Institute of Technology (MIT),Urban Studies and Planning,http://dusp.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Aeronautics and Astronautics,http://aeroastro.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Biological Engineering,http://web.mit.edu/be/index.shtml
+department,Massachusetts Institute of Technology (MIT),Chemical Engineering,http://web.mit.edu/cheme/
+department,Massachusetts Institute of Technology (MIT),Civil and Environmental Engineering,http://cee.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Electrical Engineering and Computer Science,http://www.eecs.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Materials Science and Engineering,http://dmse.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Mechanical Engineering,http://meche.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Nuclear Science and Engineering,http://web.mit.edu/nse/
+department,Massachusetts Institute of Technology (MIT),"Institute for Data, Systems, and Society",http://idss.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Institute for Medical Engineering and Science,http://imes.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Anthropology,http://web.mit.edu/anthropology/
+department,Massachusetts Institute of Technology (MIT),Comparative Media Studies,http://cms.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Writing,http://writing.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Economics,http://econ-www.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Global Studies and Languages,http://web.mit.edu/fll/www/
+department,Massachusetts Institute of Technology (MIT),History,http://history.mit.edu
+department,Massachusetts Institute of Technology (MIT),Humanities,http://shass.mit.edu/undergraduate
+department,Massachusetts Institute of Technology (MIT),,http://web.mit.edu/catalog/degre.human.ch21.html
+department,Massachusetts Institute of Technology (MIT),Linguistics,http://web.mit.edu/linguistics/
+department,Massachusetts Institute of Technology (MIT),Philosophy,http://web.mit.edu/philos/www/
+department,Massachusetts Institute of Technology (MIT),Literature,http://lit.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Music,http://web.mit.edu/music/
+department,Massachusetts Institute of Technology (MIT),Theater Arts,http://theaterarts.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Political Science,http://web.mit.edu/polisci/index.shtml
+department,Massachusetts Institute of Technology (MIT),"Science, Technology, and Society",http://web.mit.edu/sts/
+department,Massachusetts Institute of Technology (MIT),Management,http://mitsloan.mit.edu/academic/overview.php
+department,Massachusetts Institute of Technology (MIT),Biology,https://biology.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Brain and Cognitive Sciences,http://bcs.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Chemistry,http://chemistry.mit.edu/
+department,Massachusetts Institute of Technology (MIT),"Earth, Atmospheric, and Planetary Sciences",http://eapsweb.mit.edu/
+department,Massachusetts Institute of Technology (MIT),Mathematics,http://math.mit.edu/index.php
+department,Massachusetts Institute of Technology (MIT),Physics,http://web.mit.edu/physics/
 department,Stanford University,Aeronautics & Astronautics Department,https://aa.stanford.edu/
 department,Stanford University,Anesthesia Department,http://med.stanford.edu/anesthesia/
 department,Stanford University,Anthropology,http://anthropology.stanford.edu/
@@ -75,40 +110,6 @@ department,Stanford University,Structural Biology Department,http://structuralbi
 department,Stanford University,Surgery Department,http://surgery.stanford.edu/
 department,Stanford University,Theater and Performance Studies,http://taps.stanford.edu/
 department,Stanford University,Urology Department,http://urology.stanford.edu/
-department,Massachusetts Institute of Technology (MIT),Architecture,http://architecture.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Media Arts and Sciences,http://www.media.mit.edu/admissions/program-overview/freshman-year-program
-department,Massachusetts Institute of Technology (MIT),Urban Studies and Planning,http://dusp.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Aeronautics and Astronautics,http://aeroastro.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Biological Engineering,http://web.mit.edu/be/index.shtml
-department,Massachusetts Institute of Technology (MIT),Chemical Engineering,http://web.mit.edu/cheme/
-department,Massachusetts Institute of Technology (MIT),Civil and Environmental Engineering,http://cee.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Electrical Engineering and Computer Science,http://www.eecs.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Materials Science and Engineering,http://dmse.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Mechanical Engineering,http://meche.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Nuclear Science and Engineering,http://web.mit.edu/nse/
-department,Massachusetts Institute of Technology (MIT),"Institute for Data, Systems, and Society",http://idss.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Institute for Medical Engineering and Science,http://imes.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Anthropology,http://web.mit.edu/anthropology/
-department,Massachusetts Institute of Technology (MIT),Comparative Media Studies,http://cms.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Writing,http://writing.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Economics,http://econ-www.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Global Studies and Languages,http://web.mit.edu/fll/www/
-department,Massachusetts Institute of Technology (MIT),History,http://history.mit.edu
-department,Massachusetts Institute of Technology (MIT),Humanities,http://shass.mit.edu/undergraduate
-department,Massachusetts Institute of Technology (MIT),Linguistics,http://web.mit.edu/linguistics/
-department,Massachusetts Institute of Technology (MIT),Philosophy,http://web.mit.edu/philos/www/
-department,Massachusetts Institute of Technology (MIT),Literature,http://lit.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Music,http://web.mit.edu/music/
-department,Massachusetts Institute of Technology (MIT),Theater Arts,http://theaterarts.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Political Science,http://web.mit.edu/polisci/index.shtml
-department,Massachusetts Institute of Technology (MIT),"Science, Technology, and Society",http://web.mit.edu/sts/
-department,Massachusetts Institute of Technology (MIT),Management,http://mitsloan.mit.edu/academic/overview.php
-department,Massachusetts Institute of Technology (MIT),Biology,https://biology.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Brain and Cognitive Sciences,http://bcs.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Chemistry,http://chemistry.mit.edu/
-department,Massachusetts Institute of Technology (MIT),"Earth, Atmospheric, and Planetary Sciences",http://eapsweb.mit.edu/
-department,Massachusetts Institute of Technology (MIT),Mathematics,http://math.mit.edu/index.php
-department,Massachusetts Institute of Technology (MIT),Physics,http://web.mit.edu/physics/
 faculty,Harvard University,Harvard Business School,http://www.hbs.edu/
 faculty,Harvard University,Harvard College,http://college.harvard.edu/
 faculty,Harvard University,Division of Continuing Education,http://www.dce.harvard.edu/
@@ -124,6 +125,12 @@ faculty,Harvard University,Harvard Law School,http://www.law.harvard.edu/index.h
 faculty,Harvard University,Harvard Medical School,http://hms.harvard.edu/
 faculty,Harvard University,Radcliffe Institute for Advanced Study,http://radcliffe.harvard.edu/
 faculty,Harvard University,Harvard T.H. Chan School of Public Health,http://www.hsph.harvard.edu/
+department,California Institute of Technology (Caltech),Biology & Biological Engineering,http://bbe.caltech.edu/
+department,California Institute of Technology (Caltech),Chemistry & Chemical Engineering,http://cce.caltech.edu/
+department,California Institute of Technology (Caltech),Engineering & Applied Science,http://eas.caltech.edu/
+department,California Institute of Technology (Caltech),Geological & Planetary Sciences,http://gps.caltech.edu/
+department,California Institute of Technology (Caltech),Humanities & Social Sciences,http://hss.caltech.edu/
+department,California Institute of Technology (Caltech),"Physics, Mathematics & Astronomy",http://www.pma.caltech.edu/
 department,Harvard University,African and African American Studies,http://aaas.fas.harvard.edu/
 department,Harvard University,Anthropology,http://anthropology.fas.harvard.edu/
 department,Harvard University,Applied Mathematics,http://www.seas.harvard.edu/applied-mathematics
@@ -164,51 +171,17 @@ department,Harvard University,South Asian Studies,http://sas.fas.harvard.edu/icb
 department,Harvard University,Statistics,http://statistics.fas.harvard.edu/
 department,Harvard University,Stem Cell and Regenerative Biology,https://hscrb.harvard.edu/
 department,Harvard University,Visual and Environmental Studies,http://www.ves.fas.harvard.edu/
-department,California Institute of Technology (Caltech),Biology & Biological Engineering,http://bbe.caltech.edu/
-department,California Institute of Technology (Caltech),Chemistry & Chemical Engineering,http://cce.caltech.edu/
-department,California Institute of Technology (Caltech),Engineering & Applied Science,http://eas.caltech.edu/
-department,California Institute of Technology (Caltech),Geological & Planetary Sciences,http://gps.caltech.edu/
-department,California Institute of Technology (Caltech),Humanities & Social Sciences,http://hss.caltech.edu/
-department,California Institute of Technology (Caltech),"Physics, Mathematics & Astronomy",http://www.pma.caltech.edu/
-department,University of Cambridge,Arts and Humanities,http://www.csah.cam.ac.uk/
-department,University of Cambridge,Faculty of Architecture and History of Art,http://www.aha.cam.ac.uk/
-department,University of Cambridge,Department of Architecture,http://www.arct.cam.ac.uk/
-department,University of Cambridge,Department of History of Art,http://www.hoart.cam.ac.uk/
-department,University of Cambridge,Faculty of Asian and Middle Eastern Studies,http://www.ames.cam.ac.uk/
-department,University of Cambridge,Department of East Asian Studies,http://www.ames.cam.ac.uk/deas/
-department,University of Cambridge,Department of Middle Eastern Studies,http://www.ames.cam.ac.uk/dmes/
-department,University of Cambridge,Faculty of Classics,http://www.classics.cam.ac.uk/
-department,University of Cambridge,Museum of Classical Archaeology,http://www.classics.cam.ac.uk/museum/
-department,University of Cambridge,Faculty of Divinity,http://www.divinity.cam.ac.uk/
-department,University of Cambridge,Faculty of English,http://www.english.cam.ac.uk/
-department,University of Cambridge,"Department of Anglo-Saxon, Norse and Celtic",http://www.asnc.cam.ac.uk/
-department,University of Cambridge,Faculty of Modern and Medieval Languages,http://www.mml.cam.ac.uk/
-department,University of Cambridge,Department of French,http://www.mml.cam.ac.uk/french/
+department,Harvard University,Biological Chemistry and Molecular Pharmacology,http://bcmp.med.harvard.edu/
+department,Harvard University,Biomedical Informatics,https://dbmi.hms.harvard.edu/
+department,Harvard University,Cell Biology,http://cellbio.med.harvard.edu/
+department,Harvard University,Genetics,http://genetics.med.harvard.edu/
+department,Harvard University,Global Health and Social Medicine,http://ghsm.hms.harvard.edu/
+department,Harvard University,Health Care Policy,http://www.hcp.med.harvard.edu/
+department,Harvard University,Microbiology & Immunobiology,http://mbib.med.harvard.edu/
+department,Harvard University,Neurobiology,http://neuro.hms.harvard.edu/
+department,Harvard University,Stem Cell and Regenerative Biology,http://hscrb.harvard.edu/
+department,Harvard University,Systems Biology,http://sysbio.med.harvard.edu//
 department,University of Oxford,American Institute,http://www.rai.ox.ac.uk/
-department,University of Cambridge,Department of German & Dutch,http://www.mml.cam.ac.uk/german/
-department,University of Cambridge,Department of Italian,http://www.mml.cam.ac.uk/italian/
-department,University of Cambridge,Department of Slavonic Studies,http://www.mml.cam.ac.uk/slavonic/
-department,University of Cambridge,Department of Spanish and Portuguese,http://www.mml.cam.ac.uk/spanish/
-department,University of Cambridge,Department of Theoretical and Applied Linguistics,http://www.mml.cam.ac.uk/dtal/
-department,University of Cambridge,Modern Greek,http://www.mml.cam.ac.uk/greek/
-department,University of Cambridge,Neo-Latin,http://www.mml.cam.ac.uk/neo-latin
-department,University of Cambridge,Faculty of Music,http://www.mus.cam.ac.uk/
-department,University of Cambridge,Faculty of Philosophy,http://www.phil.cam.ac.uk/
-department,University of Cambridge,"Centre for Research in Arts, Humanities and Social Sciences",http://www.crassh.cam.ac.uk/
-department,University of Cambridge,Language Centre,http://www.langcen.cam.ac.uk/
-department,University of Cambridge,Humanities & Social Sciences,http://www.cshss.cam.ac.uk/
-department,University of Cambridge,"Faculty of Human, Social and Political Science (HSPS)",http://www.hsps.cam.ac.uk/
-department,University of Cambridge,Department of Archaeology,https://www.arch.cam.ac.uk/
-department,University of Cambridge,Biological Anthropology,http://www.bioanth.cam.ac.uk/
-department,University of Cambridge,Leverhulme Centre for Human Evolutionary Studies,http://www.human-evol.cam.ac.uk/
-department,University of Cambridge,McDonald Institute for Archaeological Research,https://www.mcdonald.cam.ac.uk/
-department,University of Cambridge,Department of Social Anthropology,https://www.socanth.cam.ac.uk/
-department,University of Cambridge,Mongolian and Inner Asian Studies Unit,http://innerasiaresearch.org/
-department,University of Cambridge,Museum of Archaeology & Anthropology,http://museum-server.archanth.cam.ac.uk/
-department,University of Cambridge,Department of Politics and International Studies,http://www.polis.cam.ac.uk/
-department,University of Cambridge,Centre of African Studies,http://www.african.cam.ac.uk/
-department,University of Cambridge,Centre of Development Studies,http://www.devstudies.cam.ac.uk/
-department,University of Cambridge,Centre for Gender Studies,http://www.gender.cam.ac.uk/
 department,University of Oxford,Art,http://www.rsa.ox.ac.uk/
 department,University of Oxford,Classics,http://www.classics.ox.ac.uk/
 department,University of Oxford,English Language and Literature,http://www.english.ox.ac.uk/
@@ -239,34 +212,8 @@ department,University of Oxford,Biochemistry,http://www.bioch.ox.ac.uk/
 department,University of Oxford,Clinical Medicine,http://www.ndm.ox.ac.uk/
 department,University of Oxford,Clinical Neurosciences,http://www.ndcn.ox.ac.uk/
 department,University of Oxford,Experimental Psychology,http://www.psy.ox.ac.uk/
+department,University of Cambridge,Arts and Humanities,http://www.csah.cam.ac.uk/
 department,University of Oxford,Medicine,http://www.rdm.ox.ac.uk/
-department,University of Cambridge,Centre of Latin American Studies,http://www.latin-american.cam.ac.uk/
-department,University of Cambridge,Centre of South Asian Studies,http://www.s-asian.cam.ac.uk/
-department,University of Cambridge,Department of Sociology,http://www.sociology.cam.ac.uk/
-department,University of Cambridge,Faculty of Economics,http://www.econ.cam.ac.uk/index.html
-department,University of Cambridge,Faculty of Education,http://www.educ.cam.ac.uk/
-department,University of Cambridge,Faculty of History,http://www.hist.cam.ac.uk/
-department,University of Cambridge,History and Philosophy of Science,http://www.hps.cam.ac.uk/
-department,University of Cambridge,Whipple Museum of the History of Science,http://www.hps.cam.ac.uk/whipple/index.html
-department,University of Cambridge,Faculty of Law,http://www.law.cam.ac.uk/
-department,University of Cambridge,Lauterpacht Centre for International Law,http://www.lcil.cam.ac.uk/
-department,University of Cambridge,Institute of Criminology,http://www.crim.cam.ac.uk/
-department,University of Cambridge,Land Economy,http://www.landecon.cam.ac.uk/
-department,University of Cambridge,Biological Sciences,http://www.bio.cam.ac.uk/
-department,University of Cambridge,Faculty of Biology,http://www.bio.cam.ac.uk/sbs/facbiol/
-department,University of Cambridge,Biochemistry,http://www.bioc.cam.ac.uk/
-department,University of Cambridge,Centre for Family Research,http://www.cfr.cam.ac.uk/
-department,University of Cambridge,Genetics,http://www.gen.cam.ac.uk/
-department,University of Cambridge,Pathology,http://www.path.cam.ac.uk/
-department,University of Cambridge,Pharmacology,http://www.phar.cam.ac.uk/
-department,University of Cambridge,"Physiology, Development and Neuroscience",http://www.pdn.cam.ac.uk/
-department,University of Cambridge,Plant Sciences,http://www.plantsci.cam.ac.uk/
-department,University of Cambridge,Botanic Garden,http://www.botanic.cam.ac.uk/
-department,University of Cambridge,Psychology,http://www.psychol.cam.ac.uk/
-department,University of Cambridge,Zoology,http://www.zoo.cam.ac.uk/
-department,University of Cambridge,Museum of Zoology,http://www.museum.zoo.cam.ac.uk/
-department,University of Cambridge,Department of Veterinary Medicine,http://www.vet.cam.ac.uk/
-department,University of Cambridge,Wellcome – MRC Cambridge Stem Cell Institute,http://www.stemcells.cam.ac.uk/
 department,University of Oxford,Obstetrics and Gynaecology,http://www.obs-gyn.ox.ac.uk/
 department,University of Oxford,Oncology,http://www.oncology.ox.ac.uk/
 department,University of Oxford,"Orthopaedics, Rheumatology and Musculoskeletal Sciences",http://www.ndorms.ox.ac.uk/
@@ -296,6 +243,73 @@ department,University of Oxford,Sociology,http://www.sociology.ox.ac.uk/
 department,University of Oxford,Ashmolean Museum,http://www.ashmolean.org/
 department,University of Oxford,Bodleian Libraries,http://www.bodleian.ox.ac.uk
 department,University of Oxford,Botanic Garden,http://www.botanic-garden.ox.ac.uk/
+department,University of Oxford,Museum of the History of Science,http://www.mhs.ox.ac.uk/
+department,University of Oxford,Museum of Natural History,http://www.oum.ox.ac.uk/
+department,University of Oxford,Pitt Rivers Museum,http://www.prm.ox.ac.uk/
+department,University of Cambridge,Faculty of Architecture and History of Art,http://www.aha.cam.ac.uk/
+department,University of Cambridge,Department of Architecture,http://www.arct.cam.ac.uk/
+department,University of Cambridge,Department of History of Art,http://www.hoart.cam.ac.uk/
+department,University of Cambridge,Faculty of Asian and Middle Eastern Studies,http://www.ames.cam.ac.uk/
+department,University of Cambridge,Department of East Asian Studies,http://www.ames.cam.ac.uk/deas/
+department,University of Cambridge,Department of Middle Eastern Studies,http://www.ames.cam.ac.uk/dmes/
+department,University of Cambridge,Faculty of Classics,http://www.classics.cam.ac.uk/
+department,University of Cambridge,Museum of Classical Archaeology,http://www.classics.cam.ac.uk/museum/
+department,University of Cambridge,Faculty of Divinity,http://www.divinity.cam.ac.uk/
+department,University of Cambridge,Faculty of English,http://www.english.cam.ac.uk/
+department,University of Cambridge,"Department of Anglo-Saxon, Norse and Celtic",http://www.asnc.cam.ac.uk/
+department,University of Cambridge,Faculty of Modern and Medieval Languages,http://www.mml.cam.ac.uk/
+department,University of Cambridge,Department of French,http://www.mml.cam.ac.uk/french/
+department,University of Cambridge,Department of German & Dutch,http://www.mml.cam.ac.uk/german/
+department,University of Cambridge,Department of Italian,http://www.mml.cam.ac.uk/italian/
+department,University of Cambridge,Department of Slavonic Studies,http://www.mml.cam.ac.uk/slavonic/
+department,University of Cambridge,Department of Spanish and Portuguese,http://www.mml.cam.ac.uk/spanish/
+department,University of Cambridge,Department of Theoretical and Applied Linguistics,http://www.mml.cam.ac.uk/dtal/
+department,University of Cambridge,Modern Greek,http://www.mml.cam.ac.uk/greek/
+department,University of Cambridge,Neo-Latin,http://www.mml.cam.ac.uk/neo-latin
+department,University of Cambridge,Faculty of Music,http://www.mus.cam.ac.uk/
+department,University of Cambridge,Faculty of Philosophy,http://www.phil.cam.ac.uk/
+department,University of Cambridge,"Centre for Research in Arts, Humanities and Social Sciences",http://www.crassh.cam.ac.uk/
+department,University of Cambridge,Language Centre,http://www.langcen.cam.ac.uk/
+department,University of Cambridge,Humanities & Social Sciences,http://www.cshss.cam.ac.uk/
+department,University of Cambridge,"Faculty of Human, Social and Political Science (HSPS)",http://www.hsps.cam.ac.uk/
+department,University of Cambridge,Department of Archaeology,https://www.arch.cam.ac.uk/
+department,University of Cambridge,Biological Anthropology,http://www.bioanth.cam.ac.uk/
+department,University of Cambridge,Leverhulme Centre for Human Evolutionary Studies,http://www.human-evol.cam.ac.uk/
+department,University of Cambridge,McDonald Institute for Archaeological Research,https://www.mcdonald.cam.ac.uk/
+department,University of Cambridge,Department of Social Anthropology,https://www.socanth.cam.ac.uk/
+department,University of Cambridge,Mongolian and Inner Asian Studies Unit,http://innerasiaresearch.org/
+department,University of Cambridge,Museum of Archaeology & Anthropology,http://museum-server.archanth.cam.ac.uk/
+department,University of Cambridge,Department of Politics and International Studies,http://www.polis.cam.ac.uk/
+department,University of Cambridge,Centre of African Studies,http://www.african.cam.ac.uk/
+department,University of Cambridge,Centre of Development Studies,http://www.devstudies.cam.ac.uk/
+department,University of Cambridge,Centre for Gender Studies,http://www.gender.cam.ac.uk/
+department,University of Cambridge,Centre of Latin American Studies,http://www.latin-american.cam.ac.uk/
+department,University of Cambridge,Centre of South Asian Studies,http://www.s-asian.cam.ac.uk/
+department,University of Cambridge,Department of Sociology,http://www.sociology.cam.ac.uk/
+department,University of Cambridge,Faculty of Economics,http://www.econ.cam.ac.uk/index.html
+department,University of Cambridge,Faculty of Education,http://www.educ.cam.ac.uk/
+department,University of Cambridge,Faculty of History,http://www.hist.cam.ac.uk/
+department,University of Cambridge,History and Philosophy of Science,http://www.hps.cam.ac.uk/
+department,University of Cambridge,Whipple Museum of the History of Science,http://www.hps.cam.ac.uk/whipple/index.html
+department,University of Cambridge,Faculty of Law,http://www.law.cam.ac.uk/
+department,University of Cambridge,Lauterpacht Centre for International Law,http://www.lcil.cam.ac.uk/
+department,University of Cambridge,Institute of Criminology,http://www.crim.cam.ac.uk/
+department,University of Cambridge,Land Economy,http://www.landecon.cam.ac.uk/
+department,University of Cambridge,Biological Sciences,http://www.bio.cam.ac.uk/
+department,University of Cambridge,Faculty of Biology,http://www.bio.cam.ac.uk/sbs/facbiol/
+department,University of Cambridge,Biochemistry,http://www.bioc.cam.ac.uk/
+department,University of Cambridge,Centre for Family Research,http://www.cfr.cam.ac.uk/
+department,University of Cambridge,Genetics,http://www.gen.cam.ac.uk/
+department,University of Cambridge,Pathology,http://www.path.cam.ac.uk/
+department,University of Cambridge,Pharmacology,http://www.phar.cam.ac.uk/
+department,University of Cambridge,"Physiology, Development and Neuroscience",http://www.pdn.cam.ac.uk/
+department,University of Cambridge,Plant Sciences,http://www.plantsci.cam.ac.uk/
+department,University of Cambridge,Botanic Garden,http://www.botanic.cam.ac.uk/
+department,University of Cambridge,Psychology,http://www.psychol.cam.ac.uk/
+department,University of Cambridge,Zoology,http://www.zoo.cam.ac.uk/
+department,University of Cambridge,Museum of Zoology,http://www.museum.zoo.cam.ac.uk/
+department,University of Cambridge,Department of Veterinary Medicine,http://www.vet.cam.ac.uk/
+department,University of Cambridge,Wellcome – MRC Cambridge Stem Cell Institute,http://www.stemcells.cam.ac.uk/
 department,University of Cambridge,Wellcome Trust/Cancer Research UK Gurdon Institute,http://www.gurdon.cam.ac.uk/
 department,University of Cambridge,Cambridge Systems Biology Centre (CSBC),http://www.sysbiol.cam.ac.uk/
 department,University of Cambridge,Sainsbury Laboratory,http://www.slcu.cam.ac.uk/
@@ -322,9 +336,6 @@ department,University of Cambridge,Metabolic Research Laboratories,http://www.mr
 department,University of Cambridge,Clinical Neurosciences,http://www-neurosciences.medschl.cam.ac.uk/
 department,University of Cambridge,Cambridge Centre for Brain Repair,http://www.brc.cam.ac.uk/
 department,University of Cambridge,Neurology Unit,http://www.neurology.cam.ac.uk/
-department,University of Oxford,Museum of the History of Science,http://www.mhs.ox.ac.uk/
-department,University of Oxford,Museum of Natural History,http://www.oum.ox.ac.uk/
-department,University of Oxford,Pitt Rivers Museum,http://www.prm.ox.ac.uk/
 department,University of Cambridge,Neurosurgery,http://www.neurosurg.cam.ac.uk/
 department,University of Cambridge,Wolfson Brain Imaging Centre,http://www.wbic.cam.ac.uk/
 department,University of Cambridge,Haematology,http://www.haem.cam.ac.uk/
@@ -377,16 +388,14 @@ department,University of Cambridge,Institute of Continuing Education (ICE),https
 department,University of Cambridge,Cambridge Enterprise,http://www.careers.cam.ac.uk/
 department,University of Cambridge,Careers Service,https://www.gatescambridge.org/
 department,University of Cambridge,Gates Trust,http://www.uis.cam.ac.uk/
-department,Harvard University,Biological Chemistry and Molecular Pharmacology,http://bcmp.med.harvard.edu/
-department,Harvard University,Biomedical Informatics,https://dbmi.hms.harvard.edu/
-department,Harvard University,Cell Biology,http://cellbio.med.harvard.edu/
-department,Harvard University,Genetics,http://genetics.med.harvard.edu/
-department,Harvard University,Global Health and Social Medicine,http://ghsm.hms.harvard.edu/
-department,Harvard University,Health Care Policy,http://www.hcp.med.harvard.edu/
-department,Harvard University,Microbiology & Immunobiology,http://mbib.med.harvard.edu/
-department,Harvard University,Neurobiology,http://neuro.hms.harvard.edu/
-department,Harvard University,Stem Cell and Regenerative Biology,http://hscrb.harvard.edu/
-department,Harvard University,Systems Biology,http://sysbio.med.harvard.edu//
+department,UCL (University College London),Anthropology,http://www.ucl.ac.uk/anthropology
+department,UCL (University College London),Archaeology,http://www.ucl.ac.uk/archaeology
+department,UCL (University College London),Economics,http://www.ucl.ac.uk/economics
+department,UCL (University College London),Geography,http://www.ucl.ac.uk/geography
+department,UCL (University College London),History,http://www.ucl.ac.uk/history
+department,UCL (University College London),History of Art,http://www.ucl.ac.uk/art-history
+department,UCL (University College London),Institute of The Americas,https://www.ucl.ac.uk/americas
+department,UCL (University College London),Political Science,http://www.ucl.ac.uk/spp
 department,UCL (University College London),Arts & Sciences (BASc),http://www.ucl.ac.uk/basc
 department,UCL (University College London),English Language & Literature,http://www.ucl.ac.uk/english
 department,UCL (University College London),European Social & Political Studies,http://www.ucl.ac.uk/esps/
@@ -396,15 +405,9 @@ department,UCL (University College London),Information Studies (DIS),http://www.
 department,UCL (University College London),Philosophy,http://www.ucl.ac.uk/philosophy/
 department,UCL (University College London),"School of European Languages, Culture & Society (SELCS)",http://www.ucl.ac.uk/selcs
 department,UCL (University College London),Slade School of Fine Art,http://www.ucl.ac.uk/slade/index.php
-department,UCL (University College London),Anthropology,http://www.ucl.ac.uk/anthropology
-department,UCL (University College London),Archaeology,http://www.ucl.ac.uk/archaeology
-department,UCL (University College London),Economics,http://www.ucl.ac.uk/economics
-department,UCL (University College London),Geography,http://www.ucl.ac.uk/geography
+department,UCL (University College London),Eastman Dental Institute,http://www.ucl.ac.uk/eastman
+department,UCL (University College London),Chemistry,http://www.ucl.ac.uk/chemistry
 department,"Nanyang Technological University, Singapore (NTU)",Nanyang Business School (College of Business),http://www.nbs.ntu.edu.sg/
-department,UCL (University College London),History,http://www.ucl.ac.uk/history
-department,UCL (University College London),History of Art,http://www.ucl.ac.uk/art-history
-department,UCL (University College London),Institute of The Americas,https://www.ucl.ac.uk/americas
-department,UCL (University College London),Political Science,http://www.ucl.ac.uk/spp
 department,"Nanyang Technological University, Singapore (NTU)",College of Engineering,http://coe.ntu.edu.sg/
 department,"Nanyang Technological University, Singapore (NTU)",School of Chemical and Biomedical Engineering,http://www.scbe.ntu.edu.sg/
 department,"Nanyang Technological University, Singapore (NTU)",School of Civil and Environmental Engineering,http://www.cee.ntu.edu.sg/
@@ -424,17 +427,6 @@ department,"Nanyang Technological University, Singapore (NTU)",Asian School of t
 department,"Nanyang Technological University, Singapore (NTU)",Lee Kong Chian School of Medicine (LKCMedicine),http://www.lkcmedicine.ntu.edu.sg/
 department,"Nanyang Technological University, Singapore (NTU)",Interdisciplinary Graduate School (IGS),http://igs.ntu.edu.sg/
 department,"Nanyang Technological University, Singapore (NTU)",College of Professional and Continuing Education,http://copace.ntu.edu.sg/Pages/Home.aspx
-faculty,UCL (University College London),Faculty website,http://www.ucl.ac.uk/ah
-faculty,UCL (University College London),Faculty website(1),http://www.ucl.ac.uk/bartlett
-faculty,UCL (University College London),Faculty website(2),http://www.ucl.ac.uk/brain-sciences
-faculty,UCL (University College London),Faculty website(3),http://www.engineering.ucl.ac.uk
-faculty,UCL (University College London),Faculty website(4),http://www.ucl.ac.uk/ioe
-faculty,UCL (University College London),Faculty website(5),http://www.laws.ucl.ac.uk
-faculty,UCL (University College London),Faculty website(6),http://www.ucl.ac.uk/lifesciences-faculty
-faculty,UCL (University College London),Faculty website(7),http://www.ucl.ac.uk/mathematical-physical-sciences
-faculty,UCL (University College London),Faculty website(8),http://www.ucl.ac.uk/medical-sciences
-faculty,UCL (University College London),Faculty website(9),http://www.ucl.ac.uk/populationhealth-sciences
-faculty,UCL (University College London),Faculty website(10),http://www.ucl.ac.uk/shs
 department,Imperial College London,Aeronautics,https://www.imperial.ac.uk/engineering/departments/aeronautics/
 department,Imperial College London,Bioengineering,https://www.imperial.ac.uk/engineering/departments/bioengineering/
 department,Imperial College London,Chemical Engineering,https://www.imperial.ac.uk/engineering/departments/chemical-engineering/
@@ -453,7 +445,6 @@ department,Imperial College London,Department of Surgery and Cancer,https://www.
 department,Imperial College London,Lee Kong Chian School of Medicine - London Office,https://www.imperial.ac.uk/medicine/partnership/education-collaboration/lee-kong-chian-school-of-medicine/
 department,Imperial College London,Imperial College Academic Health Science Centre,http://www.ahsc.org.uk/
 department,Imperial College London,Imperial College Healthcare NHS Trust,http://www.imperial.nhs.uk/
-department,University of Chicago,"Anesthesia and Critical Care, Department of",http://anesthesia.uchicago.edu
 department,Imperial College London,Chemistry,https://www.imperial.ac.uk/natural-sciences/departments/chemistry/
 department,Imperial College London,Mathematics,https://www.imperial.ac.uk/natural-sciences/departments/mathematics/
 department,Imperial College London,Physics,https://www.imperial.ac.uk/natural-sciences/departments/physics/
@@ -462,6 +453,30 @@ department,Imperial College London,Centre for Environmental Policy,https://www.i
 department,Imperial College London,Finance,http://www.imperial.ac.uk/business-school/research/finance/
 department,Imperial College London,Innovation and Entrepreneurship,http://www.imperial.ac.uk/business-school/research/innovation-and-entrepreneurship/
 department,Imperial College London,Management,https://www.imperial.ac.uk/business-school/research/management/
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Architecture,https://enac.epfl.ch/en/architecture
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Civil Engineering,https://enac.epfl.ch/civil-engineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Environmental Engineering,https://enac.epfl.ch/environmental-engineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Chemistry,https://sb.epfl.ch/chemistry
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Mathematics,https://sb.epfl.ch/mathematics
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Physics,https://sb.epfl.ch/physics
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Electrical Engineering,https://sti.epfl.ch/electrical-engineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Mechanical Engineering,https://sti.epfl.ch/mechanical-engineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Materials Science and Engineering,https://sti.epfl.ch/materials-science-and-engineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Microengineering,https://sti.epfl.ch/microengineering
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Computer Science,https://ic.epfl.ch/computer-science
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Communication Systems,https://ic.epfl.ch/communication-systems
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Data Science,https://ic.epfl.ch/data-science
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Neuroscience Brain Mind & Blue Brain,https://sv.epfl.ch/BMI
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Global Health,https://sv.epfl.ch/GHI
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Cancer,https://sv.epfl.ch/ISREC
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Management of Technology,https://cdm.epfl.ch/mtei
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Technology and Public Policy,https://cdm.epfl.ch/itpp
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Financial Engineering,https://sfi.epfl.ch
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Human and Social Science,https://cdh.epfl.ch/humanities-and-social-sciences
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Area and Global Studies,https://iags.epfl.ch
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Digital Humanities,https://cdh.epfl.ch/dh
+faculty,UCL (University College London),Faculty of Life Sciences,http://www.ucl.ac.uk/lifesciences-faculty
+department,University of Chicago,"Anesthesia and Critical Care, Department of",http://anesthesia.uchicago.edu
 department,University of Chicago,"Anthropology, Department of",http://anthropology.uchicago.edu/
 department,University of Chicago,"Art History, Department of",http://arthistory.uchicago.edu
 department,University of Chicago,"Astronomy and Astrophysics, Department of",http://astro.uchicago.edu/
@@ -543,31 +558,142 @@ department,University of Chicago,"South Asian Languages and Civilizations, Depar
 department,University of Chicago,"Statistics, Department of",http://www.stat.uchicago.edu/
 department,University of Chicago,"Surgery, Department of",http://surgery.uchicago.edu/Department_of_Surgery/index.php
 department,University of Chicago,"Visual Arts, Department of",http://dova.uchicago.edu/
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Architecture,https://enac.epfl.ch/en/architecture
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Civil Engineering,https://enac.epfl.ch/civil-engineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Environmental Engineering,https://enac.epfl.ch/environmental-engineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Chemistry,https://sb.epfl.ch/chemistry
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Mathematics,https://sb.epfl.ch/mathematics
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Physics,https://sb.epfl.ch/physics
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Electrical Engineering,https://sti.epfl.ch/electrical-engineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Mechanical Engineering,https://sti.epfl.ch/mechanical-engineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Materials Science and Engineering,https://sti.epfl.ch/materials-science-and-engineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Microengineering,https://sti.epfl.ch/microengineering
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Bioengineering,https://ibi.epfl.ch/
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Computer Science,https://ic.epfl.ch/computer-science
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Communication Systems,https://ic.epfl.ch/communication-systems
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Data Science,https://ic.epfl.ch/data-science
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Bioengineering(1),https://bioengineering.epfl.ch/
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Neuroscience Brain Mind & Blue Brain,https://sv.epfl.ch/BMI
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Global Health,https://sv.epfl.ch/GHI
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Cancer,https://sv.epfl.ch/ISREC
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Management of Technology,https://cdm.epfl.ch/mtei
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Technology and Public Policy,https://cdm.epfl.ch/itpp
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Financial Engineering,https://sfi.epfl.ch
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Human and Social Science,https://cdh.epfl.ch/humanities-and-social-sciences
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Area and Global Studies,https://iags.epfl.ch
-department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Digital Humanities,https://cdh.epfl.ch/dh
-department,Massachusetts Institute of Technology (MIT),Welcome! < MIT,http://catalog.mit.edu
+faculty,UCL (University College London),UCL Faculty of Medical Sciences,http://www.ucl.ac.uk/medical-sciences
+faculty,UCL (University College London),Institute of Education,http://www.ucl.ac.uk/ioe
+department,Princeton University,Department of African American Studies,http://aas.princeton.edu
+department,Princeton University,Program in African Studies,http://piirs.princeton.edu/afs
+department,Princeton University,Program in American Studies,http://ams.princeton.edu
+department,Princeton University,Department of Anthropology,http://anthropology.princeton.edu
+department,Princeton University,Program in Applications of Computing,http://www.cs.princeton.edu/ugrad/certificate-program
+department,Princeton University,Program in Applied and Computational Mathematics,http://www.pacm.princeton.edu
+department,Princeton University,School of Architecture,http://soa.princeton.edu
+department,Princeton University,Program in Architecture and Engineering,http://www.princeton.edu/cee/undergraduate/program-tracks/architecture-and-engineer/
+department,Princeton University,Department of Art and Archaeology,https://artandarchaeology.princeton.edu
+department,Princeton University,Department of Astrophysical Sciences,http://web.astro.princeton.edu
+department,Princeton University,Program in Atmospheric and Oceanic Sciences,http://www.princeton.edu/aos/phd_program/
+department,Princeton University,Program in Biophysics,http://www.princeton.edu/physics/research/biophysics/
+department,Princeton University,Department of Chemical and Biological Engineering,https://www.princeton.edu/cbe/
+department,Princeton University,Department of Chemistry,https://chemistry.princeton.edu
+department,Princeton University,Department of Civil and Environmental Engineering,http://www.princeton.edu/cee/
+department,Princeton University,Department of Classics,http://classics.princeton.edu
+department,Princeton University,Program in Cognitive Science,http://cogsci.princeton.edu
+department,Princeton University,Department of Comparative Literature,http://complit.princeton.edu/
+department,Princeton University,Princeton Institute for Computational Science and Engineering,http://www.princeton.edu/researchcomputing/education/graduate-certificate-CIS/
+department,Princeton University,Department of Computer Science,http://www.cs.princeton.edu
+department,Princeton University,Program in Contemporary European Politics and Society,http://piirs.princeton.edu/eps
+department,Princeton University,Program in Creative Writing,http://arts.princeton.edu/academics/creative-writing/
+department,Princeton University,Program in Dance,http://arts.princeton.edu/academics/dance/
+department,Princeton University,Department of East Asian Studies,http://www.princeton.edu/eas/
+department,Princeton University,Program in East Asian Studies,http://eap.princeton.edu
+department,Princeton University,Department of Ecology and Evolutionary Biology,https://www.princeton.edu/eeb/
+department,Princeton University,Department of Economics,http://economics.princeton.edu
+department,Princeton University,Department of Electrical Engineering,http://ee.princeton.edu
+department,Princeton University,Program in Engineering and Management Systems,https://orfe.princeton.edu/academics/certificates/ems
+department,Princeton University,Program in Engineering Biology,http://www.princeton.edu/engbio/
+department,Princeton University,Program in Engineering Physics,http://engineeringphysics.princeton.edu
+department,Princeton University,Department of English,http://english.princeton.edu
+department,Princeton University,Program in Entrepreneurship,http://kellercenter.princeton.edu/learn/program-in-entrepreneurship
+department,Princeton University,Program in Environmental Studies,https://environment.princeton.edu/undergrads/certificate-program/
+department,Princeton University,Program in Ethnographic Studies,http://anthropology.princeton.edu/research-programs/ethnographic-studies
+department,Princeton University,Program in European Cultural Studies,http://www.princeton.edu/ecs/
+department,Princeton University,Program in Finance,http://www.princeton.edu/bcf/
+department,Princeton University,Department of French and Italian,http://fit.princeton.edu
+department,Princeton University,Program in Gender and Sexuality Studies,http://gss.princeton.edu
+department,Princeton University,Program in Geological Engineering,http://www.princeton.edu/cee/undergraduate/program-tracks/geological-engineering/
+department,Princeton University,Department of Geosciences,http://www.princeton.edu/geosciences/
+department,Princeton University,Department of German,http://german.princeton.edu
+department,Princeton University,Program in Global Health and Health Policy,http://globalhealth.princeton.edu/undergraduates/about-ghp
+department,Princeton University,WWS Graduate Programs and Certificates,http://wws.princeton.edu/graduate-academics/programs-and-certificates
+department,Princeton University,Program in Hellenic Studies,http://www.princeton.edu/hellenic/
+department,Princeton University,Center for Hellenic Studies,http://www.princeton.edu/hellenic/graduate/
+department,Princeton University,Department of History,http://history.princeton.edu
+department,Princeton University,Program in History and the Practice of Diplomacy,http://hpd.princeton.edu
+department,Princeton University,Program in History of Science,http://history.princeton.edu/centers-programs/history-science
+department,Princeton University,Program in Humanistic Studies,https://humstudies.princeton.edu
+department,Princeton University,Interdisciplinary Doctoral Program in the Humanities,http://www.princeton.edu/ihum/
+department,Princeton University,Program in Jazz Studies,http://www.princeton.edu/music/certificate-in-jazz-studi/
+department,Princeton University,Program in Judaic Studies,http://www.princeton.edu/judaic/
+department,Princeton University,Program in Latin American Studies,http://www.princeton.edu/plas/
+department,Princeton University,Program in Latino Studies,http://www.princeton.edu/latinostudies/
+department,Princeton University,Program in Linguistics,https://linguistics.princeton.edu
+department,Princeton University,Program in Materials Science and Engineering,http://materials.princeton.edu
+department,Princeton University,Department of Mathematics,http://www.math.princeton.edu
+department,Princeton University,Department of Mechanical and Aerospace Engineering,http://mae.princeton.edu
+department,Princeton University,Program in Media and Modernity,http://mediamodernity.princeton.edu
+department,Princeton University,Program in Medieval Studies,http://medievalstudies.princeton.edu
+department,Princeton University,Department of Molecular Biology,http://molbio.princeton.edu
+department,Princeton University,Program in Music Theater,http://arts.princeton.edu/academics/music-theater/
+department,Princeton University,Department of Near Eastern Studies,http://www.princeton.edu/nes/
+department,Princeton University,Program in Near Eastern Studies,http://www.princeton.edu/nep/undergraduate-introductio/
+department,Princeton University,Princeton Neuroscience Institute,http://pni.princeton.edu
+department,Princeton University,Program in Neuroscience,http://pni.princeton.edu/undergraduate-certificate/undergraduate-certificate-neuroscience
+department,Princeton University,Department of Operations Research and Financial Engineering,https://orfe.princeton.edu
+department,Princeton University,Department of Philosophy,http://philosophy.princeton.edu
+department,Princeton University,Department of Physics,http://www.princeton.edu/physics/
+department,Princeton University,Program in Planets & Life,http://astrobiology.princeton.edu
+department,Princeton University,Program in Plasma Physics,http://www.princeton.edu/plasma/
+department,Princeton University,Department of Politics,http://www.princeton.edu/politics/
+department,Princeton University,Program in Population Studies,http://opr.princeton.edu
+department,Princeton University,Department of Psychology,http://psychology.princeton.edu
+department,Princeton University,Woodrow Wilson School of Public and International Affairs,http://wws.princeton.edu
+department,Princeton University,Undergraduate Program in Quantitative and Computational Biology,http://lsi.princeton.edu/qcbcertificate
+department,Princeton University,Graduate Program in Quantitative and Computational Biology,http://lsi.princeton.edu/qcbgraduate
+department,Princeton University,Department of Religion,http://religion.princeton.edu
+department,Princeton University,Program in Robotics and Intelligent Systems,http://www.princeton.edu/ris/
+department,Princeton University,"Program in Russian, East European and Eurasian Studies",http://piirs.princeton.edu/reees/
+department,Princeton University,"Program in Science, Technology and Environmental Policy",http://www.princeton.edu/step/
+department,Princeton University,Department of Slavic Languages and Literatures,http://slavic.princeton.edu
+department,Princeton University,Joint Degree Program in Social Policy,http://wws.princeton.edu/graduate-academics/programs-and-certificates/joint-degree-program-social-policy
+department,Princeton University,Department of Sociology,http://sociology.princeton.edu
+department,Princeton University,Program in South Asian Studies,http://piirs.princeton.edu/sas
+department,Princeton University,Department of Spanish and Portuguese,http://spo.princeton.edu
+department,Princeton University,Program in Statistics and Machine Learning,http://sml.princeton.edu/education/undergraduate-certificate-program
+department,Princeton University,Program in Sustainable Energy,http://acee.princeton.edu/education/program-in-sustainable-energy/
+department,Princeton University,Program in Teacher Preparation,http://teacherprep.princeton.edu
+department,Princeton University,Center for Information Technology Policy (information technology track),http://citp.princeton.edu
+department,Princeton University,Andlinger Center for Energy and the Environment (energy track),http://acee.princeton.edu
+department,Princeton University,Program in Theater,http://arts.princeton.edu/academics/theater/
+department,Princeton University,Program in Translation and Intercultural Communication,http://piirs.princeton.edu/ptic
+department,Princeton University,Certificates in Urban Policy and Urban Policy and Planning,http://wws.princeton.edu/graduate-academics/programs-and-certificates
+department,Princeton University,Program in Urban Studies,http://urbanstudies.princeton.edu
+department,Princeton University,Program in Values and Public Life,http://uchv.princeton.edu/academic-programs/values-and-public-life-certificate
+department,Princeton University,Program in Visual Arts,http://arts.princeton.edu/academics/visual-arts/
+faculty,Cornell University,College of Agriculture and Life Sciences,http://www.cals.cornell.edu/
+faculty,Cornell University,"College of Architecture, Art and Planning",https://aap.cornell.edu/
+faculty,Cornell University,College of Arts and Sciences,http://as.cornell.edu/
+faculty,Cornell University,College of Engineering,http://www.engineering.cornell.edu/
+faculty,Cornell University,College of Human Ecology,http://www.human.cornell.edu/
+faculty,Cornell University,School of Industrial and Labor Relations (ILR),http://www.ilr.cornell.edu/
+faculty,Cornell University,Faculty of Computing and Information Science,http://www.cis.cornell.edu/
+faculty,Cornell University,Cornell Tech (New York City),http://tech.cornell.edu/
+faculty,Cornell University,Cornell Law School,http://www.lawschool.cornell.edu/
+faculty,Cornell University,College of Veterinary Medicine,http://www.vet.cornell.edu/
+faculty,Cornell University,Graduate School,http://www.gradschool.cornell.edu/
+faculty,Cornell University,Weill Cornell Medicine (New York City),http://weill.cornell.edu/
+faculty,Cornell University,"Weill Cornell Medicine (Doha, Qatar)",http://www.qatar-med.cornell.edu/
+faculty,Cornell University,Weill Cornell Graduate School of Medical Sciences (New York City),http://gradschool.weill.cornell.edu/
+faculty,Cornell University,School of Continuing Education and Summer Sessions,http://www.sce.cornell.edu/
+faculty,UCL (University College London),UCL Faculty of Population Health Sciences,http://www.ucl.ac.uk/populationhealth-sciences
+faculty,UCL (University College London),UCL Mathematical & Physical Sciences,http://www.ucl.ac.uk/mathematical-physical-sciences
+department,UCL (University College London),Statistical Science,http://www.ucl.ac.uk/statistics
+department,ETH Zurich - Swiss Federal Institute of Technology,www.arch.ethz.ch,https://www.arch.ethz.ch/en
+faculty,UCL (University College London),UCL Faculty of Arts & Humanities,http://www.ucl.ac.uk/ah
+department,ETH Zurich - Swiss Federal Institute of Technology,www.baug.ethz.ch,http://www.baug.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.bsse.ethz.ch,https://www.bsse.ethz.ch/
+department,ETH Zurich - Swiss Federal Institute of Technology,www.inf.ethz.ch,https://www.inf.ethz.ch/
+department,ETH Zurich - Swiss Federal Institute of Technology,www.ee.ethz.ch,http://www.ee.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.mavt.ethz.ch,http://www.mavt.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.matl.ethz.ch,http://www.matl.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.biol.ethz.ch,http://www.biol.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.chab.ethz.ch,http://www.chab.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.math.ethz.ch,http://www.math.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.phys.ethz.ch,http://www.phys.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.erdw.ethz.ch,http://www.erdw.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.usys.ethz.ch,http://www.usys.ethz.ch/index_EN
+department,ETH Zurich - Swiss Federal Institute of Technology,www.hest.ethz.ch,https://www.hest.ethz.ch/en
+department,ETH Zurich - Swiss Federal Institute of Technology,www.mtec.ethz.ch,http://www.mtec.ethz.ch
+department,ETH Zurich - Swiss Federal Institute of Technology,www.gess.ethz.ch,http://www.gess.ethz.ch/index_EN
+department,Harvard University,Department of Systems Biology | Harvard Medical School,https://sysbio.med.harvard.edu/
 department,National University of Singapore (NUS),Accounting,https://bschool.nus.edu/FacultyDepartments/AcademicDepartments/Accounting/tabid/400/default.aspx
 department,National University of Singapore (NUS),Admissions,http://www.nus.edu.sg/oam/
 department,National University of Singapore (NUS),Alumni Relations,http://alumnet.nus.edu.sg/
@@ -638,7 +764,6 @@ department,National University of Singapore (NUS),Mechanical Engineering,http://
 department,National University of Singapore (NUS),Medicine,http://medicine.nus.edu.sg/
 department,National University of Singapore (NUS),Microbiology,http://medicine.nus.edu.sg/mbio/
 department,National University of Singapore (NUS),Music,http://music.nus.edu.sg/
-department,UCL (University College London),Eastman Dental Institute,http://www.ucl.ac.uk/eastman
 department,National University of Singapore (NUS),Natural History Museum,http://lkcnhm.nus.edu.sg/
 department,National University of Singapore (NUS),Nursing Studies,http://medicine.nus.edu.sg/nursing/
 department,National University of Singapore (NUS),NUS Centre For the Arts,http://www.nus.edu.sg/cfa/
@@ -657,6 +782,7 @@ department,National University of Singapore (NUS),Pathology,http://medicine.nus.
 department,National University of Singapore (NUS),Pharmacology,http://medicine.nus.edu.sg/medphc/
 department,National University of Singapore (NUS),Pharmacy,http://www.pharmacy.nus.edu.sg/
 department,National University of Singapore (NUS),Philosophy,http://www.fas.nus.edu.sg/philo/
+department,Harvard University,Department of Global Health & Social Medicine |,http://ghsm.hms.harvard.edu/
 department,National University of Singapore (NUS),Physics,http://www.physics.nus.edu.sg/
 department,National University of Singapore (NUS),Physiology,http://medicine.nus.edu.sg/phys/
 department,National University of Singapore (NUS),Political Science,http://www.fas.nus.edu.sg/pol/
@@ -674,6 +800,7 @@ department,National University of Singapore (NUS),Risk Management,http://www.nus
 department,National University of Singapore (NUS),"Safety, Health & Environment",http://www.nus.edu.sg/osh/
 department,National University of Singapore (NUS),Science,http://www.science.nus.edu.sg/
 department,National University of Singapore (NUS),Social Work,http://www.fas.nus.edu.sg/swk
+department,UCL (University College London),Mullard Space Science Laboratory,http://www.ucl.ac.uk/mssl
 department,National University of Singapore (NUS),Sociology,http://www.fas.nus.edu.sg/soc/
 department,National University of Singapore (NUS),South Asian Studies Programme,http://www.fas.nus.edu.sg/sas/
 department,National University of Singapore (NUS),Southeast Asian Studies,http://www.fas.nus.edu.sg/sea/
@@ -685,202 +812,22 @@ department,National University of Singapore (NUS),University & Global Relations,
 department,National University of Singapore (NUS),University Scholars Programme,http://www.usp.nus.edu.sg/
 department,National University of Singapore (NUS),University Town Management,http://utown.nus.edu.sg/
 department,National University of Singapore (NUS),Yale-NUS College,http://www.yale-nus.edu.sg/
-department,UCL (University College London),UCL Division of Infection & Immunity,http://www.ucl.ac.uk/infection-immunity/
-faculty,Cornell University,College of Agriculture and Life Sciences,http://www.cals.cornell.edu/
-faculty,Cornell University,"College of Architecture, Art and Planning",https://aap.cornell.edu/
-faculty,Cornell University,College of Arts and Sciences,http://as.cornell.edu/
-faculty,Cornell University,Cornell SC Johnson College of Business,http://www.business.cornell.edu/
-faculty,Cornell University,College of Engineering,http://www.engineering.cornell.edu/
-faculty,Cornell University,College of Human Ecology,http://www.human.cornell.edu/
-faculty,Cornell University,School of Industrial and Labor Relations (ILR),http://www.ilr.cornell.edu/
-faculty,Cornell University,Faculty of Computing and Information Science,http://www.cis.cornell.edu/
-faculty,Cornell University,Cornell SC Johnson College of Business(1),http://www.business.cornell.edu/
-faculty,Cornell University,Cornell Tech (New York City),http://tech.cornell.edu/
-faculty,Cornell University,Cornell Law School,http://www.lawschool.cornell.edu/
-faculty,Cornell University,College of Veterinary Medicine,http://www.vet.cornell.edu/
-faculty,Cornell University,Graduate School,http://www.gradschool.cornell.edu/
-faculty,Cornell University,Weill Cornell Medicine (New York City),http://weill.cornell.edu/
-faculty,Cornell University,"Weill Cornell Medicine (Doha, Qatar)",http://www.qatar-med.cornell.edu/
-faculty,Cornell University,Weill Cornell Graduate School of Medical Sciences (New York City),http://gradschool.weill.cornell.edu/
-faculty,Cornell University,School of Continuing Education and Summer Sessions,http://www.sce.cornell.edu/
-department,UCL (University College London),Division of Surgery & Interventional Science,http://www.ucl.ac.uk/surgery
-department,UCL (University College London),UCL Cancer Institute,http://www.ucl.ac.uk/cancer
-department,Princeton University,Department of African American Studies,http://aas.princeton.edu
-department,Princeton University,Program in African Studies,http://piirs.princeton.edu/afs
-department,Princeton University,Program in American Studies,http://ams.princeton.edu
-department,Princeton University,Department of Anthropology,http://anthropology.princeton.edu
-department,Princeton University,Program in Applications of Computing,http://www.cs.princeton.edu/ugrad/certificate-program
-department,Princeton University,Program in Applied and Computational Mathematics,http://www.pacm.princeton.edu
-department,Princeton University,School of Architecture,http://soa.princeton.edu
-department,Princeton University,Program in Architecture and Engineering,http://www.princeton.edu/cee/undergraduate/program-tracks/architecture-and-engineer/
-department,Princeton University,Department of Art and Archaeology,https://artandarchaeology.princeton.edu
-department,Princeton University,Department of Astrophysical Sciences,http://web.astro.princeton.edu
-department,Princeton University,Program in Atmospheric and Oceanic Sciences,http://www.princeton.edu/aos/phd_program/
-department,Princeton University,Program in Biophysics,http://www.princeton.edu/physics/research/biophysics/
-department,Princeton University,Department of Chemical and Biological Engineering,https://www.princeton.edu/cbe/
-department,Princeton University,Department of Chemistry,https://chemistry.princeton.edu
-department,Princeton University,Department of Civil and Environmental Engineering,http://www.princeton.edu/cee/
-department,Princeton University,Department of Classics,http://classics.princeton.edu
-department,Princeton University,Program in Cognitive Science,http://cogsci.princeton.edu
-department,Princeton University,Department of Comparative Literature,http://complit.princeton.edu/
-department,Princeton University,Princeton Institute for Computational Science and Engineering,http://www.princeton.edu/researchcomputing/education/graduate-certificate-CIS/
-department,Princeton University,Department of Computer Science,http://www.cs.princeton.edu
-department,Princeton University,Program in Contemporary European Politics and Society,http://piirs.princeton.edu/eps
-department,Princeton University,Program in Creative Writing,http://arts.princeton.edu/academics/creative-writing/
-department,Princeton University,Program in Dance,http://arts.princeton.edu/academics/dance/
-department,Princeton University,Department of East Asian Studies,http://www.princeton.edu/eas/
-department,Princeton University,Program in East Asian Studies,http://eap.princeton.edu
-department,Princeton University,Department of Ecology and Evolutionary Biology,https://www.princeton.edu/eeb/
-department,Princeton University,Department of Economics,http://economics.princeton.edu
-department,Princeton University,Department of Electrical Engineering,http://ee.princeton.edu
-department,Princeton University,Program in Engineering and Management Systems,https://orfe.princeton.edu/academics/certificates/ems
-department,Princeton University,Program in Engineering Biology,http://www.princeton.edu/engbio/
-department,Princeton University,Program in Engineering Physics,http://engineeringphysics.princeton.edu
-department,Princeton University,Department of English,http://english.princeton.edu
-department,Princeton University,Program in Entrepreneurship,http://kellercenter.princeton.edu/learn/program-in-entrepreneurship
-department,Princeton University,Program in Environmental Studies,https://environment.princeton.edu/undergrads/certificate-program/
-department,Princeton University,Program in Ethnographic Studies,http://anthropology.princeton.edu/research-programs/ethnographic-studies
-department,Princeton University,Program in European Cultural Studies,http://www.princeton.edu/ecs/
-department,Princeton University,Program in Finance,http://www.princeton.edu/bcf/
-department,Princeton University,Department of French and Italian,http://fit.princeton.edu
-department,Princeton University,Program in Gender and Sexuality Studies,http://gss.princeton.edu
-department,Princeton University,Program in Geological Engineering,http://www.princeton.edu/cee/undergraduate/program-tracks/geological-engineering/
-department,Princeton University,Department of Geosciences,http://www.princeton.edu/geosciences/
-department,Princeton University,Department of German,http://german.princeton.edu
-department,Princeton University,Program in Global Health and Health Policy,http://globalhealth.princeton.edu/undergraduates/about-ghp
-department,Princeton University,WWS Graduate Programs and Certificates,http://wws.princeton.edu/graduate-academics/programs-and-certificates
-department,Princeton University,Program in Hellenic Studies,http://www.princeton.edu/hellenic/
-department,Princeton University,Center for Hellenic Studies,http://www.princeton.edu/hellenic/graduate/
-department,Princeton University,Department of History,http://history.princeton.edu
-department,Princeton University,Program in History and the Practice of Diplomacy,http://hpd.princeton.edu
-department,Princeton University,Program in History of Science,http://history.princeton.edu/centers-programs/history-science
-department,Princeton University,Program in Humanistic Studies,https://humstudies.princeton.edu
-department,Princeton University,Interdisciplinary Doctoral Program in the Humanities,http://www.princeton.edu/ihum/
-department,Princeton University,Program in Jazz Studies,http://www.princeton.edu/music/certificate-in-jazz-studi/
-department,Princeton University,Program in Judaic Studies,http://www.princeton.edu/judaic/
-department,Princeton University,Program in Latin American Studies,http://www.princeton.edu/plas/
-department,Princeton University,Program in Latino Studies,http://www.princeton.edu/latinostudies/
-department,Princeton University,Program in Linguistics,https://linguistics.princeton.edu
-department,Princeton University,Program in Materials Science and Engineering,http://materials.princeton.edu
-department,Princeton University,Department of Mathematics,http://www.math.princeton.edu
-department,Princeton University,Department of Mechanical and Aerospace Engineering,http://mae.princeton.edu
-department,Princeton University,Program in Media and Modernity,http://mediamodernity.princeton.edu
-department,Princeton University,Program in Medieval Studies,http://medievalstudies.princeton.edu
-department,Princeton University,Department of Molecular Biology,http://molbio.princeton.edu
-department,Princeton University,Department of Music,http://www.princeton.edu/music/
-department,Princeton University,Department of Music(1),http://www.princeton.edu/music/
-department,Princeton University,Program in Music Theater,http://arts.princeton.edu/academics/music-theater/
-department,Princeton University,Department of Music(2),http://www.princeton.edu/music/certificate-of-music/
-department,Princeton University,Department of Music(3),http://www.princeton.edu/music/
-department,Princeton University,Department of Near Eastern Studies,http://www.princeton.edu/nes/
-department,Princeton University,Program in Near Eastern Studies,http://www.princeton.edu/nep/undergraduate-introductio/
-department,Princeton University,Princeton Neuroscience Institute,http://pni.princeton.edu
-department,Princeton University,Program in Neuroscience,http://pni.princeton.edu/undergraduate-certificate/undergraduate-certificate-neuroscience
-department,Princeton University,Department of Operations Research and Financial Engineering,https://orfe.princeton.edu
-department,Princeton University,Department of Philosophy,http://philosophy.princeton.edu
-department,Princeton University,Department of Physics,http://www.princeton.edu/physics/
-department,Princeton University,Program in Planets & Life,http://astrobiology.princeton.edu
-department,Princeton University,Program in Plasma Physics,http://www.princeton.edu/plasma/
-department,Princeton University,Department of Politics,http://www.princeton.edu/politics/
-department,Princeton University,Program in Population Studies,http://opr.princeton.edu
-department,Princeton University,Department of Psychology,http://psychology.princeton.edu
-department,Princeton University,Woodrow Wilson School of Public and International Affairs,http://wws.princeton.edu
-department,Princeton University,Undergraduate Program in Quantitative and Computational Biology,http://lsi.princeton.edu/qcbcertificate
-department,Princeton University,Graduate Program in Quantitative and Computational Biology,http://lsi.princeton.edu/qcbgraduate
-department,Princeton University,Department of Religion,http://religion.princeton.edu
-department,Princeton University,Program in Robotics and Intelligent Systems,http://www.princeton.edu/ris/
-department,Princeton University,"Program in Russian, East European and Eurasian Studies",http://piirs.princeton.edu/reees/
-department,Princeton University,"Program in Science, Technology and Environmental Policy",http://www.princeton.edu/step/
-department,Princeton University,Department of Slavic Languages and Literatures,http://slavic.princeton.edu
-department,Princeton University,Joint Degree Program in Social Policy,http://wws.princeton.edu/graduate-academics/programs-and-certificates/joint-degree-program-social-policy
-department,Princeton University,Department of Sociology,http://sociology.princeton.edu
-department,Princeton University,Program in South Asian Studies,http://piirs.princeton.edu/sas
-department,Princeton University,Department of Spanish and Portuguese,http://spo.princeton.edu
-department,Princeton University,Program in Statistics and Machine Learning,http://sml.princeton.edu/education/undergraduate-certificate-program
-department,Princeton University,Program in Sustainable Energy,http://acee.princeton.edu/education/program-in-sustainable-energy/
-department,Princeton University,Program in Teacher Preparation,http://teacherprep.princeton.edu
-department,Princeton University,Center for Information Technology Policy (information technology track),http://citp.princeton.edu
-department,Princeton University,Andlinger Center for Energy and the Environment (energy track),http://acee.princeton.edu
-department,Princeton University,Program in Theater,http://arts.princeton.edu/academics/theater/
-department,Princeton University,Program in Translation and Intercultural Communication,http://piirs.princeton.edu/ptic
-department,Princeton University,Certificates in Urban Policy and Urban Policy and Planning,http://wws.princeton.edu/graduate-academics/programs-and-certificates
-department,Princeton University,Program in Urban Studies,http://urbanstudies.princeton.edu
-department,Princeton University,Program in Values and Public Life,http://uchv.princeton.edu/academic-programs/values-and-public-life-certificate
-department,Princeton University,Program in Visual Arts,http://arts.princeton.edu/academics/visual-arts/
-department,ETH Zurich - Swiss Federal Institute of Technology,www.arch.ethz.ch,https://www.arch.ethz.ch/en
-department,UCL (University College London),Chemistry,http://www.ucl.ac.uk/chemistry
-department,ETH Zurich - Swiss Federal Institute of Technology,www.baug.ethz.ch,http://www.baug.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.bsse.ethz.ch,https://www.bsse.ethz.ch/
-department,ETH Zurich - Swiss Federal Institute of Technology,www.inf.ethz.ch,https://www.inf.ethz.ch/
-department,ETH Zurich - Swiss Federal Institute of Technology,www.ee.ethz.ch,http://www.ee.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.mavt.ethz.ch,http://www.mavt.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.matl.ethz.ch,http://www.matl.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.biol.ethz.ch,http://www.biol.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.chab.ethz.ch,http://www.chab.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.math.ethz.ch,http://www.math.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.phys.ethz.ch,http://www.phys.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.erdw.ethz.ch,http://www.erdw.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.usys.ethz.ch,http://www.usys.ethz.ch/index_EN
-department,ETH Zurich - Swiss Federal Institute of Technology,www.hest.ethz.ch,https://www.hest.ethz.ch/en
-department,ETH Zurich - Swiss Federal Institute of Technology,www.mtec.ethz.ch,http://www.mtec.ethz.ch
-department,ETH Zurich - Swiss Federal Institute of Technology,www.gess.ethz.ch,http://www.gess.ethz.ch/index_EN
-department,UCL (University College London),Statistical Science,http://www.ucl.ac.uk/statistics
-department,UCL (University College London),UCL Division of Medicine,http://www.ucl.ac.uk/medicine/
-department,UCL (University College London),UCL Department of Science and Technology Studies,http://www.ucl.ac.uk/sts
-department,UCL (University College London),Mullard Space Science Laboratory,http://www.ucl.ac.uk/mssl
 department,UCL (University College London),Statistical Science,http://www.ucl.ac.uk/mathematical-physical-sciences/departments-institutes/statistical-science
-department,UCL (University College London),Physics and Astronomy,http://www.ucl.ac.uk/physics-astronomy
-department,Harvard University,Department of Global Health & Social Medicine |,http://ghsm.hms.harvard.edu/
+department,Harvard University,Department of Neurobiology |,https://neuro.hms.harvard.edu/
+department,UCL (University College London),UCL Department of Science and Technology Studies,http://www.ucl.ac.uk/sts
 department,UCL (University College London),Mathematics,http://www.ucl.ac.uk/mathematics
-department,Johns Hopkins University,Department of Classics,http://classics.jhu.edu/
-department,Johns Hopkins University,Department of English,http://english.jhu.edu/
-department,Johns Hopkins University,Department of German & Romance Languages & Literatures,http://grll.jhu.edu/
-department,Johns Hopkins University,Department of History,http://history.jhu.edu/
-department,Johns Hopkins University,Department of Near Eastern Studies,http://neareast.jhu.edu/
-department,Johns Hopkins University,Department of Philosophy,http://philosophy.jhu.edu/
-department,Johns Hopkins University,Department of the History of Art,http://arthist.jhu.edu/
-department,Johns Hopkins University,Department of the History of Science & Technology,http://host.jhu.edu/
-department,Johns Hopkins University,Humanities Center,http://humctr.jhu.edu
-department,Johns Hopkins University,Program in Archaeology,http://krieger.jhu.edu/archaeology
-department,Johns Hopkins University,The Writing Seminars,http://writingseminars.jhu.edu
-department,Johns Hopkins University,Center for Advanced Media Studies,http://krieger.jhu.edu/cams
-department,Johns Hopkins University,Center for Africana Studies,http://krieger.jhu.edu/africana
-department,Johns Hopkins University,Center for Global Studies,http://krieger.jhu.edu/arrighi
-department,Johns Hopkins University,Center for Language Education,http://krieger.jhu.edu/cle
-department,Johns Hopkins University,Center for Modern German Thought,http://krieger.jhu.edu/maxkade
-department,Johns Hopkins University,Center for Visual Arts,http://krieger.jhu.edu/visualarts
-department,Johns Hopkins University,Chemistry-Biology Interface Program,http://www.cbi.jhu.edu/
-department,Johns Hopkins University,"Medicine, Science, and the Humanities Major",http://krieger.jhu.edu/msh
-department,Johns Hopkins University,"Program for the Study of Women, Gender, and Sexuality",http://krieger.jhu.edu/wgs/
+department,UCL (University College London),Physics and Astronomy,http://www.ucl.ac.uk/physics-astronomy
+department,UCL (University College London),Earth Sciences,http://www.ucl.ac.uk/earth-sciences
+department,Ecole Polytechnique Fédérale de Lausanne (EPFL),Interfaculty Institute of Bioengineering | EPFL,https://bioengineering.epfl.ch/
+department,UCL (University College London),UCL Cancer Institute,http://www.ucl.ac.uk/cancer
+department,Princeton University,Princeton Department of Music |,http://music.princeton.edu/
+department,UCL (University College London),London Centre for Nanotechnology,http://www.london-nano.com/
+department,UCL (University College London),Division of Surgery & Interventional Science,http://www.ucl.ac.uk/surgery
+department,UCL (University College London),UCL Division of Infection & Immunity,http://www.ucl.ac.uk/infection-immunity/
+department,Princeton University,Certificates in Music| Princeton Department of Music,http://music.princeton.edu/performance-programs/certificates-music
+department,Harvard University,Genetics |,http://genetics.hms.harvard.edu/
+faculty,Cornell University,Cornell SC Johnson College of Business,https://business.cornell.edu/
 department,Columbia University,Accounting Division »,http://www8.gsb.columbia.edu/faculty-research/divisions/accounting
-department,Johns Hopkins University,"Program in Cell, Molecular, Development Biology, and Biophysics",http://cmdb.jhu.edu
-department,Johns Hopkins University,Program in East Asian Studies,http://krieger.jhu.edu/east-asian/
-department,Johns Hopkins University,Program in Expository Writing,http://krieger.jhu.edu/ewp
-department,Johns Hopkins University,Program in Film & Media Studies,http://krieger.jhu.edu/film-media
-department,Johns Hopkins University,Program in Global Environmental Change and Sustainability,http://krieger.jhu.edu/gecs
-department,Johns Hopkins University,Program in International Studies,http://krieger.jhu.edu/internationalstudies/
-department,Johns Hopkins University,Program in Islamic Studies,http://krieger.jhu.edu/islamic
-department,Johns Hopkins University,Program in Jewish Studies,http://krieger.jhu.edu/jewishstudies
-department,Johns Hopkins University,Program in Latin American Studies,http://krieger.jhu.edu/plas
-department,Johns Hopkins University,Program in Museums and Society,http://krieger.jhu.edu/museums-society
-department,Johns Hopkins University,Program in Theatre Arts & Studies,http://krieger.jhu.edu/theatre-arts
-department,Johns Hopkins University,Department of Biology,http://bio.jhu.edu/
-department,Johns Hopkins University,Department of Biophysics,http://biophysics.jhu.edu
-department,Johns Hopkins University,Department of Chemistry,http://chemistry.jhu.edu
-department,Johns Hopkins University,Department of Cognitive Science,http://cogsci.jhu.edu
-department,Johns Hopkins University,Department of Earth and Planetary Sciences,http://eps.jhu.edu
-department,Johns Hopkins University,Department of Mathematics,http://mathematics.jhu.edu
-department,Johns Hopkins University,Department of Physics & Astronomy,http://physics-astronomy.jhu.edu
-department,Johns Hopkins University,Department of Psychological & Brain Sciences,http://pbs.jhu.edu
-department,Johns Hopkins University,Post-Bac Pre-Medical Program,http://krieger.jhu.edu/postbac/
-department,Johns Hopkins University,Program in Behavioral Biology,http://krieger.jhu.edu/behavioralbiology/
-department,Johns Hopkins University,Program in Molecular Biophysics,http://pmb.jhu.edu/
-department,Johns Hopkins University,Program in Neuroscience,http://krieger.jhu.edu/neuroscience/
-department,Johns Hopkins University,Center for Financial Economics,http://cfe.econ.jhu.edu
-department,Johns Hopkins University,Department of Anthropology,http://anthropology.jhu.edu
-department,Johns Hopkins University,Department of Economics,http://econ.jhu.edu
-department,Johns Hopkins University,Department of Political Science,http://politicalscience.jhu.edu/
-department,Johns Hopkins University,Department of Sociology,http://soc.jhu.edu
 department,Columbia University,Anatomy and Cell Biology Department »,http://pathology.columbia.edu/education/graduate/
 department,Columbia University,Anesthesiology Department »,http://cpmcnet.columbia.edu/dept/anesthesiology/
 department,Columbia University,Anthropology Department »,http://www.columbia.edu/cu/anthropology/
@@ -915,19 +862,6 @@ department,Columbia University,Environmental Health Sciences Department »,http:
 department,Columbia University,Epidemiology Department »,http://www.mailman.hs.columbia.edu/academic-departments/epidemiology
 department,Columbia University,Film Program »,http://arts.columbia.edu/film/
 department,Columbia University,Finance and Economics Division »,http://www8.gsb.columbia.edu/faculty-research/divisions/finance-economics
-department,Johns Hopkins University,Program in Public Health Studies,http://krieger.jhu.edu/publichealth/
-department,Johns Hopkins University,Program in Social Policy,http://krieger.jhu.edu/socialpolicy/
-department,Johns Hopkins University,The Academy,http://krieger.jhu.edu/theacademy
-department,Johns Hopkins University,Center for Astrophysical Sciences,http://sites.krieger.jhu.edu/astronomy
-department,Johns Hopkins University,Center for Government Excellence,http://govex.jhu.edu
-department,Johns Hopkins University,Center for Molecular Biophysics,http://cmb.jhu.edu/
-department,Johns Hopkins University,Center for the Study of Premodern Europe,http://krieger.jhu.edu/singleton
-department,Johns Hopkins University,Humanities Institute,http://krieger.jhu.edu/humanities-institute/
-department,Johns Hopkins University,"Institute for Applied Economics, Global Health and the Study of Business Enterprise",http://sites.krieger.jhu.edu/iae
-department,Johns Hopkins University,Institute for Quantum Matter,http://iqm.jhu.edu
-department,Johns Hopkins University,Mind/Brain Institute,http://krieger.jhu.edu/mbi/
-department,Johns Hopkins University,Population Center,http://popcenter.jhu.edu
-department,Johns Hopkins University,"Racism, Immigration, and Citizenship Program",http://ric.johnshopkins.edu/
 department,Columbia University,French and Romance Philology Department »,http://www.columbia.edu/cu/french/
 department,Columbia University,"General Medicine, Division of »",http://www.cumc.columbia.edu/dept/medicine/generalmed/
 department,Columbia University,"Genetics and Development, Department of »",http://cumc.columbia.edu/dept/genetics/
@@ -990,7 +924,6 @@ department,Columbia University,Theatre Arts Program »,http://arts.columbia.edu/
 department,Columbia University,Urology Department »,http://columbiaurology.org/
 department,Columbia University,Visual Arts Program »,http://arts.columbia.edu/visual-arts/
 department,Columbia University,Writing Program »,http://arts.columbia.edu/writing/
-department,UCL (University College London),UCL Medical School,https://www.ucl.ac.uk/medical-school
 department,Yale University,African American Studies,http://afamstudies.yale.edu/
 department,Yale University,African Studies,http://african.macmillan.yale.edu/
 department,Yale University,American Studies,http://americanstudies.yale.edu/
@@ -1019,7 +952,6 @@ department,Yale University,Dermatology,http://dermatology.yale.edu/
 department,Yale University,East Asian Languages & Literatures,http://eall.yale.edu/
 department,Yale University,East Asian Studies,http://ceas.yale.edu/
 department,Yale University,Ecology & Evolutionary Biology,http://eeb.yale.edu/
-department,UCL (University College London),London Centre for Nanotechnology,http://www.london-nano.com/
 department,Yale University,Economics,http://economics.yale.edu/
 department,Yale University,Electrical Engineering,http://seas.yale.edu/departments/electrical-engineering
 department,Yale University,Emergency Medicine,http://medicine.yale.edu/emergencymed/
@@ -1094,8 +1026,70 @@ department,Yale University,Theater Studies,http://theaterstudies.yale.edu/
 department,Yale University,Therapeutic Radiology/Radiation Oncology,http://medicine.yale.edu/therapeuticradiology/
 department,Yale University,Urology,http://medicine.yale.edu/urology/
 department,Yale University,"Women’s, Gender, & Sexuality Studies",http://wgss.yale.edu/
-department,UCL (University College London),Earth Sciences,http://www.ucl.ac.uk/earth-sciences
-department,Harvard University,Department of Neurobiology |,https://neuro.hms.harvard.edu/
+faculty,UCL (University College London),Brain Sciences - UCL - London's Global University,https://www.ucl.ac.uk/brain-sciences/
+department,Johns Hopkins University,Department of Classics,http://classics.jhu.edu/
+department,Johns Hopkins University,Department of English,http://english.jhu.edu/
+department,Johns Hopkins University,Department of German & Romance Languages & Literatures,http://grll.jhu.edu/
+department,Johns Hopkins University,Department of History,http://history.jhu.edu/
+department,Johns Hopkins University,Department of Near Eastern Studies,http://neareast.jhu.edu/
+department,Johns Hopkins University,Department of Philosophy,http://philosophy.jhu.edu/
+department,Johns Hopkins University,Department of the History of Art,http://arthist.jhu.edu/
+department,Johns Hopkins University,Department of the History of Science & Technology,http://host.jhu.edu/
+department,Johns Hopkins University,Humanities Center,http://humctr.jhu.edu
+department,Johns Hopkins University,Program in Archaeology,http://krieger.jhu.edu/archaeology
+department,Johns Hopkins University,The Writing Seminars,http://writingseminars.jhu.edu
+department,Johns Hopkins University,Center for Advanced Media Studies,http://krieger.jhu.edu/cams
+department,Johns Hopkins University,Center for Africana Studies,http://krieger.jhu.edu/africana
+department,Johns Hopkins University,Center for Global Studies,http://krieger.jhu.edu/arrighi
+department,Johns Hopkins University,Center for Language Education,http://krieger.jhu.edu/cle
+department,Johns Hopkins University,Center for Modern German Thought,http://krieger.jhu.edu/maxkade
+department,Johns Hopkins University,Center for Visual Arts,http://krieger.jhu.edu/visualarts
+department,Johns Hopkins University,Chemistry-Biology Interface Program,http://www.cbi.jhu.edu/
+department,Johns Hopkins University,"Medicine, Science, and the Humanities Major",http://krieger.jhu.edu/msh
+department,Johns Hopkins University,"Program for the Study of Women, Gender, and Sexuality",http://krieger.jhu.edu/wgs/
+department,Johns Hopkins University,"Program in Cell, Molecular, Development Biology, and Biophysics",http://cmdb.jhu.edu
+department,Johns Hopkins University,Program in East Asian Studies,http://krieger.jhu.edu/east-asian/
+department,Johns Hopkins University,Program in Expository Writing,http://krieger.jhu.edu/ewp
+department,Johns Hopkins University,Program in Film & Media Studies,http://krieger.jhu.edu/film-media
+department,Johns Hopkins University,Program in Global Environmental Change and Sustainability,http://krieger.jhu.edu/gecs
+department,Johns Hopkins University,Program in International Studies,http://krieger.jhu.edu/internationalstudies/
+department,Johns Hopkins University,Program in Islamic Studies,http://krieger.jhu.edu/islamic
+department,Johns Hopkins University,Program in Jewish Studies,http://krieger.jhu.edu/jewishstudies
+department,Johns Hopkins University,Program in Latin American Studies,http://krieger.jhu.edu/plas
+department,Johns Hopkins University,Program in Museums and Society,http://krieger.jhu.edu/museums-society
+department,Johns Hopkins University,Program in Theatre Arts & Studies,http://krieger.jhu.edu/theatre-arts
+department,Johns Hopkins University,Department of Biology,http://bio.jhu.edu/
+department,Johns Hopkins University,Department of Biophysics,http://biophysics.jhu.edu
+department,Johns Hopkins University,Department of Chemistry,http://chemistry.jhu.edu
+department,Johns Hopkins University,Department of Cognitive Science,http://cogsci.jhu.edu
+department,Johns Hopkins University,Department of Earth and Planetary Sciences,http://eps.jhu.edu
+department,Johns Hopkins University,Department of Mathematics,http://mathematics.jhu.edu
+department,Johns Hopkins University,Department of Physics & Astronomy,http://physics-astronomy.jhu.edu
+department,Johns Hopkins University,Department of Psychological & Brain Sciences,http://pbs.jhu.edu
+department,Johns Hopkins University,Post-Bac Pre-Medical Program,http://krieger.jhu.edu/postbac/
+department,Johns Hopkins University,Program in Behavioral Biology,http://krieger.jhu.edu/behavioralbiology/
+department,Johns Hopkins University,Program in Molecular Biophysics,http://pmb.jhu.edu/
+department,Johns Hopkins University,Program in Neuroscience,http://krieger.jhu.edu/neuroscience/
+department,Johns Hopkins University,Center for Financial Economics,http://cfe.econ.jhu.edu
+department,Johns Hopkins University,Department of Anthropology,http://anthropology.jhu.edu
+department,Johns Hopkins University,Department of Economics,http://econ.jhu.edu
+department,Johns Hopkins University,Department of Political Science,http://politicalscience.jhu.edu/
+department,Johns Hopkins University,Department of Sociology,http://soc.jhu.edu
+department,Johns Hopkins University,Program in Public Health Studies,http://krieger.jhu.edu/publichealth/
+department,Johns Hopkins University,Program in Social Policy,http://krieger.jhu.edu/socialpolicy/
+department,Johns Hopkins University,The Academy,http://krieger.jhu.edu/theacademy
+department,Johns Hopkins University,Center for Astrophysical Sciences,http://sites.krieger.jhu.edu/astronomy
+department,Johns Hopkins University,Center for Government Excellence,http://govex.jhu.edu
+department,Johns Hopkins University,Center for Molecular Biophysics,http://cmb.jhu.edu/
+department,Johns Hopkins University,Center for the Study of Premodern Europe,http://krieger.jhu.edu/singleton
+department,Johns Hopkins University,Humanities Institute,http://krieger.jhu.edu/humanities-institute/
+department,Johns Hopkins University,"Institute for Applied Economics, Global Health and the Study of Business Enterprise",http://sites.krieger.jhu.edu/iae
+department,Johns Hopkins University,Institute for Quantum Matter,http://iqm.jhu.edu
+department,Johns Hopkins University,Mind/Brain Institute,http://krieger.jhu.edu/mbi/
+department,Johns Hopkins University,Population Center,http://popcenter.jhu.edu
+department,Johns Hopkins University,"Racism, Immigration, and Citizenship Program",http://ric.johnshopkins.edu/
+faculty,UCL (University College London),,https://www.laws.ucl.ac.uk/
+department,UCL (University College London),UCL Medical School,https://www.ucl.ac.uk/medical-school
 department,The Australian National University,Research School of Humanities & the Arts,http://rsha.anu.edu.au
 department,The Australian National University,Research School of Social Sciences,http://rsss.anu.edu.au
 department,The Australian National University,Australian Centre on China in the World,http://ciw.anu.edu.au/
@@ -1136,77 +1130,30 @@ faculty,University of Pennsylvania,Perelman School of Medicine,http://www.med.up
 faculty,University of Pennsylvania,School of Social Policy & Practice,http://www.sp2.upenn.edu/
 faculty,University of Pennsylvania,School of Veterinary Medicine,http://www.vet.upenn.edu/
 faculty,University of Pennsylvania,The Wharton School,http://www.wharton.upenn.edu/
-department,Harvard University,Department of Systems Biology | Harvard Medical School,https://sysbio.med.harvard.edu/
-department,The University of Edinburgh,Business School,http://www.business-school.ed.ac.uk/
-department,The University of Edinburgh,Centre for Open Learning,https://www.ed.ac.uk/lifelong-learning
-department,The University of Edinburgh,Divinity,https://www.ed.ac.uk/divinity
-department,The University of Edinburgh,Economics,http://www.ed.ac.uk/schools-departments/economics
-department,The University of Edinburgh,Edinburgh College of Art,http://www.eca.ed.ac.uk/
-department,The University of Edinburgh,Health in Social Science,http://www.ed.ac.uk/schools-departments/health
-department,The University of Edinburgh,"History, Classics and Archaeology",https://www.ed.ac.uk/history-classics-archaeology
-department,The University of Edinburgh,Law,http://www.law.ed.ac.uk/
-department,The University of Edinburgh,"Literatures, Languages and Cultures",https://www.ed.ac.uk/literatures-languages-cultures
-department,The University of Edinburgh,Moray House School of Education,http://www.education.ed.ac.uk/
-department,The University of Edinburgh,"Philosophy, Psychology and Language Science",http://www.ppls.ed.ac.uk/
-department,The University of Edinburgh,Social and Political Science,http://www.sps.ed.ac.uk/
-department,King's College London,Academic Rheumatology,https://www.kcl.ac.uk/lsm/research/divisions/diiid/departments/rheumatology/index.aspx
-department,King's College London,Air Power Studies Research Group,http://www.kcl.ac.uk/sspp/departments/warstudies/research/groups/aswrg/indexold.aspx
-department,King's College London,Anatomy,https://www.kcl.ac.uk/lsm/study/departments/anatomy/index.aspx
-department,King's College London,"Arts & Humanities, Faculty of",http://www.kcl.ac.uk/artshums/index.aspx
-department,King's College London,"Australian Studies, Menzies Centre for",http://www.kcl.ac.uk/artshums/ahri/centres/menzies/index.aspx
-department,Duke University,African and African American Studies,http://aaas.duke.edu/undergraduate/major-minor
-department,Duke University,Art History,http://aahvs.duke.edu/undergraduate/majors
-department,Duke University,Asian and Middle Eastern Studies,http://asianmideast.duke.edu/undergraduate/majors-minors
-department,Duke University,Biology,http://biology.duke.edu/undergraduate/majors-minor
-department,Duke University,Biomedical Engineering*,http://bme.duke.edu/
-department,Duke University,Biophysics,https://www.phy.duke.edu/biophysics-major
-department,Duke University,Brazilian and Global Portuguese Studies,http://romancestudies.duke.edu/undergraduate/majors
-department,Duke University,Chemistry,http://www.chem.duke.edu/undergraduate/majors/
-department,Duke University,Civil Engineering*,http://www.cee.duke.edu/undergrad
-department,Duke University,Classical Civilization,https://classicalstudies.duke.edu/undergraduate/majors/classical-civilization
-department,Duke University,Classical Languages,https://classicalstudies.duke.edu/undergraduate/major/classical-languages
-department,Duke University,Computer Science,http://www.cs.duke.edu/education/undergrad/index.php
-department,Duke University,Cultural Anthropology,http://culturalanthropology.duke.edu/undergraduate/major-minor
-department,Duke University,Dance,http://danceprogram.duke.edu/academics/major
-department,Duke University,Earth and Ocean Sciences,http://nicholas.duke.edu/programs/undergrad
-department,Duke University,Economics,http://econ.duke.edu/undergraduate/major-minors
-department,Duke University,Electrical and Computer Engineering*,http://www.ece.duke.edu/
-department,Duke University,English,https://english.duke.edu/undergraduate/major
-department,Duke University,Environmental Engineering*,http://www.cee.duke.edu/undergrad
-department,Duke University,Environmental Sciences,http://nicholas.duke.edu/programs/undergrad
-department,Duke University,Environmental Sciences and Policy,http://nicholas.duke.edu/programs/undergrad
-department,Duke University,Evolutionary Anthropology,http://evolutionaryanthropology.duke.edu/undergraduate
-department,Duke University,French Studies,http://romancestudies.duke.edu/undergraduate/majors
-department,Duke University,"Gender, Sexuality, and Feminist Studies",http://gendersexualityfeminist.duke.edu/undergraduate
-department,Duke University,German,http://german.duke.edu/undergraduate/major-minor
-department,Duke University,Global Cultural Studies,http://literature.duke.edu/undergraduate-programs
-department,Duke University,Global Health**,http://globalhealth.duke.edu/education-and-training/undergraduate/major
-department,Duke University,History,https://history.duke.edu/undergraduate/major
-department,Duke University,Interdepartmental Major,http://trinity.duke.edu/undergraduate/academic-policies/interdepartmental-major
-department,Duke University,International Comparative Studies,http://internationalcomparative.duke.edu/academics/major-requirements
-department,Duke University,Italian Studies,http://romancestudies.duke.edu/undergraduate/majors
-department,Duke University,Linguistics,http://linguisticsprogram.duke.edu/major-minor
-department,Duke University,Mathematics,http://www.math.duke.edu/
-department,Duke University,Mechanical Engineering*,http://www.mems.duke.edu/
-department,Duke University,Medieval and Renaissance Studies,http://medren.aas.duke.edu/cmrs/undergraduateRequirements.html
-department,Duke University,Music,http://music.duke.edu/undergraduate/major-minor
-department,Duke University,Neuroscience,http://www.dibs.duke.edu/education/undergraduate-neuroscience
-department,Duke University,Philosophy,http://philosophy.duke.edu/undergraduate/major-minor
-department,Duke University,Physics,http://www.phy.duke.edu/physics-major
-department,Duke University,Political Science,http://polisci.duke.edu/undergraduate/offerings
-department,Duke University,"Program II (self-designed degree, BA or BS)",http://program2.duke.edu/
-department,Duke University,Psychology,http://psychandneuro.duke.edu/undergraduate/requirements
-department,Duke University,Public Policy Studies,http://www.sanford.duke.edu/undergraduate/history.php
-department,Duke University,Religious Studies,http://religiousstudies.duke.edu/
-department,Duke University,Romance Studies,http://romancestudies.duke.edu/undergraduate/majors
-department,Duke University,Russian,http://slaviceurasian.duke.edu/undergraduate/majors-minors
-department,Duke University,Slavic and Eurasian Studies,http://slaviceurasian.duke.edu/undergraduate/majors-minors
-department,Duke University,Sociology,http://sociology.duke.edu/
-department,Duke University,"Spanish, Latin American, and Latino/a Studies",https://romancestudies.duke.edu/undergraduate/majors
-department,Duke University,Statistical Science,https://stat.duke.edu/undergraduate-program
-department,Duke University,Theater Studies,http://theaterstudies.duke.edu/academics/major-minor
-department,Duke University,Visual Arts,http://aahvs.duke.edu/undergraduate/majors/visual-arts
-department,Duke University,Visual and Media Studies,http://aahvs.duke.edu/undergraduate/majors/visual-media-studies
+faculty,UCL (University College London),The Bartlett - UCL - London's Global University,https://www.ucl.ac.uk/bartlett/
+faculty,UCL (University College London),UCL Engineering,http://www.engineering.ucl.ac.uk
+department,UCL (University College London),UCL Division of Medicine,http://www.ucl.ac.uk/medicine/
+faculty,University of Michigan,Architecture & Urban Planning,http://taubmancollege.umich.edu/
+faculty,University of Michigan,Art & Design,http://art-design.umich.edu/
+faculty,University of Michigan,Business,http://bus.umich.edu/
+faculty,University of Michigan,Dentistry,http://dent.umich.edu/
+faculty,University of Michigan,Education,http://soe.umich.edu/
+faculty,University of Michigan,Engineering,http://engin.umich.edu/
+faculty,University of Michigan,Environment and Sustainability,http://seas.umich.edu/
+faculty,University of Michigan,Information,https://si.umich.edu/
+faculty,University of Michigan,Kinesiology,http://kinesiology.umich.edu/
+faculty,University of Michigan,Law,http://law.umich.edu/
+faculty,University of Michigan,"Literature, Science, and the Arts",http://lsa.umich.edu/
+faculty,University of Michigan,Medicine,http://med.umich.edu/medschool/
+faculty,University of Michigan,"Music, Theatre & Dance",http://music.umich.edu/
+faculty,University of Michigan,Nursing,http://nursing.umich.edu/
+faculty,University of Michigan,Pharmacy,http://pharmacy.umich.edu/
+faculty,University of Michigan,Public Health,http://sph.umich.edu/
+faculty,University of Michigan,Public Policy,http://fordschool.umich.edu/
+faculty,University of Michigan,Rackham School of Graduate Studies,http://rackham.umich.edu/
+faculty,University of Michigan,Social Work,http://ssw.umich.edu/
+faculty,University of Michigan,U-M Dearborn,http://umdearborn.edu/
+faculty,University of Michigan,U-M Flint,http://umflint.edu/
 department,Johns Hopkins University,Adolescent Health,http://www.jhsph.edu/academics/certificate-programs/certificates-for-hopkins-and-non-degree-students/adolescent-health.html
 department,Johns Hopkins University,Adult-Gerontological Acute Care Nurse Practitioner,http://nursing.jhu.edu/academics/programs/post-degree/nurse-practitioner/adult-gerontological-acute.html
 department,Johns Hopkins University,Adult-Gerontological Critical Care Clinical Nurse Specialist,http://nursing.jhu.edu/academics/programs/post-degree/cns.html
@@ -1241,12 +1188,25 @@ department,Johns Hopkins University,Biological Chemistry,http://www.hopkinsmedic
 department,Johns Hopkins University,Biology,http://krieger.jhu.edu/fields/biology/
 department,Johns Hopkins University,Biomedical Engineering,http://engineering.jhu.edu/fields-of-study/biomedical-engineering/
 department,Johns Hopkins University,Biophysics and Biophysical Chemistry,http://biophysics.med.jhmi.edu/education/
-faculty,University of Michigan,Architecture & Urban Planning,http://taubmancollege.umich.edu/
-department,Harvard University,Genetics |,http://genetics.hms.harvard.edu/
 department,Johns Hopkins University,Biophysics and Molecular Biophysics,http://krieger.jhu.edu/fields/biophysics/
 department,Johns Hopkins University,Biostatistics,http://www.jhsph.edu/departments/biostatistics/
 department,Johns Hopkins University,Biotechnology,http://advanced.jhu.edu/academics/graduate-degree-programs/biotechnology/
 department,Johns Hopkins University,Biotechnology Education,http://advanced.jhu.edu/academics/certificate-programs/biotechnology-education/
+department,Duke University,African and African American Studies,http://aaas.duke.edu/undergraduate/major-minor
+department,Duke University,Art History,http://aahvs.duke.edu/undergraduate/majors
+department,Duke University,Asian and Middle Eastern Studies,http://asianmideast.duke.edu/undergraduate/majors-minors
+department,The University of Edinburgh,Business School,http://www.business-school.ed.ac.uk/
+department,The University of Edinburgh,Centre for Open Learning,https://www.ed.ac.uk/lifelong-learning
+department,The University of Edinburgh,Divinity,https://www.ed.ac.uk/divinity
+department,The University of Edinburgh,Economics,http://www.ed.ac.uk/schools-departments/economics
+department,The University of Edinburgh,Edinburgh College of Art,http://www.eca.ed.ac.uk/
+department,The University of Edinburgh,Health in Social Science,http://www.ed.ac.uk/schools-departments/health
+department,The University of Edinburgh,"History, Classics and Archaeology",https://www.ed.ac.uk/history-classics-archaeology
+department,The University of Edinburgh,Law,http://www.law.ed.ac.uk/
+department,The University of Edinburgh,"Literatures, Languages and Cultures",https://www.ed.ac.uk/literatures-languages-cultures
+department,The University of Edinburgh,Moray House School of Education,http://www.education.ed.ac.uk/
+department,The University of Edinburgh,"Philosophy, Psychology and Language Science",http://www.ppls.ed.ac.uk/
+department,The University of Edinburgh,Social and Political Science,http://www.sps.ed.ac.uk/
 department,Johns Hopkins University,Biotechnology Enterprise,http://advanced.jhu.edu/academics/certificate-programs/biotechnology-enterprise/
 department,Johns Hopkins University,Biotechnology Enterprise and Entrepreneurship,http://advanced.jhu.edu/academics/graduate-degree-programs/biotechnology-enterprise-and-entrepreneurship/
 department,Johns Hopkins University,Business Administration (MBA),http://carey.jhu.edu/academics/master-of-business-administration/
@@ -1267,26 +1227,6 @@ department,Johns Hopkins University,Clinical Trials,http://www.jhsph.edu/academi
 department,Johns Hopkins University,Cognitive Science,http://krieger.jhu.edu/fields/cogsci/
 department,Johns Hopkins University,Communication,http://advanced.jhu.edu/academics/graduate-degree-programs/communication/
 department,Johns Hopkins University,Community-based Public Health,http://www.jhsph.edu/academics/certificate-programs/certificates-for-hopkins-students/community-based-public-health.html
-faculty,University of Michigan,Art & Design,http://art-design.umich.edu/
-faculty,University of Michigan,Business,http://bus.umich.edu/
-faculty,University of Michigan,Dentistry,http://dent.umich.edu/
-faculty,University of Michigan,Education,http://soe.umich.edu/
-faculty,University of Michigan,Engineering,http://engin.umich.edu/
-faculty,University of Michigan,Environment and Sustainability,http://seas.umich.edu/
-faculty,University of Michigan,Information,https://si.umich.edu/
-faculty,University of Michigan,Kinesiology,http://kinesiology.umich.edu/
-faculty,University of Michigan,Law,http://law.umich.edu/
-faculty,University of Michigan,"Literature, Science, and the Arts",http://lsa.umich.edu/
-faculty,University of Michigan,Medicine,http://med.umich.edu/medschool/
-faculty,University of Michigan,"Music, Theatre & Dance",http://music.umich.edu/
-faculty,University of Michigan,Nursing,http://nursing.umich.edu/
-faculty,University of Michigan,Pharmacy,http://pharmacy.umich.edu/
-faculty,University of Michigan,Public Health,http://sph.umich.edu/
-faculty,University of Michigan,Public Policy,http://fordschool.umich.edu/
-faculty,University of Michigan,Rackham School of Graduate Studies,http://rackham.umich.edu/
-faculty,University of Michigan,Social Work,http://ssw.umich.edu/
-faculty,University of Michigan,U-M Dearborn,http://umdearborn.edu/
-faculty,University of Michigan,U-M Flint,http://umflint.edu/
 department,Johns Hopkins University,Computational Medicine,http://engineering.jhu.edu/fields-of-study/computational-medicine/
 department,Johns Hopkins University,Computer Integrated Surgery,http://engineering.jhu.edu/fields-of-study/computer-integrated-surgery/
 department,Johns Hopkins University,Computer Science,http://engineering.jhu.edu/fields-of-study/computer-science/
@@ -1299,6 +1239,36 @@ department,Johns Hopkins University,Demography,http://www.jhsph.edu/departments/
 department,Johns Hopkins University,Digital Curation,http://advanced.jhu.edu/academics/certificate-programs/digital-curation-certificate/
 department,Johns Hopkins University,Doctor of Public Health,http://www.jhsph.edu/academics/degree-programs/doctoral-programs/doctor-of-public-health/
 department,Johns Hopkins University,Early Intervention/Preschool Special Education Specialist,http://education.jhu.edu/Academics/certificates/early/index.html
+department,Duke University,Biology,http://biology.duke.edu/undergraduate/majors-minor
+department,Duke University,Biomedical Engineering*,http://bme.duke.edu/
+department,Duke University,Biophysics,https://www.phy.duke.edu/biophysics-major
+department,Duke University,Brazilian and Global Portuguese Studies,http://romancestudies.duke.edu/undergraduate/majors
+department,Duke University,Chemistry,http://www.chem.duke.edu/undergraduate/majors/
+department,Duke University,Civil Engineering*,http://www.cee.duke.edu/undergrad
+department,Duke University,Classical Civilization,https://classicalstudies.duke.edu/undergraduate/majors/classical-civilization
+department,Duke University,Classical Languages,https://classicalstudies.duke.edu/undergraduate/major/classical-languages
+department,Duke University,Computer Science,http://www.cs.duke.edu/education/undergrad/index.php
+department,Duke University,Cultural Anthropology,http://culturalanthropology.duke.edu/undergraduate/major-minor
+department,Duke University,Dance,http://danceprogram.duke.edu/academics/major
+department,Duke University,Earth and Ocean Sciences,http://nicholas.duke.edu/programs/undergrad
+department,Duke University,Economics,http://econ.duke.edu/undergraduate/major-minors
+department,Duke University,Electrical and Computer Engineering*,http://www.ece.duke.edu/
+department,Duke University,English,https://english.duke.edu/undergraduate/major
+department,Duke University,Environmental Engineering*,http://www.cee.duke.edu/undergrad
+department,Duke University,Environmental Sciences,http://nicholas.duke.edu/programs/undergrad
+department,Duke University,Environmental Sciences and Policy,http://nicholas.duke.edu/programs/undergrad
+department,Duke University,Evolutionary Anthropology,http://evolutionaryanthropology.duke.edu/undergraduate
+department,Duke University,French Studies,http://romancestudies.duke.edu/undergraduate/majors
+department,Duke University,"Gender, Sexuality, and Feminist Studies",http://gendersexualityfeminist.duke.edu/undergraduate
+department,Duke University,German,http://german.duke.edu/undergraduate/major-minor
+department,Duke University,Global Cultural Studies,http://literature.duke.edu/undergraduate-programs
+department,Duke University,Global Health**,http://globalhealth.duke.edu/education-and-training/undergraduate/major
+department,Duke University,History,https://history.duke.edu/undergraduate/major
+department,Duke University,Interdepartmental Major,http://trinity.duke.edu/undergraduate/academic-policies/interdepartmental-major
+department,Duke University,International Comparative Studies,http://internationalcomparative.duke.edu/academics/major-requirements
+department,Duke University,Italian Studies,http://romancestudies.duke.edu/undergraduate/majors
+department,Duke University,Linguistics,http://linguisticsprogram.duke.edu/major-minor
+department,Duke University,Mathematics,http://www.math.duke.edu/
 department,Johns Hopkins University,Early Music Performance,http://www.peabody.jhu.edu/earlymusic
 department,Johns Hopkins University,Earth and Planetary Sciences,http://krieger.jhu.edu/fields/eps/
 department,Johns Hopkins University,East Asian Studies,http://krieger.jhu.edu/fields/east-asian-studies/
@@ -1335,6 +1305,26 @@ department,Johns Hopkins University,Financial Management,http://carey.jhu.edu/ac
 department,Johns Hopkins University,Financial Mathematics,http://engineering.jhu.edu/fields-of-study/financial-mathematics/
 department,Johns Hopkins University,Food Safety Regulation,http://advanced.jhu.edu/academics/graduate-degree-programs/food-safety-regulation/
 department,Johns Hopkins University,"Food System, Environment and Public Health",http://www.jhsph.edu/academics/certificate-programs/certificates-for-hopkins-and-non-degree-students/food-system-envir-publ-health.html
+department,Duke University,Mechanical Engineering*,http://www.mems.duke.edu/
+department,Duke University,Medieval and Renaissance Studies,http://medren.aas.duke.edu/cmrs/undergraduateRequirements.html
+department,Duke University,Music,http://music.duke.edu/undergraduate/major-minor
+department,Duke University,Neuroscience,http://www.dibs.duke.edu/education/undergraduate-neuroscience
+department,Duke University,Philosophy,http://philosophy.duke.edu/undergraduate/major-minor
+department,Duke University,Physics,http://www.phy.duke.edu/physics-major
+department,Duke University,Political Science,http://polisci.duke.edu/undergraduate/offerings
+department,Duke University,"Program II (self-designed degree, BA or BS)",http://program2.duke.edu/
+department,Duke University,Psychology,http://psychandneuro.duke.edu/undergraduate/requirements
+department,Duke University,Public Policy Studies,http://www.sanford.duke.edu/undergraduate/history.php
+department,Duke University,Religious Studies,http://religiousstudies.duke.edu/
+department,Duke University,Romance Studies,http://romancestudies.duke.edu/undergraduate/majors
+department,Duke University,Russian,http://slaviceurasian.duke.edu/undergraduate/majors-minors
+department,Duke University,Slavic and Eurasian Studies,http://slaviceurasian.duke.edu/undergraduate/majors-minors
+department,Duke University,Sociology,http://sociology.duke.edu/
+department,Duke University,"Spanish, Latin American, and Latino/a Studies",https://romancestudies.duke.edu/undergraduate/majors
+department,Duke University,Statistical Science,https://stat.duke.edu/undergraduate-program
+department,Duke University,Theater Studies,http://theaterstudies.duke.edu/academics/major-minor
+department,Duke University,Visual Arts,http://aahvs.duke.edu/undergraduate/majors/visual-arts
+department,Duke University,Visual and Media Studies,http://aahvs.duke.edu/undergraduate/majors/visual-media-studies
 department,Johns Hopkins University,Forecasting,http://advanced.jhu.edu/academics/certificate-programs/certificate-in-forecasting/
 department,Johns Hopkins University,French,http://grll.jhu.edu/french/
 department,Johns Hopkins University,General Engineering,http://engineering.jhu.edu/fields-of-study/general-engineering/
@@ -1385,8 +1375,6 @@ department,Johns Hopkins University,International Development,https://www.sais-j
 department,Johns Hopkins University,International Economics and Finance,http://www.sais-jhu.edu/atoz/master-international-economics-and-finance
 department,Johns Hopkins University,International Health,http://www.jhsph.edu/departments/international-health/
 department,Johns Hopkins University,International Public Policy,http://www.sais-jhu.edu/atoz/master-international-public-policy
-department,Johns Hopkins University,International Studies,http://krieger.jhu.edu/fields/international-studies/
-department,Johns Hopkins University,International Studies(1),https://www.sais-jhu.edu/atoz/certificates
 department,Johns Hopkins University,International Studies (China),http://www.sais-jhu.edu/graduate-studies/campuses/nanjing-china#hnc-academic-programs-master-arts-international-studies-mais
 department,Johns Hopkins University,International Studies (Europe),http://www.sais-jhu.edu/atoz/diploma-international-studies#overview
 department,Johns Hopkins University,International Studies (PhD),http://www.sais-jhu.edu/atoz/doctor-philosophy#overview
@@ -1443,8 +1431,6 @@ department,Johns Hopkins University,Nanobiotechnology,http://engineering.jhu.edu
 department,Johns Hopkins University,National Security Studies,http://advanced.jhu.edu/academic/national-security/
 department,Johns Hopkins University,Natural Sciences,http://www.advising.jhu.edu/natural_science.php
 department,Johns Hopkins University,Near Eastern Studies,http://krieger.jhu.edu/fields/near-eastern-studies/
-department,Johns Hopkins University,Neuroscience,http://neuroscience.jhu.edu/graduate-program
-department,Johns Hopkins University,Neuroscience(1),http://krieger.jhu.edu/fields/neuroscience/
 department,Johns Hopkins University,Nonprofit Management,http://advanced.jhu.edu/academics/certificate-programs/nonprofit-management/
 department,Johns Hopkins University,Nursing (PhD),http://nursing.jhu.edu/academics/programs/doctoral/phd/index.html
 department,Johns Hopkins University,Nursing DNP/PhD,http://nursing.jhu.edu/academics/programs/doctoral/dnp-phd.html
@@ -1511,18 +1497,13 @@ department,Johns Hopkins University,Visual Arts,http://krieger.jhu.edu/fields/vi
 department,Johns Hopkins University,"Women, Gender, and Sexuality",http://krieger.jhu.edu/fields/women-gender-and-sexuality/
 department,Johns Hopkins University,Writing,http://advanced.jhu.edu/academics/graduate-degree-programs/writing
 department,Johns Hopkins University,Writing Seminars,http://krieger.jhu.edu/fields/writing-seminars/
-department,King's College London,"Respiratory Science, Department of Asthma, Allergy &",https://www.kcl.ac.uk/lsm/research/divisions/aalb/departments/aars/index.aspx
-department,King's College London,"Ultrastructural Imaging, Centre for",http://www.kcl.ac.uk/innovation/research/corefacilities/majorrf/cui/index.aspx
-department,King's College London,Theology & Religious Studies,http://www.kcl.ac.uk/artshums/depts/trs/index.aspx
-department,King's College London,Tissue Engineering & Biophotonics,http://www.kcl.ac.uk/dentistry/research/divisions/bio3/index.aspx
-department,King's College London,Twin Research & Genetic Epidemiology,https://www.kcl.ac.uk/lsm/Schools/life-course-sciences/departments/twin-research-and-genetic-epidemiology/index.aspx
-department,King's College London,War Studies,http://www.kcl.ac.uk/sspp/departments/warstudies/index.aspx
-department,King's College London,Women's Health,https://www.kcl.ac.uk/lsm/research/divisions/wh/index.aspx
-department,King's College London,Skin Therapy Research Unit,https://www.kcl.ac.uk/lsm/research/divisions/gmm/departments/dermatology/Research/stru/index.aspx
-department,King's College London,"Social Science & Public Policy, Faculty of",http://www.kcl.ac.uk/sspp/index.aspx
-department,King's College London,"Social Science, Health & Medicine",http://www.kcl.ac.uk/sspp/departments/sshm/index.aspx
-department,King's College London,"Spanish, Portuguese & Latin American Studies",http://www.kcl.ac.uk/artshums/depts/splas/index.aspx
-department,King's College London,Osteoporosis Unit,https://www.kcl.ac.uk/lsm/research/divisions/imaging/departments/cancer/osteoporosis/index.aspx
+department,King's College London,Academic Rheumatology,https://www.kcl.ac.uk/lsm/research/divisions/diiid/departments/rheumatology/index.aspx
+department,King's College London,Air Power Studies Research Group,http://www.kcl.ac.uk/sspp/departments/warstudies/research/groups/aswrg/indexold.aspx
+department,King's College London,Anatomy,https://www.kcl.ac.uk/lsm/study/departments/anatomy/index.aspx
+department,King's College London,"Arts & Humanities, Faculty of",http://www.kcl.ac.uk/artshums/index.aspx
+department,King's College London,"Australian Studies, Menzies Centre for",http://www.kcl.ac.uk/artshums/ahri/centres/menzies/index.aspx
+department,Johns Hopkins University,International Studies – Krieger School of Arts & Sciences,http://krieger.jhu.edu/fields/international-studies/
+department,Johns Hopkins University,Neuroscience – Krieger School of Arts & Sciences,http://krieger.jhu.edu/fields/neuroscience/
 department,King's College London,Paediatrics,https://www.kcl.ac.uk/lsm/research/divisions/wh/groups/paediatric-respiratory-physiology/index.aspx
 department,King's College London,Pharmacology & Therapeutics,https://www.kcl.ac.uk/lsm/study/departments/pharmacology/index.aspx
 department,King's College London,Pharmacy,http://www.kcl.ac.uk/lsm/study/departments/pharmacy-forensic/index.aspx
@@ -1533,12 +1514,16 @@ department,King's College London,Physiotherapy,https://www.kcl.ac.uk/lsm/researc
 department,King's College London,Political Economy,http://www.kcl.ac.uk/sspp/departments/politicaleconomy/index.aspx
 department,King's College London,Population & Patient Health,http://www.kcl.ac.uk/dentistry/research/divisions/population/index.aspx
 department,King's College London,"Psychiatry, Psychology & Neuroscience, Institute of",http://www.kcl.ac.uk/ioppn/index.aspx
-department,King's College London,"Natural and Mathematical Sciences, Faculty of",http://www.kcl.ac.uk/nms/index.aspx
-department,King's College London,Neuropathology,https://www.kcl.ac.uk/ioppn/depts/cn/research/Neuropathology/neuropathology.aspx
-department,King's College London,Neuroscience (Institute of Psychiatry),http://www.kcl.ac.uk/ioppn/depts/bcn/index.aspx
-department,King's College London,"Neuroscience, Clinical",http://www.kcl.ac.uk/ioppn/depts/bcn/index.aspx
-department,King's College London,Nutrition & Dietetics,https://www.kcl.ac.uk/lsm/research/divisions/dns/study/nutrition/index.aspx
-department,King's College London,Nutritional Science,https://www.kcl.ac.uk/lsm/research/divisions/dns/index.aspx
+department,Johns Hopkins University,Certificate Programs | SAIS,https://www.sais-jhu.edu/atoz/certificates
+department,King's College London,Health Service and Population Research,https://www.kcl.ac.uk/ioppn/depts/hspr/index.aspx
+department,King's College London,History,http://www.kcl.ac.uk/artshums/depts/history/index.aspx
+department,King's College London,"Humanities, School of Arts & Humanities",http://www.kcl.ac.uk/artshums/index.aspx
+department,King's College London,"Genetics and Molecular Medicine, Division of",https://www.kcl.ac.uk/lsm/research/divisions/gmm/index.aspx
+department,King's College London,"Genetics, Medicine & Molecular",https://www.kcl.ac.uk/lsm/research/divisions/gmm/index.aspx
+department,King's College London,Geography,http://www.kcl.ac.uk/sspp/departments/geography/index.aspx
+department,King's College London,German,http://www.kcl.ac.uk/artshums/depts/german/index.aspx
+department,King's College London,"Gerontology, Institute of",https://www.kcl.ac.uk/sspp/departments/sshm/geront/index.aspx
+department,King's College London,Graduate School,http://www.kcl.ac.uk/study/pg/school/index.aspx
 department,King's College London,Management (King's Business School),https://www.kcl.ac.uk/business/index.aspx
 department,King's College London,Mathematics,http://www.kcl.ac.uk/nms/depts/mathematics/index.aspx
 department,King's College London,Medical & Molecular Genetics,https://www.kcl.ac.uk/lsm/research/divisions/gmm/departments/mmg/index.aspx
@@ -1549,8 +1534,7 @@ department,King's College London,Menzies Centre for Australian Studies,http://ww
 department,King's College London,Middle East & Mediterranean Studies,http://www.kcl.ac.uk/sspp/departments/mems/index.aspx
 department,King's College London,Modern Language Centre,http://www.kcl.ac.uk/artshums/depts/mlc/index.aspx
 department,King's College London,Mucosal & Salivary Biology,http://www.kcl.ac.uk/dentistry/research/divisions/mucosal/index.aspx
-department,King's College London,"Law, Dickson Poon School of",http://www.kcl.ac.uk/law/index.aspx
-department,King's College London,"Life Sciences and Medicine, Faculty of",https://www.kcl.ac.uk/lsm/index.aspx
+department,Johns Hopkins University,Welcome to the Graduate Program - The Solomon H Snyder Department of Neuroscience,http://neuroscience.jhu.edu/graduate
 department,King's College London,Imaging Sciences & Biomedical Engineering,https://www.kcl.ac.uk/lsm/research/divisions/imaging/Bin/biomedical-engineering-and-imaging-sciences-index.aspx
 department,King's College London,Immunobiology,https://www.kcl.ac.uk/lsm/research/divisions/diiid/departments/immunobiology/index.aspx
 department,King's College London,"Immunology, Infection and Inflammatory Diseases, Division of",https://www.kcl.ac.uk/lsm/research/divisions/diiid/index.aspx
@@ -1559,27 +1543,36 @@ department,King's College London,Informatics,http://www.kcl.ac.uk/nms/depts/info
 department,King's College London,Innovation & Translation Centre,http://www.kcl.ac.uk/dentistry/innovation/innovation-and-translation-centre/old-site-pages/indexOld.aspx
 department,King's College London,Institute of Gerontology,https://www.kcl.ac.uk/sspp/departments/sshm/geront/index.aspx
 department,King's College London,"Institute of Psychiatry, Psychology and Neuroscience",http://www.kcl.ac.uk/ioppn/index.aspx
+department,King's College London,"Law, Dickson Poon School of",http://www.kcl.ac.uk/law/index.aspx
+department,King's College London,"Life Sciences and Medicine, Faculty of",https://www.kcl.ac.uk/lsm/index.aspx
+department,King's College London,Osteoporosis Unit,https://www.kcl.ac.uk/lsm/research/divisions/imaging/departments/cancer/osteoporosis/index.aspx
+department,King's College London,"Natural and Mathematical Sciences, Faculty of",http://www.kcl.ac.uk/nms/index.aspx
+department,King's College London,Neuropathology,https://www.kcl.ac.uk/ioppn/depts/cn/research/Neuropathology/neuropathology.aspx
+department,King's College London,Neuroscience (Institute of Psychiatry),http://www.kcl.ac.uk/ioppn/depts/bcn/index.aspx
+department,King's College London,"Neuroscience, Clinical",http://www.kcl.ac.uk/ioppn/depts/bcn/index.aspx
+department,King's College London,Nutrition & Dietetics,https://www.kcl.ac.uk/lsm/research/divisions/dns/study/nutrition/index.aspx
+department,King's College London,Nutritional Science,https://www.kcl.ac.uk/lsm/research/divisions/dns/index.aspx
 department,King's College London,King's Learning Institute,http://www.kcl.ac.uk/study/learningteaching/kli/index.aspx
-department,King's College London,"Genetics and Molecular Medicine, Division of",https://www.kcl.ac.uk/lsm/research/divisions/gmm/index.aspx
-department,King's College London,"Genetics, Medicine & Molecular",https://www.kcl.ac.uk/lsm/research/divisions/gmm/index.aspx
-department,King's College London,Geography,http://www.kcl.ac.uk/sspp/departments/geography/index.aspx
-department,King's College London,German,http://www.kcl.ac.uk/artshums/depts/german/index.aspx
-department,King's College London,"Gerontology, Institute of",https://www.kcl.ac.uk/sspp/departments/sshm/geront/index.aspx
-department,King's College London,Graduate School,http://www.kcl.ac.uk/study/pg/school/index.aspx
-department,King's College London,Health Service and Population Research,https://www.kcl.ac.uk/ioppn/depts/hspr/index.aspx
-department,King's College London,History,http://www.kcl.ac.uk/artshums/depts/history/index.aspx
-department,King's College London,"Humanities, School of Arts & Humanities",http://www.kcl.ac.uk/artshums/index.aspx
-department,King's College London,Film Studies,https://www.kcl.ac.uk/artshums/depts/filmstudies/index.aspx
-department,King's College London,Forensic & Analytical Science,http://www.kcl.ac.uk/biohealth/study/departments/forensic/index.aspx
-department,King's College London,Forensic and Neurodevelopmental Science,https://www.kcl.ac.uk/ioppn/depts/fans/index.aspx
-department,King's College London,French,http://www.kcl.ac.uk/artshums/depts/french/index.aspx
 department,King's College London,Education and Professional Studies,http://www.kcl.ac.uk/sspp/departments/education/index.aspx
 department,King's College London,English,http://www.kcl.ac.uk/artshums/depts/english/index.aspx
 department,King's College London,English Language Centre,http://www.kcl.ac.uk/study/elc/index.aspx
 department,King's College London,European & International Studies,https://www.kcl.ac.uk/sspp/departments/european-studies/index.aspx
+department,King's College London,Film Studies,https://www.kcl.ac.uk/artshums/depts/filmstudies/index.aspx
+department,King's College London,Forensic & Analytical Science,http://www.kcl.ac.uk/biohealth/study/departments/forensic/index.aspx
+department,King's College London,Forensic and Neurodevelopmental Science,https://www.kcl.ac.uk/ioppn/depts/fans/index.aspx
+department,King's College London,French,http://www.kcl.ac.uk/artshums/depts/french/index.aspx
+department,King's College London,"Ultrastructural Imaging, Centre for",http://www.kcl.ac.uk/innovation/research/corefacilities/majorrf/cui/index.aspx
+department,King's College London,Skin Therapy Research Unit,https://www.kcl.ac.uk/lsm/research/divisions/gmm/departments/dermatology/Research/stru/index.aspx
+department,King's College London,"Social Science & Public Policy, Faculty of",http://www.kcl.ac.uk/sspp/index.aspx
+department,King's College London,"Social Science, Health & Medicine",http://www.kcl.ac.uk/sspp/departments/sshm/index.aspx
+department,King's College London,"Spanish, Portuguese & Latin American Studies",http://www.kcl.ac.uk/artshums/depts/splas/index.aspx
+department,King's College London,Theology & Religious Studies,http://www.kcl.ac.uk/artshums/depts/trs/index.aspx
+department,King's College London,Tissue Engineering & Biophotonics,http://www.kcl.ac.uk/dentistry/research/divisions/bio3/index.aspx
+department,King's College London,Twin Research & Genetic Epidemiology,https://www.kcl.ac.uk/lsm/Schools/life-course-sciences/departments/twin-research-and-genetic-epidemiology/index.aspx
 department,King's College London,Dental Institute,http://www.kcl.ac.uk/dentistry/index.aspx
 department,King's College London,"Digital Humanities, Department of",http://www.kcl.ac.uk/artshums/depts/ddh/index.aspx
 department,King's College London,Division of Genetics & Molecular Medicine,https://www.kcl.ac.uk/lsm/research/divisions/gmm/index.aspx
+department,King's College London,"Respiratory Science, Department of Asthma, Allergy &",https://www.kcl.ac.uk/lsm/research/divisions/aalb/departments/aars/index.aspx
 department,King's College London,"Cancer Studies, Division of Cardiology",https://www.kcl.ac.uk/lsm/research/divisions/cancer/index.aspx
 department,King's College London,"Cardiovascular Medicine, Division of",https://www.kcl.ac.uk/lsm/research/divisions/cardio/index.aspx
 department,King's College London,Centre of Construction Law,http://www.kcl.ac.uk/law/research/centres/construction/about.aspx
@@ -1590,6 +1583,8 @@ department,King's College London,Classics,http://www.kcl.ac.uk/artshums/depts/cl
 department,King's College London,"Clinical Skills Centre, Chantler",http://www.kcl.ac.uk/health/study/facilities/chantler/index.aspx
 department,King's College London,Comparative Literature,http://www.kcl.ac.uk/artshums/depts/complit/index.aspx
 department,King's College London,"Construction Law, Centre of",http://www.kcl.ac.uk/law/research/centres/construction/about.aspx
+department,King's College London,War Studies,http://www.kcl.ac.uk/sspp/departments/warstudies/index.aspx
+department,King's College London,Women's Health,https://www.kcl.ac.uk/lsm/research/divisions/wh/index.aspx
 department,King's College London,"Biochemistry, Department of",https://www.kcl.ac.uk/lsm/study/departments/biochemistry/index.aspx
 department,King's College London,"Biomedical Engineering, Department of",https://www.kcl.ac.uk/lsm/research/divisions/imaging/departments/biomedengineering/index.aspx
 department,King's College London,Biostatistics,https://www.kcl.ac.uk/ioppn/depts/BiostatisticsHealthInformatics/index.aspx

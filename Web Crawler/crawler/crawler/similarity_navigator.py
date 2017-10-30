@@ -20,10 +20,17 @@ class SimilarityNavigator(object):
     DEPARTMENT_TARGET = frozenset(['area of study', 'department', 'department of', 'school', 'school of',
                                    'academic unit', 'school & department', 'major and minor', 'major',
                                    'faculty & department', 'academics', 'departments and programs'])
-    PEOPLE_TARGET = frozenset(['academic staff', 'faculty', 'faculty staff', 'faculty people',
-                               'faculty directory', 'our people', 'people', 'staff',
-                               'staff directory', 'teaching staff', 'emeritus'])
+    PEOPLE_TARGET = frozenset(['academic staff', 'faculty', 'faculty staff', 'faculty people', 'faculty directory',
+                               'our people', 'people', 'teaching faculty', 'courtesy faculty', 'adjunct faculty',
+                               'professors', 'staff list', 'staff directory', 'teaching staff', 'emeritus',
+                               'faculty profiles', 'faculty list'])
     SEQUENTIAL_THRESHOLD = 0.8
+
+    # Filter word for extracting link
+    LINK_FILTER_KEYWORD_STRING_WISE = frozenset(['publication', 'publications', 'paper', 'search', 'news', 'event',
+                                                 'events', 'calendar', 'map', 'student'])
+    LINK_FILTER_KEYWORD_CHAR_WISE = frozenset(['login', 'logout', 'publication', 'news', 'wiki',
+                                               'event', 'calendar', 'map', 'article', 'blog', 'student'])
 
     def __init__(self):
         self.model_en = spacy.load('en_core_web_md')
@@ -44,7 +51,9 @@ class SimilarityNavigator(object):
 
         # Iterate through each item pair and obtain the similarity with the target keyword
         for item_pair in menu:
-            menu_with_similarity.append(item_pair + self.get_similarity(first_string=item_pair[0],
+            # Strip if there is index indicating redundancy
+            string_stripped = re.sub(r'\([1-9]+\)', '', item_pair[0])
+            menu_with_similarity.append(item_pair + self.get_similarity(first_string=string_stripped,
                                                                         second_string=target,
                                                                         ratio=ratio) + [target_class])
 
@@ -100,6 +109,9 @@ class SimilarityNavigator(object):
                 result_list.append(element_pair)
             link_set.add(element_pair[1])
 
+        # Filter link by certain keywords
+        result_list = [element_pair for element_pair in result_list if not self.link_contain_keyword(element_pair[1])]
+
         # Fallback to general href crawling and try again
         if fall_back_to_general:
             if (len(result_list) == 0) and (extract_func != get_general):
@@ -112,3 +124,14 @@ class SimilarityNavigator(object):
                                                ratio=ratio, top_from_each=top_from_each, threshold=threshold)
 
         return result_list
+
+    def link_contain_keyword(self, link):
+        # Get all word token in link
+        tokens = re.findall(r'[A-Za-z]+', link)
+        for token in tokens:
+            if token.lower() in self.LINK_FILTER_KEYWORD_STRING_WISE:
+                return True
+        for word in self.LINK_FILTER_KEYWORD_CHAR_WISE:
+            if word in link.lower():
+                return True
+        return False

@@ -89,8 +89,11 @@ def generic_get_anchor_and_text(response, content_xpath, href_xpath):
     for index in range(len(content_text)):
         text_ele = content_text[index]
         if text_ele in text_freq_dict.keys():
-            content_text[index] += '(%d)' % text_freq_dict[text_ele]
+            if text_freq_dict[text_ele] == 1:
+                prev_index = content_text.index(text_ele)
+                content_text[prev_index] += '(1)'
             text_freq_dict[text_ele] += 1
+            content_text[index] += '(%d)' % text_freq_dict[text_ele]
         else:
             text_freq_dict[text_ele] = 1
 
