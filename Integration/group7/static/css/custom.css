@@ -1,0 +1,35 @@
+body {
+	font-family: Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #4C5586;
+	background-color: #E8EAF6;
+}
+
+.jumbotron {
+	background-color: #4C5586;
+}
+
+.jumbotron h1 {
+	color: #fff;
+}
+
+.jumbotron p {
+	color: #fff;
+	font-weight: 300;
+	font-size: 1.6em;
+}
+
+.card {
+	background-color: #F4F5FD;
+}
+
+.footer {
+	background-color: #4D566A;
+}
+
+.footer p {
+	color: #fff;
+}
+
+.shadowed {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
