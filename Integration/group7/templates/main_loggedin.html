@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello Cindy - Identifying Young and Rising Stars for Promotion</title>
+    <title>Welcome back, Cindy - Identifying Young and Rising Stars for Promotion</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,86 +13,91 @@
     <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom fonts for this template -->
-    
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:light,regular,medium,bold&subset=Latin">
+
     <!-- Custom styles for this template -->
+    <link href="../static/css/custom.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <!-- Navigation -->
-    <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Group 7</a>
+    <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/main_loggedin/">WELCOME<span class="sr-only">(current)</span></a>
+            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">ABOUT</a>
+            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/profile/">PROFILE</a>
+            <a class="nav-link font-weight-bold" href="/profile/">PROFILE</a>
           </li>
         </ul>
       </div>
     </header>
 
     <!-- Jumbotron -->
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container my-4">
-        <h1 class="display-4 text-center">WELCOME BACK, CINDY</h1>
-        <hr class="my-4">
-        <p class="text-center">Select the product function below and start exploring the information that you need.</p>
-        <div class="text-center">
-          <img src="{{ url_for('static', filename='img/index1.png') }}" class="img-fluid" alt="" height="300" width="700">
-        </div>
-        <div class="text-center my-4">
-          <div class="btn-group" role="group" aria-label="Function buttons">
-            <a class="btn btn-secondary btn-light" href="/crawler/">
-              <img src="{{ url_for('static', filename='img/Crawling Icon.png') }}">Crawling
-            </a>
-            <a class="btn btn-secondary btn-light" href="/database/">
-              <img src="{{ url_for('static', filename='img/Database Icon.png') }}">Database
-            </a>
-            <a class="btn btn-secondary btn-light" href=/>
-              <img src="{{ url_for('static', filename='img/Logout Icon.png') }}">Log Out
-            </a>
-          </div>
-        </div>
+    <div class="jumbotron jumbotron-fluid shadowed">
+      <div class="container mt-4 text-center">
+        <h1 class="font-weight-bold">WELCOME BACK, CINDY</h1>
+        <img src="../static/img/Arrow.svg" alt="Arrow" class="my-4">
+        <p class="pb-2">Select the product function below and start exploring the information that you need.</p>
+        <img src="../static/img/Landing.svg" class="img-fluid" alt="Landing">
+      </div>
+    </div>
+
+    <!-- Function Button Group -->
+    <div class="container-fluid border text-center py-4 shadowed overlay">
+      <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
+        <a class="btn btn-light btn-menu" href="/crawler/">
+          <img src="../static/img/Crawl.svg">Crawler
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Database
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Benchmarker
+        </a>
+        <a class="btn btn-light btn-menu" href="/">
+          <img src="../static/img/Logout.svg">Log Out
+        </a>
       </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer pt-5">
+    <footer class="footer pt-5 pb-2">
       <div class="container">
         <div class="text-center">
           <ul class="list-inline">
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-facebook"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-github"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-wechat"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-linkedin"></i>
               </a>
             </li>
           </ul>
-          <p class="text-muted">Copyright &copy; BT3101 Group 7 2017</p>
+          <p>Copyright &copy; BT3101 Group 7 2017</p>
         </div>
       </div>
     </footer>

@@ -40,3 +40,29 @@ body {
 	background-color: #F4F5FD;
 	width: 15em;
 }
+
+.btn-menu {
+	color: #4C5586;
+	border-color: #F4F5FD;
+	background-color: #F4F5FD;
+}
+
+.function-button {
+	background-color: #F4F5FD;
+}
+
+.profile-box {
+	background-color: #F4F5FD;
+}
+
+.criteria-box {
+	background-color: #DADCE5;
+}
+
+.form-scrollable {
+	max-height: 5.75rem;
+  overflow-y: scroll;
+  background-color: #fff;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #CED4DA;
+}

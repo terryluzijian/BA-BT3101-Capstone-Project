@@ -13,62 +13,68 @@
     <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom fonts for this template -->
-    
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:light,regular,medium,bold&subset=Latin">
+
     <!-- Custom styles for this template -->
+    <link href="../static/css/custom.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Group 7</a>
+    <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/main_loggedin/">WELCOME</a>
+            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">ABOUT</a>
+            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/profile/">PROFILE<span class="sr-only">(current)</span></a>
+          <li class="nav-item active">
+            <a class="nav-link font-weight-bold" href="/profile/">PROFILE<span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
-    </nav>
+    </header>
 
-    <!-- Function Buttons -->
-    <div class="container mt-3 pt-5 text-center">
-      <div class="btn-group" role="group" aria-label="Function buttons">
-        <button class="btn btn-secondary btn-light">
-          <img src="img/Crawling Icon.png">Crawling
-        </button>
-        <button class="btn btn-secondary btn-light">
-          <img src="img/Database Icon.png">Database
-        </button>
-        <button class="btn btn-secondary btn-light">
-          <img src="img/Logout Icon.png">Log-out
-        </button>
+    <!-- Function Button Group -->
+    <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
+      <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
+        <a class="btn btn-light btn-menu" href="/crawler/">
+          <img src="../static/img/Crawl.svg">Crawler
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Database
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Benchmarker
+        </a>
+        <a class="btn btn-light btn-menu" href="/">
+          <img src="../static/img/Logout.svg">Log Out
+        </a>
       </div>
     </div>
 
     <!-- Profile Card and Activity History-->
     <div class="container pt-5">
-      <div class="row d-flex justify-content-center">
-        <div class="col-5 border text-center pt-5">
-          <img class="img-fluid" src="img/Profile Icon.png" alt="User Profile Pic">
+      <div class="row">
+        <div class="col-5 border text-center py-2 profile-box shadowed">
+          <p class="text-right"><a href="#"><i class="fa fa-lg fa-pencil"></i></a></p>
+          <img class="img-fluid" src="../static/img/Profile Icon.png" alt="User Profile Pic">
           <h4>Cindy Tay</h4>
-          <p><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp; REA Team</p>
-          <p><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp; cindytay@nus.edu.sg</p>
-          <p><i class="fa fa-university" aria-hidden="true"></i>&nbsp; National University of Singapore</p>
+          <p><i class="fa fa-sitemap"></i>&nbsp; REA Team</p>
+          <p><i class="fa fa-envelope-o"></i>&nbsp; cindytay@nus.edu.sg</p>
+          <p><i class="fa fa-university"></i>&nbsp; National University of Singapore</p>
         </div>
         <div class="col-7 pt-2">
-          <h5>Recent Activities</h5>
-          <table class="table border">
+          <h4>Recent Activities</h4>
+          <table class="table border profile-box shadowed">
             <thead>
               <tr>
                 <th scope="col">Timestamp</th>
@@ -89,17 +95,16 @@
     </div>
 
     <!-- Database Query History -->
-    <div class="container pt-5">
+    <div class="container py-4">
       <div class="row">
-        <h5>Recent Activities</h5>
-        <table class="table border ">
+        <h4>Database Query History</h4>
+        <table class="table border profile-box shadowed">
           <thead>
             <tr>
               <th scope="col">Timestamp</th>
               <th scope="col">Professor Name</th>
               <th scope="col">Faculty</th>
-              <th scope="col">Research Interest</th>
-              <th scope="col">Benchmarking Metrics Chosen</th>
+              <th scope="col">Benchmarking Metrics</th>
               <th scope="col">Search Again</th>
             </tr>
           </thead>
@@ -107,11 +112,10 @@
             <tr>
               <td>8:30:12 PM 2017-09-29</td>
               <td>Best Prof Ever</td>
-              <td>Department of Physics</td>
-              <td>Quantum Theory; Dark Matter</td>
+              <td>Geography</td>
               <td>PhD Year; Phd University; Research Area Similarity; Promotion Year</td>
-              <td><a href="#">
-                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</a>
+              <td class="text-center"><a href="#">
+                <i class="fa fa-lg fa-search"></i></a>
               </td>
             </tr>
           </tbody>
@@ -120,32 +124,32 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer pt-5">
+    <footer class="footer pt-5 pb-2">
       <div class="container">
         <div class="text-center">
           <ul class="list-inline">
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-facebook"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-github"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-wechat"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-linkedin"></i>
               </a>
             </li>
           </ul>
-          <p class="text-muted">Copyright &copy; BT3101 Group 7 2017</p>
+          <p>Copyright &copy; BT3101 Group 7 2017</p>
         </div>
       </div>
     </footer>

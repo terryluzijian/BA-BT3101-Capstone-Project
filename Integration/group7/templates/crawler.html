@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Crawler - Identifying Young and Rising Stars for Promotion</title>
+    <title>Crawler</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,51 +13,56 @@
     <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom fonts for this template -->
-    
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:light,regular,medium,bold&subset=Latin">
+
     <!-- Custom styles for this template -->
+    <link href="../static/css/custom.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Group 7</a>
+    <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/main_loggedin/">WELCOME<span class="sr-only">(current)</span></a>
+            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">ABOUT</a>
+            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/profile/">PROFILE</a>
+            <a class="nav-link font-weight-bold" href="/profile/">PROFILE</a>
           </li>
         </ul>
       </div>
-    </nav>
+    </header>
 
-    <!-- Function Buttons -->
-    <div class="container mt-3 pt-5 text-center">
-      <div class="btn-group" role="group" aria-label="Function buttons">
-        <a class="btn btn-secondary btn-light active" href="/crawler/">
-          <img src="{{ url_for('static', filename='img/Crawling Icon.png') }}">Crawling
+    <!-- Function Button Group -->
+    <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
+      <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
+        <a class="btn btn-light btn-menu active" href="/crawler/">
+          <img src="../static/img/Crawl.svg">Crawler
         </a>
-        <a class="btn btn-secondary btn-light" href="/database/">
-          <img src="{{ url_for('static', filename='img/Database Icon.png') }}">Database
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Database
         </a>
-        <a class="btn btn-secondary btn-light" href=/>
-          <img src="{{ url_for('static', filename='img/Logout Icon.png') }}">Log Out
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Benchmarker
+        </a>
+        <a class="btn btn-light btn-menu" href="/">
+          <img src="../static/img/Logout.svg">Log Out
         </a>
       </div>
     </div>
 
     <!-- Crawler Criteria Picker -->
-    <div class="container pt-5">
+    <div class="container-fluid border py-2 criteria-box shadowed">
       <form>
         <div class="form-row">
           <div class="form-group col-4">
@@ -69,95 +74,210 @@
             </select>
           </div>
           <div class="form-group col-4">
-            <label for="aspirant"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities</label>
-            <select multiple id="aspirant" class="form-control custom-select">
-              <option selected>Stanford University</option>
-              <option selected>Northwestern University</option>
-              <option>Toronto University</option>
-            </select>
+            <label for="aspirant">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities (xx chosen)
+            </label>
+            <div class="form-scrollable rounded">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_1">
+                  Stanford University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_2">
+                  Northwestern University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_3">
+                  Toronto University
+                </label>
+              </div>
+            </div>
           </div>
           <div class="form-group col-4">
-            <label for="peer"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities</label>
-            <select multiple id="peer" class="form-control custom-select">
-              <option selected>Tokyo University</option>
-              <option selected>Yale University</option>
-              <option selected="">Harvard University</option>
-            </select>
+            <label for="aspirant">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities (xx chosen)
+            </label>
+            <div class="form-scrollable rounded">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_1">
+                  Harvard University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_2">
+                  University 2
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_3">
+                  University 3
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 4
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 5
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 6
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 7
+                </label>
+              </div>
+            </div>
           </div>
         </div>
+        <button type="submit" class="btn btn-outline-danger d-block mx-auto">Check Database</button>
       </form>
     </div>
 
-    <!-- Crawler Result -->
+    <!-- Crawler Result Preview -->
     <div class="container pt-5">
-      <div class="card-deck">
-        <div class="card text-center">
-          <div class="card-body">
-            <h4 class="card-title">Professor 1</h4>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
-              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
-            </ul>
+      <h4 class="text-center">There is an existing database for this faculty</h4>
+      <div class="text-center pt-2">
+        <button type="button" class="btn btn-danger">Recrawl Now</button>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="container pt-2">
+      <h4 class="text-center pb-2">Preview of existing database</h4>
+      <div class="row">
+        <div class="col-4">
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Johny Bravo</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-warning mb-2">Associate Professor</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="card text-center">
-          <div class="card-body">
-            <h4 class="card-title">Professor 2</h4>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
-              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
-            </ul>
+        <div class="col-4">
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Samurai Jack</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-success mb-2">Professor</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
+                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="card text-center">
-          <div class="card-body">
-            <h4 class="card-title">Professor 3</h4>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
-              <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-              <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-              <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Coolest Science</li>
-            </ul>
+        <div class="col-4">
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Blossoms</h4>
+              <h6 class="card-subtitle text-center">
+                <span class="badge badge-success mb-2">Professor</span>
+                <span class="badge badge-danger mb-2">Incomplete</span>
+              </h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase"></i>&nbsp;Stanford University - Peer</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap"></i>&nbsp;1997 - ABC Uni</li>
+                <li class="list-group-item"><i class="fa fa-star"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book"></i>&nbsp;Coolest Science</li>
+                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <div class="text-center pt-5">
-        <button type="button" class="btn btn-warning">Load More</button>
-        <button type="button" class="btn btn-warning">Store in Database</button>
+      <div class="row">
+        <div class="col-4">
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Johny Bravo</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-warning mb-2">Associate Professor</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Samurai Jack</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-success mb-2">Professor</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
+                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center py-5">
+        <button type="button" class="btn btn-primary">Load More</button>
+        <button type="button" class="btn btn-primary">Export Database</button>
       </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer pt-5">
+    <footer class="footer pt-5 pb-2">
       <div class="container">
         <div class="text-center">
           <ul class="list-inline">
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-facebook"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-github"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-wechat"></i>
               </a>
             </li>
             <li class="list-inline-item">
-              <a class="btn-social btn-outline-info" href="#">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
                 <i class="fa fa-fw fa-2x fa-linkedin"></i>
               </a>
             </li>
           </ul>
-          <p class="text-muted">Copyright &copy; BT3101 Group 7 2017</p>
+          <p>Copyright &copy; BT3101 Group 7 2017</p>
         </div>
       </div>
     </footer>
