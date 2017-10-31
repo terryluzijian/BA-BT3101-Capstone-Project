@@ -60,10 +60,11 @@ TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descenda
                   'and not(descendant::style)]/text()[normalize-space(.)]'
 # NEW_TEXT_XPATH = '%s | preceding-sibling::*/text()[normalize-space(.)] | %s' % (TEXT_MENU_XPATH, TEXT_XPATH)
 
-# h1, h2, title and text
+# h1, h2, h3, title and text
 TITLE_XPATH = '//title/text() | //*[contains(@class, "title")]/text()'
 H1_XPATH = '//h1/text()'
 H2_XPATH = '//h2/text()'
+H3_XPATH = '//h3/text()'
 MAIN_CONTENT_TEXT_XPATH_RAW = '//*[not(self::script) and not(self::style) and not(self::a)]' \
                               + '[text()[normalize-space(.)]]/text()'
 MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]/text()' \
@@ -120,8 +121,12 @@ def generic_get_unique_content(response, past_response, extract_func=None, get_t
         response_content = extract_func(response)
         if len(response_content) <= 0:
             response_content = get_general(response)
-        return {text: link for text, link in response_content.items()
-                if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+        content = {text: link for text, link in response_content.items()
+                   if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+        if (len(content) == 0) & (extract_func != get_general):
+            return generic_get_unique_content(response, past_response, get_general)
+        else:
+            return content
     else:
         text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()
         text_content_normalized = list(filter(lambda y: len(y) >= 3, map(lambda x: ' '.join(x.split()), text_content)))
@@ -175,7 +180,7 @@ def get_general(response):
                                        href_xpath='//a[@href]/@href[not(contains(., "#"))]')
 
 
-def get_title_h1_h2(response):
+def get_title_h1_h2_h3(response):
     # Get H1, H2 and title-tagged text data
     def get_text(response_fetch, text_xpath, punctuation='!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'):
         # Help function to capitalize words properly
@@ -196,6 +201,7 @@ def get_title_h1_h2(response):
 
     return {'h1': get_text(response, H1_XPATH),
             'h2': get_text(response, H2_XPATH),
+            'h3': get_text(response, H3_XPATH),
             'title': get_text(response, TITLE_XPATH)}
 
 
