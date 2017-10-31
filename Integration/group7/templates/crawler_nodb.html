@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Crawler</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Font Awesome CSS -->
+    <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:light,regular,medium,bold&subset=Latin">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/profile/">PROFILE</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Function Button Group -->
+    <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
+      <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
+        <a class="btn btn-light btn-menu active" href="/crawler/">
+          <img src="../static/img/Crawl.svg">Crawler
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Database
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Benchmarker
+        </a>
+        <a class="btn btn-light btn-menu" href="/">
+          <img src="../static/img/Logout.svg">Log Out
+        </a>
+      </div>
+    </div>
+
+    <!-- Crawler Criteria Picker -->
+    <div class="container-fluid border py-2 criteria-box shadowed">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
+            <select id="faculty" class="form-control custom-select">
+              <option selected>Biochemistry</option>
+              <option>Biomedical Engineering</option>
+              <option>Geography</option>
+            </select>
+          </div>
+          <div class="form-group col-4">
+            <label for="aspirant">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities (xx chosen)
+            </label>
+            <div class="form-scrollable rounded">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_1">
+                  Stanford University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_2">
+                  Northwestern University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="aspi_uni_3">
+                  Toronto University
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-4">
+            <label for="aspirant">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities (xx chosen)
+            </label>
+            <div class="form-scrollable rounded">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_1">
+                  Harvard University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_2">
+                  University 2
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="peer_uni_3">
+                  University 3
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 4
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 5
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 6
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="">
+                  University 7
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-outline-danger d-block mx-auto">Check Database</button>
+      </form>
+    </div>
+
+    <!-- Crawler Result Preview -->
+    <div class="container pt-5">
+      <h4 class="text-center">There is no database for this faculty yet!</h4>
+      <div class="text-center pt-2 pb-5">
+        <button type="button" class="btn btn-lg btn-danger">Crawl Now</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-5 pb-2">
+      <div class="container">
+        <div class="text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-github"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-wechat"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+          <p>Copyright &copy; BT3101 Group 7 2017</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
+</html>

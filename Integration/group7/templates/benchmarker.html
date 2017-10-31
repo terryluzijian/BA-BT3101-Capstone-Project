@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Candidate Benchmarker</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Font Awesome CSS -->
+    <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:light,regular,medium,bold&subset=Latin">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="/profile/">PROFILE</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Function Button Group -->
+    <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
+      <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
+        <a class="btn btn-light btn-menu" href="/crawler/">
+          <img src="../static/img/Crawl.svg">Crawler
+        </a>
+        <a class="btn btn-light btn-menu" href="/database/">
+          <img src="../static/img/Database.svg">Database
+        </a>
+        <a class="btn btn-light btn-menu active" href="/database/">
+          <img src="../static/img/Database.svg">Benchmarker
+        </a>
+        <a class="btn btn-light btn-menu" href="/">
+          <img src="../static/img/Logout.svg">Log Out
+        </a>
+      </div>
+    </div>
+
+    <!-- Crawler Criteria Picker -->
+    <div class="container-fluid border py-2 criteria-box shadowed">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="professor"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp;Enter Professor Name</label>
+            <input type="text" class="form-control" id="professor" value="Best Professor Ever">
+          </div>
+          <div class="form-group col-6">
+            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
+            <select id="faculty" class="form-control custom-select">
+              <option selected>Biochemistry</option>
+              <option>Biomedical Engineering</option>
+              <option>Geography</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-2">
+            <label for="phd_year"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;PhD Year</label>
+            <input type="text" class="form-control" id="professor" placeholder="2006"readonly>
+          </div>
+          <div class="form-group col-3">
+            <label for="phd_university"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;PhD University</label>
+            <input type="text" class="form-control" id="professor" placeholder="Harvard University"readonly>
+          </div>
+          <div class="form-group col-7">
+            <label for="research_areas"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Research Areas</label>
+            <textarea type="text" class="form-control" id="professor" placeholder="Quantum Theories"readonly></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="promotion_level"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Promotion Level</label>
+            <select id="faculty" class="form-control custom-select">
+              <option selected>Associate Professor</option>
+              <option>Professor</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="metrics">
+              <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Benchmarking Metrics (xx chosen)
+            </label>
+            <div class="form-scrollable rounded">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="metric_1">
+                  PhD Year
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="metric_2">
+                  PhD University
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="metric_3">
+                  PhD Promotion Year
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value="metric_4">
+                  Research Area Similarity
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-outline-danger d-block mx-auto">Start Benchmarking</button>
+      </form>
+    </div>
+
+    <!-- Crawler Result -->
+    <div class="container pt-5">
+      <div class="row">
+        <div class="col-6">
+          <h4>Peer University Candidates</h4>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Johny Bravo</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 1</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Samurai Jack</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 2</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Blossoms</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 3</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Coolest Science</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h4>Aspirant University Candidates</h4>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Johny Bravo</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 1</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Samurai Jack</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 2</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-3 shadowed">
+            <div class="card-body">
+              <h4 class="card-title text-center">Blossoms</h4>
+              <h6 class="card-subtitle text-center"><span class="badge badge-primary mb-2">Rank 3</span></h6>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University</li>
+                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
+                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
+                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Coolest Science</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center py-5">
+        <button type="button" class="btn btn-dark">Load More</button>
+        <button type="button" class="btn btn-dark">Export Results</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-5 pb-2">
+      <div class="container">
+        <div class="text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-github"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-wechat"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-secondary rounded-circle" href="#" target="_blank">
+                <i class="fa fa-fw fa-2x fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+          <p>Copyright &copy; BT3101 Group 7 2017</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
+</html>
