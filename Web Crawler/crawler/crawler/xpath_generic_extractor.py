@@ -56,18 +56,18 @@ MAIN_CONTENT_NO_MENU_XPATH = MAIN_CONTENT_XPATH + '[%s]' % MENU_EXCLUDED
 MAIN_CONTENT_NO_MENU_HREF_XPATH = '%s/@href[not(contains(., "#"))]' % MAIN_CONTENT_NO_MENU_XPATH
 
 TEXT_XPATH = 'descendant-or-self::*[not(self::script) and not(self::style)]/text()[normalize-space(.)]'
-TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descendant::script) ' + \
-                  'and not(descendant::style)]/text()[normalize-space(.)]'
+# TEXT_MENU_XPATH = 'ancestor::*[self::li or self::div][count(a)=1]/a[not(descendant::script) ' + \
+# 'and not(descendant::style)]//text()[normalize-space(.)]'
 # NEW_TEXT_XPATH = '%s | preceding-sibling::*/text()[normalize-space(.)] | %s' % (TEXT_MENU_XPATH, TEXT_XPATH)
 
 # h1, h2, h3, title and text
-TITLE_XPATH = '//title/text() | //*[contains(@class, "title")]/text()'
-H1_XPATH = '//h1/text()'
-H2_XPATH = '//h2/text()'
-H3_XPATH = '//h3/text()'
+TITLE_XPATH = '//title//text() | //*[contains(@class, "title")]//text()'
+H1_XPATH = '//h1//text()'
+H2_XPATH = '//h2//text()'
+H3_XPATH = '//h3//text()'
 MAIN_CONTENT_TEXT_XPATH_RAW = '//*[not(self::script) and not(self::style) and not(self::a)]' \
-                              + '[text()[normalize-space(.)]]/text()'
-MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]/text()' \
+                              + '[text()[normalize-space(.)]]//text()'
+MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]//text()' \
                           % (MENU_EXCLUDED, COND_COMBINE)
 
 # Menu specific element to pass
@@ -106,12 +106,20 @@ def generic_get_anchor_and_text(response, content_xpath, href_xpath):
 def generic_get_unique_content(response, past_response, extract_func=None, get_text=False):
     # Get unique content by comparing with previous response
     # Deal with list or a single Response object
+    def normalize_link(link_url):
+        # TreatURL with slash at the end as the same as those without a slash
+        if link_url[-1] == '/':
+            return link_url[:-1]
+        else:
+            return link_url
+
     if isinstance(past_response, Response):
-        general_past_content = get_main_and_menu(past_response)
+        general_past_content = get_general(past_response)
     elif type(past_response) is list:
+        # Changed to get_general
         general_past_content = {key: value
                                 for element in past_response
-                                for key, value in get_main_and_menu(element).items()}
+                                for key, value in get_general(element).items()}
     else:
         general_past_content = {}
 
@@ -121,8 +129,9 @@ def generic_get_unique_content(response, past_response, extract_func=None, get_t
         response_content = extract_func(response)
         if len(response_content) <= 0:
             response_content = get_general(response)
+        link_values = list(map(lambda link: normalize_link(link), list(general_past_content.values())))
         content = {text: link for text, link in response_content.items()
-                   if (link not in general_past_content.values()) & (text not in general_past_content.keys())}
+                   if (normalize_link(link) not in link_values) & (text not in general_past_content.keys())}
         if (len(content) == 0) & (extract_func != get_general):
             return generic_get_unique_content(response, past_response, get_general)
         else:
@@ -130,8 +139,9 @@ def generic_get_unique_content(response, past_response, extract_func=None, get_t
     else:
         text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()
         text_content_normalized = list(filter(lambda y: len(y) >= 3, map(lambda x: ' '.join(x.split()), text_content)))
+        content_keys = set(map(lambda x: re.sub(r'\([1-9]+\)', '', x), list(general_past_content.keys())))
         return [text_element for text_element in text_content_normalized
-                if text_element not in general_past_content.keys()]
+                if re.sub(r'\([1-9]+\)', '', text_element) not in content_keys]
 
 
 # Specific get functions
@@ -144,7 +154,8 @@ def get_main_content(response):
 
 
 def get_main_content_unique(response, past_response):
-    return generic_get_unique_content(response, past_response, get_main_content)
+    # Changed to get_general
+    return generic_get_unique_content(response, past_response, get_general)
 
 
 def get_main_content_excluding_menu(response):

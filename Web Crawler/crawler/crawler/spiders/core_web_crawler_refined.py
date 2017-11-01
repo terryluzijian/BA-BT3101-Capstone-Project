@@ -7,6 +7,7 @@ from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2_h
                                             get_main_content_text, get_main_content_excluding_menu, \
                                             get_header, get_menu, get_main_content_unique, generic_get_unique_content
 from difflib import SequenceMatcher
+from lxml import html
 from random import shuffle
 from scrapy import Request
 from scrapy.linkextractors import LinkExtractor, IGNORED_EXTENSIONS
@@ -324,7 +325,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Parse main content of the current page recursively
         basics = self.report_basic_information(response, response.meta)
         if basics['404']:
-            # Stop parsing when encourtering 404 error
+            # Stop parsing when encountering 404 error
             return
 
         # If redirection contains keyword to filter, stop parsing
@@ -341,7 +342,6 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             new_meta['depth'] = response.meta['depth']
             yield Request(response.urljoin(iframe_link.url), self.parse_people, meta=new_meta,
                           errback=self.errback_report)
-            return
 
         # Core part of parse_people with call on processing named entity for the response
         current_response = response
@@ -426,6 +426,21 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Get current response metadata
         # Get unique content of current response (fallback to general when empty)
         main_content = get_main_content_unique(response, response.meta['Past Response'])
+        if response.meta.get('XML', False):
+            to_parse = html.fromstring(response.body)
+            link_href = to_parse.xpath('//a[@href]/@href')
+            main_content = {key: value for key, value in zip(['Link %d' % index for index in range(len(link_href))],
+                                                             link_href)}
+
+        # If main content still contains zero components, it is probably a AJAX-enabled page
+        # Simulate a XML document call by heuristics
+        if len(main_content) == 0:
+            response.meta['depth'] -= 1
+            new_meta = response.meta.copy()
+            new_meta['depth'] = response.meta['depth']
+            new_meta['XML'] = True
+            yield Request(response.urljoin(response.url.replace('html', 'xml')), self.parse_people, meta=new_meta,
+                          errback=self.errback_report)
 
         # Iterate through each component
         for content_text, content_href in main_content.items():
@@ -466,21 +481,28 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Parse title first to find person's name
         name = 'Unknown'
         if len(self.parse_entity(response.meta['Title'])) >= 1:
+            # If entity is identified in the metadata title
             name = response.meta['Title']
         elif len(self.parse_entity(unique_title)) >= 1:
+            # If entity is identified in the current unique title
             name = unique_title
         else:
+            # Identify named entity in h1, h2 and h3 text
             h1_h2_h3 = [element for key, value in get_title_h1_h2_h3(response).items()
                         for element in value if key in ['h1', 'h2', 'h3']]
             h1_h2_h3_parsed = list(filter(lambda y: len(y) > 0, map(lambda x: self.parse_entity(x), h1_h2_h3)))
             h1_h2_h3_entity = [name for name_list in list(map(lambda x: list(x.keys()), h1_h2_h3_parsed))
                                for name in name_list]
+
+            # Select first occurrence
             name = name if len(h1_h2_h3_entity) <= 0 else h1_h2_h3_entity[0]
 
         # ----------------------------------POSITION/APPOINTMENT COMPONENT CODE----------------------------------
         # Parse and mine main text, find professor first
         position = 'Non-Professor'
         main_text = generic_get_unique_content(response, response.meta['Past Response'][-1], get_text=True)
+
+        # For the simplest case, find position title in name
         if response.meta['Title'].lower().startswith('prof'):
             position = 'Professor'
         elif response.meta['Title'].lower().startswith('assistant') | response.meta['Title'].lower().startswith('asst'):
@@ -488,6 +510,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         elif response.meta['Title'].lower().startswith('associate') | response.meta['Title'].lower().startswith('asso'):
             position = 'Associate Professor'
         else:
+            # Find in longer main text otherwise, start from shorter length and expand subsequently
             assoc_prof_re = r'(associate|(assoc\.?)) prof[\.]?[ ]?'
             assist_prof_re = r'(assistant|(asst\.?)) prof[\.]?[ ]?'
             prof_re = r'prof\.|professor'
@@ -511,20 +534,16 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         if position != 'Non-Professor':
             print('%s (%s)' % (name, position))
 
-    def errback_report(self, failure):
-        # Log all failures
-        try:
-            self.logger.info('Minor error occurs at %s / %s' % (failure.request, failure.value.response))
-        except AttributeError:
-            self.logger.info('Minor error occurs, which might be Twisted Connection Error')
-
     def match_pattern(self, pattern_dict, response_url):
+        # Help function to tell whether certain link matches the pattern made
         def path_contain_path(url_parsed, path_list):
+            # Run through every path, inclusive or not of the url path to be parsed
             path_to_search = '/'.join(url_parsed[1][:-1])
             for path in path_list:
                 if path in path_to_search:
                     return True
             return False
+
         parsed = self.get_netloc_and_path_level(response_url)
         if parsed[0] not in pattern_dict['Netloc']:
             return False
@@ -536,14 +555,25 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Add the parent link also as it may also implies viable link
         pattern_list_parsed = list(map(lambda link: self.get_netloc_and_path_level(link),
                                        pattern_list + [response.meta['Previous Link']]))
+
+        # Only get the top n netloc for simplicity and accuracy
         netloc_list = [element[0] for element in pattern_list_parsed]
         netloc_sort = sorted(set(netloc_list), key=lambda x: netloc_list.count(x), reverse=True)
         compiled = {
             'Netloc': list(netloc_sort)[:top_n],
             'Path': set(filter(lambda x: x != '', ['/'.join(element[1][:-1]) for element in pattern_list_parsed]))
         }
+
+        # Log pattern information
         self.logger.info('Found pattern %s for %s' % (list(compiled.values()), response.meta['Original Start']))
         return compiled
+
+    def errback_report(self, failure):
+        # Log all failures
+        try:
+            self.logger.info('Minor error occurs at %s / %s' % (failure.request, failure.value.response))
+        except AttributeError:
+            self.logger.info('Minor error occurs, which might be Twisted Connection Error')
 
     def report_basic_information(self, response, response_meta):
         # Report redirecting information
