@@ -8,11 +8,13 @@ from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2_h
                                             get_header, get_menu, get_main_content_unique, generic_get_unique_content
 from difflib import SequenceMatcher
 from lxml import html
+from PyPDF2 import PdfFileReader
 from random import shuffle
 from scrapy import Request
 from scrapy.linkextractors import LinkExtractor, IGNORED_EXTENSIONS
 from scrapy.utils.url import parse_url, url_has_any_extension
 from tld import get_tld
+from urllib.request import urlretrieve
 
 
 class UniversityWebCrawlerRefined(scrapy.Spider):
@@ -49,8 +51,11 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     # Get prioritized department list specified by user
     DEPARTMENT_DATA_FILE_NAME = 'DEPARTMENT_FACULTY.csv'
     DEPARTMENT_DATA_PRIORITIZED = 'DEPARTMENT_FACULTY_PRIORITIZED.csv'
+    DEPARTMENT_XPATH = 'DEPARTMENT_FACULTY_WITH_XPATH.csv'
     data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/data/'
     department_data = pandas.read_csv(data_file_path + DEPARTMENT_DATA_FILE_NAME)
+    college_list = list(pandas.read_csv(data_file_path + DEPARTMENT_XPATH,
+                                        encoding='latin1')['Name'].value_counts().index)
     department_data_index = department_data.index
     department_data_prioritized = pandas.read_csv(data_file_path + DEPARTMENT_DATA_PRIORITIZED)
 
@@ -70,11 +75,11 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
     # Filter word for extracting link and identifying entity
     LINK_FILTER_KEYWORD_STRING_WISE = frozenset(['publication', 'publications', 'paper', 'search', 'news', 'event',
-                                                 'events', 'calendar', 'map', 'student', 'lab'])
+                                                 'events', 'calendar', 'map', 'student', 'lab', 'lib', 'library'])
     LINK_FILTER_KEYWORD_CHAR_WISE = frozenset(['login', 'logout', 'publication', 'news', 'wiki', 'lab', 'resource',
-                                               'event', 'calendar', 'map', 'article', 'blog', 'student'])
-    ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty',
-                                       'college', 'staff', 'student', 'lab'])
+                                               'event', 'calendar', 'map', 'article', 'blog', 'student', 'library'])
+    ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty', 'menu', 'copyright'
+                                       'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header'])
 
     # Create a class attribute to store corresponding patterns that match a profile page under certain
     # department site
@@ -83,7 +88,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     PROFILE_THRESHOLD = 10
 
     # Testing params
-    test_link = 'https://chemistry.uchicago.edu'
+    test_link = 'http://www.geog.ucl.ac.uk'
     test_tag = 'department'
     test_title = 'Department of Geography'
     allowed_domains.append(get_tld(test_link))
@@ -476,7 +481,6 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
     def process_profile_item(self, response, unique_title, len_lim=10):
         # Key function to parse profile items
-
         # ----------------------------------NAME COMPONENT CODE----------------------------------
         # Parse title first to find person's name
         name = 'Unknown'
@@ -531,8 +535,122 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                                        x.lower()) and len(x.split(' ')) <= len_lim, remain))) >= 1:
                     position = 'Professor'
 
+        # ----------------------------------YEAR INFORMATION COMPONENT CODE----------------------------------
         if position != 'Non-Professor':
-            print('%s (%s)' % (name, position))
+
+            year_info = self.parse_year_info(main_text=main_text, len_lim=len_lim)
+
+            # ----------------------------------PDF (RESUME) COMPONENT CODE----------------------------------
+            links = get_main_content_unique(response, response.meta['Past Response'])
+            pdf_links = {key: value for key, value in links.items()
+                         if ('.pdf' in value) & (('cv' in value) or ('resum' in value) or ('vitam' in value))}
+            for pdf_title, pdf_link in pdf_links.items():
+                # Assume that resume contains more accurate information and overwrite
+                self.logger.info('Found resume link: %s' % pdf_link)
+                reader = PdfFileReader(urlretrieve(response.urljoin(pdf_link))[0])
+                text_content_list = []
+                for page_number in range(reader.getNumPages()):
+                    text_content_list.append(reader.getPage(page_number).extractText().split())
+                year_info_new = self.parse_year_info(main_text=text_content_list, len_lim=len_lim)
+                if year_info_new.count('Unknown') < year_info.count('Unknown'):
+                    year_info = year_info_new
+
+            self.logger.info('%s (%s, %s)' % (name, position, year_info))
+
+    def parse_year_info(self, main_text, len_lim):
+        # Function to process year information
+        def find_time_information(string_list):
+            # Help function to find year format
+            filtered = list(filter(lambda x: re.search(r'(?:19|20)\d{2}',
+                                                       x.lower()) and 'student' not in x.lower(), string_list))
+            return list(map(lambda x: re.findall(r'(?:19|20)\d{2}', x), filtered))
+
+        def process_school_list(school_list):
+            # Help function to process school list
+            def match_school_name(school_a_name, school_b_name):
+                return SequenceMatcher(None, school_a_name, school_b_name).ratio()
+            college_name = UniversityWebCrawlerRefined.college_list
+            school_list_filter = list(filter(lambda x: re.search(r'univ|insti', x) or
+                                                       (max(list(map(lambda y: match_school_name(y.lower(),
+                                                                                                 x.lower()),
+                                                                     college_name))) >= 0.5), school_list))
+            return sorted(school_list_filter, key=lambda x: school_list_filter.count(x), reverse=True)
+
+        def find_neighbors(target_list, original_list):
+            # Help function to find neighbors
+            new_list = []
+            for target in target_list:
+                ori_index = original_list.index(target)
+                if ori_index - 1 >= 0:
+                    if original_list[ori_index-1] not in new_list:
+                        new_list.append(original_list[ori_index-1])
+                if target not in new_list:
+                    new_list.append(target)
+                if ori_index + 1 < len(original_list):
+                    if original_list[ori_index+1] not in new_list:
+                        new_list.append(original_list[ori_index+1])
+            return new_list
+
+        # Select maximum year conservatively by default
+        phd_year = 'Unknown'
+        phd_school = 'Unknown'
+        phd_string = list(filter(lambda x: (re.search(r'(ph\.?[ ]?d\.?[ ]?)|(d\.?[ ]?phil\.?[ ]?)', x.lower())) and
+                                           ('student' not in x.lower()) and
+                                           (len(x.split(' ')) <= len_lim), main_text))
+        phd_year_list = find_time_information(phd_string)
+
+        # Ignore acronym wrapped in brackets
+        phd_string_sub = list(map(lambda x: re.sub(r'\([A-Za-z]+\)', ' ', x), phd_string))
+        phd_school_list = process_school_list(self.find_entity_list(phd_string_sub, only_org=True))
+
+        # Get PhD graduation year
+        if len(phd_year_list) > 0:
+            # Find information around neighbours
+            phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
+            phd_year = min(phd_year_flatten)
+        else:
+            phd_string_with_neighbors = find_neighbors(phd_string, main_text)
+            phd_year_list = find_time_information(phd_string_with_neighbors)
+            phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
+            if len(phd_year_flatten) > 0:
+                phd_year = min(phd_year_flatten)
+
+        # Get PhD School
+        if len(phd_school_list) > 0:
+            # Find information around neighbours
+            phd_school = phd_school_list[0]
+        else:
+            phd_string_with_neighbors = list(map(lambda x: re.sub(r'\(.+\)', ' ', x),
+                                                 find_neighbors(phd_string, main_text)))
+            phd_school_list = process_school_list(self.find_entity_list(phd_string_with_neighbors, only_org=True))
+            if len(phd_school_list) > 0:
+                phd_school = phd_school_list[0]
+
+        # Update and normalize phd school name
+        if phd_school != 'Unknown':
+            phd_school = sorted(UniversityWebCrawlerRefined.college_list,
+                                key=lambda x: SequenceMatcher(None, x, phd_school).ratio(),
+                                reverse=True)[0]
+
+        # Get promotion year
+        prof_re = r'prof\.|professor'
+        prof_year = 'Unknown'
+        prof_string = list(filter(lambda x: (re.search(prof_re, x.lower())) and
+                                            (len(x.split(' ')) <= len_lim), main_text))
+        prof_year_list = find_time_information(prof_string)
+
+        if len(prof_year_list) > 0:
+            # Find information around neighbours
+            prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
+            prof_year = max(prof_year_flatten)
+        else:
+            prof_string_with_neighbors = find_neighbors(prof_string, main_text)
+            prof_year_list = find_time_information(prof_string_with_neighbors)
+            prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
+            if len(prof_year_flatten) > 0:
+                prof_year = max(prof_year_flatten)
+
+        return phd_year, phd_school, prof_year
 
     def match_pattern(self, pattern_dict, response_url):
         # Help function to tell whether certain link matches the pattern made
@@ -637,7 +755,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         return parsed.netloc, path, len(path)
 
     @staticmethod
-    def parse_entity(target_string, including_org=True):
+    def parse_entity(target_string, including_org=True, only_org=False):
 
         def normalize_string_space(string_before):
             return ' '.join(string_before.split())
@@ -651,12 +769,29 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         parsed = UniversityWebCrawlerRefined.SIMILARITY_NAVIGATOR.model_en(target_string).ents
 
         # Include ORG here as spacy is not capable of identifying all kinds of names
-        if including_org:
+        if only_org:
+            entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
+                           if entity.label_ in ['ORG']}
+        elif including_org:
             entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
                            if entity.label_ in ['PERSON', 'ORG']}
+            # Filter
+            entity_dict = {key: value for key, value in entity_dict.items()
+                           if not contain_filter_word(key, UniversityWebCrawlerRefined.ENTITY_FILTER_KEYWORD)}
         else:
             entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
                            if entity.label_ in ['PERSON']}
+            # Filter
             entity_dict = {key: value for key, value in entity_dict.items()
                            if not contain_filter_word(key, UniversityWebCrawlerRefined.ENTITY_FILTER_KEYWORD)}
         return entity_dict
+
+    @staticmethod
+    def find_entity_list(string_list, including_org=True, only_org=False):
+        # Parse entity
+        string_list_parsed = list(map(lambda x: UniversityWebCrawlerRefined.parse_entity(x,
+                                                                                         including_org=including_org,
+                                                                                         only_org=only_org),
+                                      string_list))
+        flattened = [element for dictionary in string_list_parsed for element in list(dictionary.keys())]
+        return flattened

@@ -65,7 +65,7 @@ TITLE_XPATH = '//title//text() | //*[contains(@class, "title")]//text()'
 H1_XPATH = '//h1//text()'
 H2_XPATH = '//h2//text()'
 H3_XPATH = '//h3//text()'
-MAIN_CONTENT_TEXT_XPATH_RAW = '//*[not(self::script) and not(self::style) and not(self::a)]' \
+MAIN_CONTENT_TEXT_XPATH_RAW = '//*[not(self::script) and not(self::style)]' \
                               + '[text()[normalize-space(.)]]//text()'
 MAIN_CONTENT_TEXT_XPATH = '//*[not(self::script) and not(self::style)][%s][%s][text()[normalize-space(.)]]//text()' \
                           % (MENU_EXCLUDED, COND_COMBINE)
