@@ -63,88 +63,41 @@
 
     <!-- Crawler Criteria Picker -->
     <div class="container-fluid border py-2 criteria-box shadowed">
-      <form>
+      <form action="{{ url_for('get_preview', dep=dep) }}" method="post">
         <div class="form-row">
           <div class="form-group col-4">
-            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
-            <select id="faculty" class="form-control custom-select">
-              <option selected>Biochemistry</option>
-              <option>Biomedical Engineering</option>
-              <option>Geography</option>
+            <label for="department"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Department</label>
+            <select id="department" class="form-control custom-select" onchange="javascript:location.href = this.value;">
+              <option {% if dep == 'bme' %} selected {% endif %} value="{{ url_for('crawler', dep='bme') }}">Biomedical Engineering (BME)</option>
+              <option {% if dep == 'biochem' %} selected {% endif %} value="{{ url_for('crawler', dep='biochem') }}">Biochemistry</option>
+              <option {% if dep == 'geo' %} selected {% endif %} value="{{ url_for('crawler', dep='geo') }}">Geography</option>
             </select>
           </div>
           <div class="form-group col-4">
-            <label for="aspirant">
-              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities (xx chosen)
+            <label for="peer">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities
             </label>
             <div class="form-scrollable rounded">
+              {% for uni in peer_unis %}
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="aspi_uni_1">
-                  Stanford University
-                </label>
+                  <input class="form-check-input" type="checkbox" name="selected_peer" value="{{ uni }}" {% if uni in selected_peer %} checked {% endif %}/>{{ uni }}</label>
               </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="aspi_uni_2">
-                  Northwestern University
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="aspi_uni_3">
-                  Toronto University
-                </label>
-              </div>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group col-4">
             <label for="aspirant">
-              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities (xx chosen)
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities
             </label>
             <div class="form-scrollable rounded">
+              {% for uni in asp_unis %}
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="peer_uni_1">
-                  Harvard University
+                  <input class="form-check-input" type="checkbox" name="selected_asp" value="{{ uni }}" {% if uni in selected_asp %} checked {% endif %}/>{{ uni }}
                 </label>
               </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="peer_uni_2">
-                  University 2
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="peer_uni_3">
-                  University 3
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                  University 4
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                  University 5
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                  University 6
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                  University 7
-                </label>
-              </div>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -153,11 +106,37 @@
     </div>
 
     <!-- Crawler Result Preview -->
+    {% if selected_peer %}
+      <div class="container">
+        <h4>Selected Peer Unis</h4>
+        {% for uni in selected_peer %}
+          <p>{{ uni }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if selected_asp %}
+      <div class="container">
+        <h4>Selected Aspirant Unis</h4>
+        {% for uni in selected_asp %}
+          <p>{{ uni }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <div class="container pt-5">
       <h4 class="text-center">There is an existing database for this faculty</h4>
       <div class="text-center pt-2">
-        <button type="button" class="btn btn-danger">Recrawl Now</button>
-        <hr/>
+        <form action="{{ url_for('start_crawler') }}" method="post">
+          <input type="hidden" name="dep" value="{{ dep }}"/>
+          {% for uni in selected_peer %}
+            <input type="hidden" name="selected_peer" value="{{ uni }}"/>
+          {% endfor %}
+          {% for uni in selected_asp %}
+            <input type="hidden" name="selected_asp" value="{{ uni }}"/>
+          {% endfor %}
+          <button type="submit" class="btn btn-danger">Recrawl Now</button>
+          <hr/>
+        </form>
       </div>
     </div>
 
