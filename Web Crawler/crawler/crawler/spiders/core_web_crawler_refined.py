@@ -29,7 +29,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Override custom settings preset by scrapy
         # Take a depth-first search algorithm by setting a negative priority or positive otherwise
         'DEPTH_LIMIT': 4,
-        'DEPTH_PRIORITY': -3,
+        'DEPTH_PRIORITY': -2,
         'DEPTH_STATS_VERBOSE': True,
 
         # Limit the concurrent request per domain and moderate the server load
@@ -39,10 +39,10 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     }
 
     # Set it to be true for debugging
-    PRINT_VERBOSE = True
+    PRINT_VERBOSE = False
 
     # Set it to be true for crawling single specified department
-    TESTING = True
+    TESTING = False
 
     # Set it to be true to enable broad crawling
     GENERIC = False
@@ -96,7 +96,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     test_title = 'Test Department'
     allowed_domains.append(get_tld(test_link))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, start_university=None, start_department=None, *args, **kwargs):
         # Initiate spider object and shuffling urls to start crawling
         super(UniversityWebCrawlerRefined, self).__init__(*args, **kwargs)
 
@@ -105,6 +105,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Initiate iframe link extractor
         self.iframe_extractor = LinkExtractor(allow=self.allowed_domains, tags=['iframe'], attrs=['src'],
                                               unique=False, canonicalize=False)
+        self.start_domain = (start_university, start_department)
 
         # Get the index of the data frame for shuffling, available only for broad crawling
         self.shuffled_index = list(UniversityWebCrawlerRefined.department_data_index)
@@ -137,8 +138,35 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 university_name = value['school_name']
                 url_link = value['url']
                 link_title = value['title']
-                if link_title == 'BME':
-                    link_title = 'Biomedical Engineering'
+                department_or_faculty = value['department_or_faculty']
+                tag = value['tag']
+
+                # Yield request corresponding with preliminary meta data including university name and page title
+                request = Request(url_link, callback=self.parse_menu, errback=self.errback_report)
+
+                # Link-related data
+                request.meta['Link'] = url_link  # Link read as input
+                request.meta['Title'] = link_title  # Title read as input
+                request.meta['depth'] = 0
+
+                # Some basic record-based data
+                request.meta['University Name'] = university_name
+                request.meta['Original Start'] = (url_link, link_title)
+                request.meta['Previous Link'] = ''
+                request.meta['Is Department'] = department_or_faculty
+                request.meta['tag'] = tag
+                yield request
+
+        elif self.start_domain[0] is not None and self.start_domain[1] is not None:
+            assert self.start_domain[0] in UniversityWebCrawlerRefined.department_data_prioritized['school_name']
+            assert self.start_domain[1] in UniversityWebCrawlerRefined.department_data_prioritized['title']
+            df = UniversityWebCrawlerRefined.department_data_prioritized
+            university_name = self.start_domain[0]
+            link_title = self.start_domain[1]
+            df_locate = df.loc[(df['school_name'] == university_name) & (df['title'] == link_title)]
+            for index, value in df_locate.iterrows():
+                # Get data from the specific row
+                url_link = value['url']
                 department_or_faculty = value['department_or_faculty']
                 tag = value['tag']
 
@@ -420,7 +448,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                           profile_dict['Total'], response.meta['Original Start']))
 
                     # Process the profile item
-                    self.process_profile_item(response, current_unique)
+                    item = self.process_profile_item(response, current_unique)
+                    if item is not None:
+                        yield item
                 else:
                     # Compile patterns when reaching the threshold
                     if profile_dict['Total'] == self.profile_threshold:
@@ -435,7 +465,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                               response.meta['Original Start']))
 
                         # Process the profile item
-                        self.process_profile_item(response, current_unique)
+                        item = self.process_profile_item(response, current_unique)
+                        if item is not None:
+                            yield item
                 return
 
         # If path differs, go back to parse_menu (assumed to happen at depth <= 1 and hence skip the conditioning above)
@@ -596,10 +628,12 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             profile['position'] = position
             profile['phd_year'] = year_info[0]
             profile['phd_school'] = year_info[1]
-            profile['promote_year'] = year_info[2]
+            profile['promotion_year'] = year_info[2]
             profile['text_raw'] = main_text_long
             profile['tag'] = response.meta.get('tag', 'None')
-            yield profile
+            return profile
+
+        return
 
     def parse_year_info(self, main_text, len_lim):
         # Function to process year information

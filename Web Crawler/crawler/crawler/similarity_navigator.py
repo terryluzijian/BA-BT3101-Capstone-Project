@@ -23,7 +23,7 @@ class SimilarityNavigator(object):
     PEOPLE_TARGET = frozenset(['academic staff', 'faculty', 'faculty staff', 'faculty people', 'faculty directory',
                                'our people', 'people', 'teaching faculty', 'courtesy faculty', 'adjunct faculty',
                                'professors', 'staff list', 'staff directory', 'teaching staff', 'emeritus',
-                               'faculty profiles', 'faculty list'])
+                               'faculty profiles', 'faculty list', 'staff'])
     SEQUENTIAL_THRESHOLD = 0.8
 
     # Filter word for extracting link

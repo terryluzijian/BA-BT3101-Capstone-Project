@@ -1,2 +1,3 @@
 from scrapy import cmdline
-cmdline.execute("scrapy crawl refined".split())
+command = 'scrapy crawl refined'
+cmdline.execute(command.split())
