@@ -2,6 +2,7 @@ import os
 import pandas
 import re
 import scrapy
+from crawler.items import ProfilePageItem
 from crawler.similarity_navigator import SimilarityNavigator
 from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2_h3, get_main_content, \
                                             get_main_content_text, get_main_content_excluding_menu, \
@@ -45,6 +46,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
     # Set it to be true to enable broad crawling
     GENERIC = False
+    PRIORITIZED = True
 
     # Get department link from the file name stored as a class attribute using pandas
     # Shuffle the link for a random start to avoid over-frequent crawling
@@ -79,7 +81,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     LINK_FILTER_KEYWORD_CHAR_WISE = frozenset(['login', 'logout', 'publication', 'news', 'wiki', 'lab', 'resource',
                                                'event', 'calendar', 'map', 'article', 'blog', 'student', 'library'])
     ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty', 'menu', 'copyright'
-                                       'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header'])
+                                       'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header',
+                                       'department'])
 
     # Create a class attribute to store corresponding patterns that match a profile page under certain
     # department site
@@ -88,9 +91,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     PROFILE_THRESHOLD = 10
 
     # Testing params
-    test_link = 'http://www.geog.ucl.ac.uk'
+    test_link = 'https://chemistry.uchicago.edu'
     test_tag = 'department'
-    test_title = 'Department of Geography'
+    test_title = 'Test Department'
     allowed_domains.append(get_tld(test_link))
 
     def __init__(self, *args, **kwargs):
@@ -127,6 +130,33 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             request.meta['Previous Link'] = ''
             request.meta['Is Department'] = UniversityWebCrawlerRefined.test_tag
             yield request
+
+        elif UniversityWebCrawlerRefined.PRIORITIZED:
+            for index, value in UniversityWebCrawlerRefined.department_data_prioritized.iterrows():
+                # Get data from the specific row
+                university_name = value['school_name']
+                url_link = value['url']
+                link_title = value['title']
+                if link_title == 'BME':
+                    link_title = 'Biomedical Engineering'
+                department_or_faculty = value['department_or_faculty']
+                tag = value['tag']
+
+                # Yield request corresponding with preliminary meta data including university name and page title
+                request = Request(url_link, callback=self.parse_menu, errback=self.errback_report)
+
+                # Link-related data
+                request.meta['Link'] = url_link  # Link read as input
+                request.meta['Title'] = link_title  # Title read as input
+                request.meta['depth'] = 0
+
+                # Some basic record-based data
+                request.meta['University Name'] = university_name
+                request.meta['Original Start'] = (url_link, link_title)
+                request.meta['Previous Link'] = ''
+                request.meta['Is Department'] = department_or_faculty
+                request.meta['tag'] = tag
+                yield request
 
         else:
             for individual_index in self.shuffled_index:
@@ -199,6 +229,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 'Previous Link': response.url,
                 'Fall Back': response.meta.get('Fall Back', False),
                 'Is Department': response.meta['Is Department'],
+                'tag': response.meta.get('tag', 'None')
             }
 
             # Yield request
@@ -472,6 +503,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 'Original Start': response.meta['Original Start'],
                 'Previous Link': response.url,
                 'Is Department': response.meta['Is Department'],
+                'tag': response.meta.get('tag', 'None')
             }
 
             # If the text contains person name, it is highly possible it directs to a
@@ -555,7 +587,19 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 if year_info_new.count('Unknown') < year_info.count('Unknown'):
                     year_info = year_info_new
 
-            self.logger.info('%s (%s, %s)' % (name, position, year_info))
+            main_text_long = ' '.join(list(filter(lambda x: len(x.split(' ')) >= len_lim * 2, main_text)))
+            profile = ProfilePageItem()
+            profile['name'] = name
+            profile['department'] = response.meta['Original Start'][1]
+            profile['university'] = response.meta['University Name']
+            profile['profile_link'] = response.url
+            profile['position'] = position
+            profile['phd_year'] = year_info[0]
+            profile['phd_school'] = year_info[1]
+            profile['promote_year'] = year_info[2]
+            profile['text_raw'] = main_text_long
+            profile['tag'] = response.meta.get('tag', 'None')
+            yield profile
 
     def parse_year_info(self, main_text, len_lim):
         # Function to process year information
@@ -594,61 +638,69 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Select maximum year conservatively by default
         phd_year = 'Unknown'
         phd_school = 'Unknown'
+        prof_re = r'prof\.|professor'
+        prof_year = 'Unknown'
         phd_string = list(filter(lambda x: (re.search(r'(ph\.?[ ]?d\.?[ ]?)|(d\.?[ ]?phil\.?[ ]?)', x.lower())) and
                                            ('student' not in x.lower()) and
                                            (len(x.split(' ')) <= len_lim), main_text))
         phd_year_list = find_time_information(phd_string)
 
         # Ignore acronym wrapped in brackets
-        phd_string_sub = list(map(lambda x: re.sub(r'\([A-Za-z]+\)', ' ', x), phd_string))
+        phd_string_sub = list(map(lambda x: re.sub(r'\([A-Z][A-Z]+\)', ' ', x), phd_string))
         phd_school_list = process_school_list(self.find_entity_list(phd_string_sub, only_org=True))
 
-        # Get PhD graduation year
-        if len(phd_year_list) > 0:
-            # Find information around neighbours
-            phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
-            phd_year = min(phd_year_flatten)
-        else:
-            phd_string_with_neighbors = find_neighbors(phd_string, main_text)
-            phd_year_list = find_time_information(phd_string_with_neighbors)
-            phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
-            if len(phd_year_flatten) > 0:
-                phd_year = min(phd_year_flatten)
+        if phd_year == 'Unknown':
+            # Get PhD graduation year
+            if len(phd_year_list) > 0:
+                # Find information around neighbours
+                phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
+                phd_year = phd_year_flatten[0]
+            else:
+                phd_string_with_neighbors = find_neighbors(phd_string, main_text)
+                phd_year_list = find_time_information(phd_string_with_neighbors)
+                phd_year_flatten = [int(year) for year_list in phd_year_list for year in year_list]
+                if len(phd_year_flatten) > 0:
+                    phd_year = phd_year_flatten[0]
 
-        # Get PhD School
-        if len(phd_school_list) > 0:
-            # Find information around neighbours
-            phd_school = phd_school_list[0]
-        else:
-            phd_string_with_neighbors = list(map(lambda x: re.sub(r'\(.+\)', ' ', x),
-                                                 find_neighbors(phd_string, main_text)))
-            phd_school_list = process_school_list(self.find_entity_list(phd_string_with_neighbors, only_org=True))
+        if phd_school == 'Unknown':
+            # Get PhD School
             if len(phd_school_list) > 0:
+                # Find information around neighbours
                 phd_school = phd_school_list[0]
+            else:
+                phd_string_with_neighbors = list(map(lambda x: re.sub(r'\(.+\)', ' ', x),
+                                                     find_neighbors(phd_string, main_text)))
+                phd_school_list = process_school_list(self.find_entity_list(phd_string_with_neighbors, only_org=True))
+                if len(phd_school_list) > 0:
+                    phd_school = phd_school_list[0]
 
-        # Update and normalize phd school name
-        if phd_school != 'Unknown':
-            phd_school = sorted(UniversityWebCrawlerRefined.college_list,
-                                key=lambda x: SequenceMatcher(None, x, phd_school).ratio(),
-                                reverse=True)[0]
+            # Update and normalize phd school name
+            phd_school_sort = sorted(UniversityWebCrawlerRefined.college_list,
+                                     key=lambda x: SequenceMatcher(None, x, phd_school).ratio(),
+                                     reverse=True)
+            if SequenceMatcher(None, phd_school_sort[0], phd_school).ratio() >= 0.6:
+                phd_school = phd_school_sort[0]
 
-        # Get promotion year
-        prof_re = r'prof\.|professor'
-        prof_year = 'Unknown'
-        prof_string = list(filter(lambda x: (re.search(prof_re, x.lower())) and
-                                            (len(x.split(' ')) <= len_lim), main_text))
-        prof_year_list = find_time_information(prof_string)
+        if prof_year == 'Unknown':
+            # Get promotion year
+            prof_string = list(filter(lambda x: (re.search(prof_re, x.lower())) and
+                                                (len(x.split(' ')) <= len_lim), main_text))
+            prof_year_list = find_time_information(prof_string)
 
-        if len(prof_year_list) > 0:
-            # Find information around neighbours
-            prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
-            prof_year = max(prof_year_flatten)
-        else:
-            prof_string_with_neighbors = find_neighbors(prof_string, main_text)
-            prof_year_list = find_time_information(prof_string_with_neighbors)
-            prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
-            if len(prof_year_flatten) > 0:
-                prof_year = max(prof_year_flatten)
+            if len(prof_year_list) > 0:
+                # Find information around neighbours
+                prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
+                prof_year = prof_year_flatten[0]
+            else:
+                prof_string_with_neighbors = find_neighbors(prof_string, main_text)
+                prof_year_list = find_time_information(prof_string_with_neighbors)
+                prof_year_flatten = [int(year) for year_list in prof_year_list for year in year_list]
+                if len(prof_year_flatten) > 0:
+                    prof_year = prof_year_flatten[0]
+
+        if phd_year != 'Unknown' and prof_year != 'Unknown':
+            if phd_year > prof_year:
+                phd_year = 'Unknown'
 
         return phd_year, phd_school, prof_year
 
@@ -772,6 +824,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         if only_org:
             entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
                            if entity.label_ in ['ORG']}
+            entity_dict = {key: value for key, value in entity_dict.items()
+                           if not contain_filter_word(key, UniversityWebCrawlerRefined.ENTITY_FILTER_KEYWORD)}
         elif including_org:
             entity_dict = {normalize_string_space(entity.string): entity.label_ for entity in parsed
                            if entity.label_ in ['PERSON', 'ORG']}

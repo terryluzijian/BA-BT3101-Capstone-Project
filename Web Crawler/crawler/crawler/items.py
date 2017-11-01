@@ -6,6 +6,7 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 from scrapy.item import Item, Field
+from scrapy.loader.processors import TakeFirst
 
 
 class DirectoryItem(Item):
@@ -25,14 +26,14 @@ class DepartmentItem(Item):
     department_or_faculty = Field()
 
 
-class DirectoryProfilePageItem(Item):
-    profile_url = Field()
-    university_name = Field()
-    page_title = Field()
-    aggregated_title = Field()
-    starting_url = Field()
-    # response_body = Field()
-    main_content = Field()
-    header_content = Field()
-    depth = Field()
-    previous_link = Field()
+class ProfilePageItem(Item):
+    name = Field(output_processor=TakeFirst())
+    department = Field(output_processor=TakeFirst())
+    university = Field(output_processor=TakeFirst())
+    profile_link = Field(output_processor=TakeFirst())
+    position = Field(output_processor=TakeFirst())
+    phd_year = Field(output_processor=TakeFirst())
+    phd_school = Field(output_processor=TakeFirst())
+    promotion_year = Field(output_processor=TakeFirst())
+    text_raw = Field(output_processor=TakeFirst())
+    tag = Field(output_processor=TakeFirst())
