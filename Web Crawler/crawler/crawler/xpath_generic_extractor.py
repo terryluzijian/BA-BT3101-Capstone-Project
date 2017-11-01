@@ -114,12 +114,19 @@ def generic_get_unique_content(response, past_response, extract_func=None, get_t
             return link_url
 
     if isinstance(past_response, Response):
-        general_past_content = get_general(past_response)
+        if not get_text:
+            general_past_content = get_general(past_response)
+        else:
+            general_past_content = past_response.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()
     elif type(past_response) is list:
         # Changed to get_general
-        general_past_content = {key: value
-                                for element in past_response
-                                for key, value in get_general(element).items()}
+        if not get_text:
+            general_past_content = {key: value
+                                    for element in past_response
+                                    for key, value in get_general(element).items()}
+        else:
+            general_past_content = [value for element in past_response
+                                    for value in element.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()]
     else:
         general_past_content = {}
 
@@ -139,9 +146,9 @@ def generic_get_unique_content(response, past_response, extract_func=None, get_t
     else:
         text_content = response.xpath(MAIN_CONTENT_TEXT_XPATH_RAW).extract()
         text_content_normalized = list(filter(lambda y: len(y) >= 3, map(lambda x: ' '.join(x.split()), text_content)))
-        content_keys = set(map(lambda x: re.sub(r'\([1-9]+\)', '', x), list(general_past_content.keys())))
+        content = set(general_past_content)
         return [text_element for text_element in text_content_normalized
-                if re.sub(r'\([1-9]+\)', '', text_element) not in content_keys]
+                if text_element not in content]
 
 
 # Specific get functions
