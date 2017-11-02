@@ -1,3 +1,5 @@
+import pandas as pd
+
 def get_peer_unis(dep):
     bme_peer = [
         'Columbia University',
@@ -55,3 +57,25 @@ def get_asp_unis(dep):
         'geo': geo_asp}
 
     return departments[dep]
+
+def get_preview_json(filename, dep):
+    preview = pd.read_json(filename, orient='records')
+    preview = preview[preview['position'].isin(['Professor', 'Associate Professor'])]
+    department = ''
+    if dep == 'bme':
+        department = 'Biomedical Engineering'
+    elif dep == 'biochem':
+        department = 'Biochemistry'
+    elif dep == 'geo':
+        department = 'Geography'
+    return preview[preview['department'] == department]
+
+def export_db(filename, dep, location):
+    preview = get_preview_json(filename, dep)
+    preview.to_excel(location, index=False)
+    print('exported.. check directory..')
+    return True
+
+# dummy function to check the crawler progress. plus + 10 every time
+def check_crawler_progress(progress):
+    return progress + 10
