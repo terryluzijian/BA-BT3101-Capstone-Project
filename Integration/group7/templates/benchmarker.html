@@ -52,7 +52,7 @@
         <a class="btn btn-light btn-menu" href="/database/">
           <img src="../static/img/Database.svg">Database
         </a>
-        <a class="btn btn-light btn-menu active" href="/database/">
+        <a class="btn btn-light btn-menu active" href="/benchmarker/">
           <img src="../static/img/Database.svg">Benchmarker
         </a>
         <a class="btn btn-light btn-menu" href="/">
@@ -66,14 +66,14 @@
       <form>
         <div class="form-row">
           <div class="form-group col-6">
-            <label for="professor"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp;Enter Professor Name</label>
-            <input type="text" class="form-control" id="professor" value="Best Professor Ever">
+            <label for="professor"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp; Professor Name</label>
+            <input type="text" class="form-control" id="professor" value="" placeholder="e.g. Peter Tan">
           </div>
           <div class="form-group col-6">
-            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
+            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Department</label>
             <select id="faculty" class="form-control custom-select">
-              <option selected>Biochemistry</option>
-              <option>Biomedical Engineering</option>
+              <option selected>Biomedical Engineering (BME)</option>
+              <option>Biochemistry</option>
               <option>Geography</option>
             </select>
           </div>
@@ -81,20 +81,20 @@
         <div class="form-row">
           <div class="form-group col-2">
             <label for="phd_year"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;PhD Year</label>
-            <input type="text" class="form-control" id="professor" placeholder="2006"readonly>
+            <input type="text" class="form-control" id="professor" placeholder="e.g. 2006">
           </div>
           <div class="form-group col-3">
             <label for="phd_university"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;PhD University</label>
-            <input type="text" class="form-control" id="professor" placeholder="Harvard University"readonly>
+            <input type="text" class="form-control" id="professor" placeholder="e.g. Harvard University">
           </div>
           <div class="form-group col-7">
             <label for="research_areas"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Research Areas</label>
-            <textarea type="text" class="form-control" id="professor" placeholder="Quantum Theories"readonly></textarea>
+            <textarea type="text" class="form-control" id="professor" placeholder="e.g. Quantum Theories, something cool. You can even write a paragraph."></textarea>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-6">
-            <label for="promotion_level"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Promotion Level</label>
+            <label for="promotion_level"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Desired Promotion Level</label>
             <select id="faculty" class="form-control custom-select">
               <option selected>Associate Professor</option>
               <option>Professor</option>
@@ -102,7 +102,7 @@
           </div>
           <div class="form-group col-6">
             <label for="metrics">
-              <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Benchmarking Metrics (xx chosen)
+              <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Benchmarking Metrics
             </label>
             <div class="form-scrollable rounded">
               <div class="form-check">
