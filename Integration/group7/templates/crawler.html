@@ -143,16 +143,9 @@
             </div>
           {% endfor %}
         </div>
-        <div class="row" id="loadMore">
-          <div class="col-6 text-right py-5">
-            <a type="button" class="btn btn-primary" href="{{ url_for('crawler_preview', dep=dep, length=length+9) }}">Load More</a>
-          </div>
-          <div class="col-6 text-left py-5">
-            <form action="{{ url_for('crawler_export') }}" method="post">
-              <input type="hidden" name="dep" value="{{ dep }}">
-              <button type="submit" class="btn btn-primary" onclick="alert('Database has been saved to local directory.')">Export Database</button>
-            </form>
-          </div>      
+        <div class="text-center py-5" id="loadMore">
+          <a type="button" class="btn btn-primary" href="{{ url_for('crawler_preview', dep=dep, length=length+9) }}">Load More</a>
+          <button type="butoon" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">Export Database</button>
         </div>
       </div>
     {% else %}
@@ -163,6 +156,31 @@
         </div>
       </div>
     {% endif %}
+
+    <!-- Modal for export button -->
+    <div class="modal" tabindex="-1" role="dialog" id="exportModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Database export</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <p>The database for this department will be saved to local directory.</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <form action="{{ url_for('crawler_export') }}" method="post">
+              <input type="hidden" name="dep" value="{{ dep }}"/>
+              <button type="submit" class="btn btn-primary">Proceed</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer pt-5 pb-2">
