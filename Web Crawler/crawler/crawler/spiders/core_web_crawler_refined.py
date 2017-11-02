@@ -3,6 +3,7 @@ import pandas
 import re
 import scrapy
 from crawler.items import ProfilePageItem
+from crawler.profile_info_analyzer import get_key_information
 from crawler.similarity_navigator import SimilarityNavigator
 from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2_h3, get_main_content, \
                                             get_main_content_text, get_main_content_excluding_menu, \
@@ -82,7 +83,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                                'event', 'calendar', 'map', 'article', 'blog', 'student', 'library'])
     ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty', 'menu', 'copyright'
                                        'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header',
-                                       'department'])
+                                       'department', 'view', 'profile'])
 
     # Create a class attribute to store corresponding patterns that match a profile page under certain
     # department site
@@ -602,7 +603,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # ----------------------------------YEAR INFORMATION COMPONENT CODE----------------------------------
         if position != 'Non-Professor':
 
-            year_info = self.parse_year_info(main_text=main_text, len_lim=len_lim)
+            year_info = get_key_information(response)
 
             # ----------------------------------PDF (RESUME) COMPONENT CODE----------------------------------
             links = get_main_content_unique(response, response.meta['Past Response'])
@@ -619,19 +620,26 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 if year_info_new.count('Unknown') < year_info.count('Unknown'):
                     year_info = year_info_new
 
-            main_text_long = ' '.join(list(filter(lambda x: len(x.split(' ')) >= len_lim * 2, main_text)))
             profile = ProfilePageItem()
-            profile['name'] = name
-            profile['department'] = response.meta['Original Start'][1]
-            profile['university'] = response.meta['University Name']
-            profile['profile_link'] = response.url
-            profile['position'] = position
-            profile['phd_year'] = str(year_info[0])
-            profile['phd_school'] = year_info[1]
-            profile['promotion_year'] = str(year_info[2])
-            profile['text_raw'] = main_text_long
-            profile['tag'] = response.meta.get('tag', 'None')
-            return profile
+            name_before = re.sub(r'\(\d+\)', '', name).split(' ')
+            try:
+                if name_before[0].lower() in ['prof.', 'dr.', 'prof', 'dr']:
+                    profile['name'] = ' '.join(name_before[1:3])
+                else:
+                    profile['name'] = ' '.join(name_before[:3])
+                profile['department'] = response.meta['Original Start'][1]
+                profile['university'] = response.meta['University Name']
+                profile['profile_link'] = response.url
+                profile['position'] = position
+                profile['phd_year'] = str(year_info[0])
+                profile['phd_school'] = year_info[1]
+                profile['promotion_year'] = str(year_info[2])
+                self.logger.info(str(profile))
+                profile['text_raw'] = year_info[3]
+                profile['tag'] = response.meta.get('tag', 'None')
+                return profile
+            except IndexError:
+                pass
 
         return
 
