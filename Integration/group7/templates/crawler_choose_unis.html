@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Database Manager</title>
+    <title>Crawler</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,10 +46,10 @@
     <!-- Function Button Group -->
     <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
       <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
-        <a class="btn btn-light btn-menu" href="/crawler/">
+        <a class="btn btn-light btn-menu active" href="/crawler/">
           <img src="../static/img/Crawl.svg">Crawler
         </a>
-        <a class="btn btn-light btn-menu active" href="/database/">
+        <a class="btn btn-light btn-menu" href="/database/">
           <img src="../static/img/Database.svg">Database
         </a>
         <a class="btn btn-light btn-menu" href="/benchmarker/">
@@ -63,94 +63,49 @@
 
     <!-- Crawler Criteria Picker -->
     <div class="container-fluid border py-2 criteria-box shadowed">
-      <div class="col-4 d-flex mx-auto justify-content-center">
-        <form>
-          <div class="form-group">
-            <label for="faculty"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Faculty</label>
-            <select id="faculty" class="form-control custom-select">
-              <option>Biochemistry</option>
-              <option>Biomedical Engineering</option>
-              <option>Geography</option>
+      <form action="{{ url_for('start_crawler') }}" method="post">
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label for="dep"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Department</label>
+            <select name="dep" class="form-control custom-select">
+              <option {% if dep == 'bme' %} selected {% else %} disabled {% endif %} value="bme">Biomedical Engineering</option>
+              <option {% if dep == 'biochem' %} selected {% else %} disabled {% endif %} value="biochem">Biochemistry</option>
+              <option {% if dep == 'geo' %} selected {% else %} disabled {% endif %} value="geo">Geography</option>
             </select>
           </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">Retrieve only incomplete records
+          <div class="form-group col-4">
+            <label for="peer">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities
             </label>
+            <div class="form-scrollable rounded">
+              {% for uni in peer_unis %}
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" name="selected_peer" value="{{ uni }}" checked/>{{ uni }}</label>
+              </div>
+              {% endfor %}
+            </div>
           </div>
-          <button type="submit" class="btn btn-outline-danger d-block mx-auto">Retrieve Data</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Crawler Result Preview -->
-    <div class="container py-5">
-      <h4>Database for [faculty name]</h4>
-      <h6>*Only missing information in the database can be manually filled.</h6>
-      <p>We suggest you visit the faculty profile page of the professor to look for the information manually. 
-      <br/>Once the information is found, fill in the appropriate boxes and click the button to confirm addition.</p>
-      <table class="table border profile-box shadowed">
-        <thead>
-          <tr>
-            <th scope="col">Type</th>
-            <th scope="col">Professor Name</th>
-            <th scope="col">PhD Year</th>
-            <th scope="col">PhD University</th>
-            <th scope="col">Promotion Year</th>
-            <th scope="col">Research Areas</th>
-            <th scope="col">Faculty Profile Page</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Peer</td>
-            <td>Best Prof Ever</td>
-            <td>1993</td>
-            <td>Yale University</td>
-            <td>2006</td>
-            <td>The biophysical environment of Singapore</td>
-            <td class="text-center">
-              <a href="#" target="_blank"><i class="fa fa-lg fa-link"></i> Go to page</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Peer</td>
-            <td>Best Prof Ever</td>
-            <td>1993</td>
-            <td>Yale University</td>
-            <td>2006</td>
-            <td>The biophysical environment of Singapore</td>
-            <td class="text-center">
-              <a href="#" target="_blank"><i class="fa fa-lg fa-link"></i> Go to page</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Peer</td>
-            <td>Best Prof Ever</td>
-            <td>1993</td>
-            <td>Yale University</td>
-            <td>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Year" aria-label="PhD Year">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button"><i class="fa fa-check"></i></button>
-                </span>
+          <div class="form-group col-4">
+            <label for="aspirant">
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities
+            </label>
+            <div class="form-scrollable rounded">
+              {% for uni in asp_unis %}
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" name="selected_asp" value="{{ uni }}" checked/>{{ uni }}
+                </label>
               </div>
-            </td>
-            <td>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Research Areas" aria-label="Research Areas">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button"><i class="fa fa-check"></i></button>
-                </span>
-              </div>
-            </td>
-            <td class="text-center">
-              <a href="#" target="_blank"><i class="fa fa-lg fa-link"></i> Go to page</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <a class="btn btn-outline-secondary" href="{{ url_for('crawler_preview', dep=dep) }}">Back</a>
+          <button type="submit" class="btn btn-outline-danger">Crawl</button>
+        </div>
+      </form>
     </div>
 
     <!-- Footer -->

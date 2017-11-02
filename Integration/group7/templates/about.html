@@ -41,7 +41,7 @@
               SIGN IN
             </a>
               <div class="dropdown-menu dropdown-menu-right signin shadowed" aria-labelledby="navbarDropdown">
-                <form>
+                <form action="{{ url_for('login') }}" method="post">
                   <div class="form-group row d-flex mx-auto">
                     <label for="username_signin" class="col-2 col-form-label-sm">
                       <i class="fa fa-user fa-lg"></i>

@@ -63,170 +63,122 @@
 
     <!-- Crawler Criteria Picker -->
     <div class="container-fluid border py-2 criteria-box shadowed">
-      <form action="{{ url_for('get_preview', dep=dep) }}" method="post">
+      <form>
         <div class="form-row">
           <div class="form-group col-4">
             <label for="department"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Department</label>
             <select id="department" class="form-control custom-select" onchange="javascript:location.href = this.value;">
-              <option {% if dep == 'bme' %} selected {% endif %} value="{{ url_for('crawler', dep='bme') }}">Biomedical Engineering (BME)</option>
-              <option {% if dep == 'biochem' %} selected {% endif %} value="{{ url_for('crawler', dep='biochem') }}">Biochemistry</option>
-              <option {% if dep == 'geo' %} selected {% endif %} value="{{ url_for('crawler', dep='geo') }}">Geography</option>
+              <option {% if dep == 'bme' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='bme') }}">Biomedical Engineering</option>
+              <option {% if dep == 'biochem' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='biochem') }}">Biochemistry</option>
+              <option {% if dep == 'geo' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='geo') }}">Geography</option>
             </select>
           </div>
           <div class="form-group col-4">
             <label for="peer">
-              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Peer Universities
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Peer Universities in Database
             </label>
             <div class="form-scrollable rounded">
               {% for uni in peer_unis %}
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="selected_peer" value="{{ uni }}" {% if uni in selected_peer %} checked {% endif %}/>{{ uni }}</label>
+                  <input class="form-check-input" type="checkbox" name="selected_peer" value="{{ uni }}" {% if uni in selected_peer %} checked {% endif %} disabled="" />{{ uni }}</label>
               </div>
               {% endfor %}
             </div>
           </div>
           <div class="form-group col-4">
             <label for="aspirant">
-              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Choose Aspirant Universities
+              <i class="fa fa-university" aria-hidden="true"></i>&nbsp;Aspirant Universities in Database
             </label>
             <div class="form-scrollable rounded">
               {% for uni in asp_unis %}
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="selected_asp" value="{{ uni }}" {% if uni in selected_asp %} checked {% endif %}/>{{ uni }}
+                  <input class="form-check-input" type="checkbox" name="selected_asp" value="{{ uni }}" {% if uni in selected_asp %} checked {% endif %} disabled="" />{{ uni }}
                 </label>
               </div>
               {% endfor %}
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-outline-danger d-block mx-auto">Check Database</button>
       </form>
     </div>
 
-    <!-- Crawler Result Preview -->
-    {% if selected_peer %}
-      <div class="container">
-        <h4>Selected Peer Unis</h4>
-        {% for uni in selected_peer %}
-          <p>{{ uni }}</p>
-        {% endfor %}
+    {% if preview.shape[0] > 0 %}
+      <div class="container py-5">
+        <h4 class="text-center">An existing database for this department is found. Displaying preview</h4>
+        <div class="text-center pt-2">
+          <a href="{{ url_for('crawler_choose_unis', dep=dep) }}" class="btn btn-danger">Recrawl Now</a>
+        </div>
       </div>
-    {% endif %}
-    {% if selected_asp %}
-      <div class="container">
-        <h4>Selected Aspirant Unis</h4>
-        {% for uni in selected_asp %}
-          <p>{{ uni }}</p>
-        {% endfor %}
+
+      <div class="container pt-2">
+        <div class="row">
+          {% for key, value in preview[:length].iterrows() %}
+            <div class="col-4">
+              <div class="card mb-3 shadowed">
+                <div class="card-body">
+                  <h4 class="card-title text-center">{{ value['name'] }}</h4>
+                  <h6 class="card-subtitle text-center">
+                    {% if value['position'] == 'Professor' %}
+                      <span class="badge badge-success mb-2">Professor</span>
+                    {% elif value['position'] == 'Associate Professor' %}
+                      <span class="badge badge-warning mb-2">Associate Professor</span>
+                    {% endif %}
+                    {% if value['tag'] == 'peer' %}
+                      <span class="badge badge-primary mb-2">Peer</span>
+                    {% elif value['tag'] == 'aspirant' %}
+                      <span class="badge badge-info mb-2">Aspirant</span>
+                    {% endif %}
+                  </h6>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;{{ value['university'] }}</li>
+                    <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;{{ value['phd_year'] }} - {{ value['phd_school'] }}</li>
+                    <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;{{ value['promotion_year'] }}</li>
+                    <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+                    <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="{{ value['profile_link'] }}" target="_blank">Profile Page</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="text-center py-5" id="loadMore">
+          <a type="button" class="btn btn-primary" href="{{ url_for('crawler_preview', dep=dep, length=length+9) }}">Load More</a>
+          <button type="butoon" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">Export Database</button>
+        </div>
+      </div>
+    {% else %}
+      <div class="container py-5">
+        <h4 class="text-center">There is no database for this faculty yet!</h4>
+        <div class="text-center pt-2">
+          <button type="button" class="btn btn-lg btn-danger">Crawl Now</button>
+        </div>
       </div>
     {% endif %}
 
-    <div class="container pt-5">
-      <h4 class="text-center">There is an existing database for this faculty</h4>
-      <div class="text-center pt-2">
-        <form action="{{ url_for('start_crawler') }}" method="post">
-          <input type="hidden" name="dep" value="{{ dep }}"/>
-          {% for uni in selected_peer %}
-            <input type="hidden" name="selected_peer" value="{{ uni }}"/>
-          {% endfor %}
-          {% for uni in selected_asp %}
-            <input type="hidden" name="selected_asp" value="{{ uni }}"/>
-          {% endfor %}
-          <button type="submit" class="btn btn-danger">Recrawl Now</button>
-          <hr/>
-        </form>
-      </div>
-    </div>
-
-    <div class="container pt-2">
-      <h4 class="text-center pb-2">Preview of existing database</h4>
-      <div class="row">
-        <div class="col-4">
-          <div class="card mb-3 shadowed">
-            <div class="card-body">
-              <h4 class="card-title text-center">Johny Bravo</h4>
-              <h6 class="card-subtitle text-center"><span class="badge badge-warning mb-2">Associate Professor</span></h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
-                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
-                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
-              </ul>
+    <!-- Modal for export button -->
+    <div class="modal" tabindex="-1" role="dialog" id="exportModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Database export</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <p>The database for this department will be saved to local directory.</p>
             </div>
           </div>
-        </div>
-        <div class="col-4">
-          <div class="card mb-3 shadowed">
-            <div class="card-body">
-              <h4 class="card-title text-center">Samurai Jack</h4>
-              <h6 class="card-subtitle text-center"><span class="badge badge-success mb-2">Professor</span></h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
-                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
-                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
-              </ul>
-            </div>
+          <div class="modal-footer">
+            <form action="{{ url_for('crawler_export') }}" method="post">
+              <input type="hidden" name="dep" value="{{ dep }}"/>
+              <button type="submit" class="btn btn-primary">Proceed</button>
+            </form>
           </div>
         </div>
-        <div class="col-4">
-          <div class="card mb-3 shadowed">
-            <div class="card-body">
-              <h4 class="card-title text-center">Blossoms</h4>
-              <h6 class="card-subtitle text-center">
-                <span class="badge badge-success mb-2">Professor</span>
-                <span class="badge badge-danger mb-2">Incomplete</span>
-              </h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><i class="fa fa-briefcase"></i>&nbsp;Stanford University - Peer</li>
-                <li class="list-group-item"><i class="fa fa-graduation-cap"></i>&nbsp;1997 - ABC Uni</li>
-                <li class="list-group-item"><i class="fa fa-star"></i>&nbsp;2003</li>
-                <li class="list-group-item"><i class="fa fa-book"></i>&nbsp;Coolest Science</li>
-                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <div class="card mb-3 shadowed">
-            <div class="card-body">
-              <h4 class="card-title text-center">Johny Bravo</h4>
-              <h6 class="card-subtitle text-center"><span class="badge badge-warning mb-2">Associate Professor</span></h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
-                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
-                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card mb-3 shadowed">
-            <div class="card-body">
-              <h4 class="card-title text-center">Samurai Jack</h4>
-              <h6 class="card-subtitle text-center"><span class="badge badge-success mb-2">Professor</span></h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Stanford University - Peer</li>
-                <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;1997</li>
-                <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;2003</li>
-                <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Cool Science</li>
-                <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="#" target="_blank">Homepage</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center py-5">
-        <button type="button" class="btn btn-primary">Load More</button>
-        <button type="button" class="btn btn-primary">Export Database</button>
       </div>
     </div>
 
@@ -261,12 +213,17 @@
       </div>
     </footer>
 
-    <!-- Optional JavaScript -->
-    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!-- Script to start the document from the load more button when load more preview result -->
+    {% if length is defined and length > 9 %}
+    <script>
+      $(document).scrollTop($('#loadMore').offset().top);
+    </script>
+    {% endif %}
 
   </body>
 </html>
