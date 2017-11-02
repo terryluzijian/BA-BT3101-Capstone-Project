@@ -626,9 +626,9 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             profile['university'] = response.meta['University Name']
             profile['profile_link'] = response.url
             profile['position'] = position
-            profile['phd_year'] = year_info[0]
+            profile['phd_year'] = str(year_info[0])
             profile['phd_school'] = year_info[1]
-            profile['promotion_year'] = year_info[2]
+            profile['promotion_year'] = str(year_info[2])
             profile['text_raw'] = main_text_long
             profile['tag'] = response.meta.get('tag', 'None')
             return profile
