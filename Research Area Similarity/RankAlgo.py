@@ -2,79 +2,94 @@ import pandas as pd
 import Similarity
 from fuzzywuzzy import fuzz, process
 import numpy as np
+import json
 
-def get_uni_rank(uni, uni_ls):
-    best_match = process.extractOne(uni, uni_ls)
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+def get_uni_rank(uni, uni_dict):
+    if uni == "Unknown":
+        return np.nan
+    best_match = process.extractOne(uni, uni_dict.keys())
     if best_match[1] >= 85:  # similar enough
-        return uni_ls.indexof(best_match[0])
+        return uni_dict[best_match[0]]
 
 
 class Rank:
 
-    def __int__(self, filename, nus, univeristy_ls):
+    def __int__(self, filename, nus, univeristy_filename):
+        filename = "/Users/Ye/Desktop/Y4S1/BT3101/BA-BT3101/Web Crawler/crawler/crawler/data/SAMPLE_JSON.json"
+        univeristy_filename = "/Users/Ye/Desktop/Y4S1/BT3101/BA-BT3101/Web Crawler/crawler/crawler/data/UNIVERSITY_LINK.json"
         self.data = pd.read_json(filename)
-        self.university = univeristy_ls
-        self.nus = nus
+        self.university = pd.read_json(univeristy_filename, orient = "index")["Rank"]\
+            .apply(lambda x: int(x.split("=")[-1])).to_dict()
+        self.nus = {u'department': u'Geography',
+                     u'name': u'Prof Clive Agnew research profile - personal details   ',
+                     u'phd_school': u'University of East Anglia, School of Development Studies',
+                     u'phd_year': 1980,
+                     u'position': u'Professor',
+                     u'profile_link': u'http://www.manchester.ac.uk/research/Clive.agnew/',
+                     u'promotion_year': 1999,
+                     u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
+                     u'university': u'The University of Manchester'
+        }
+        #self.nus = nus
         self.promo = False
         self.phd = False
         self.phdUni = False
         self.research = False
 
-    def get_rank_scores(self, ls):
+    def get_rank_scores(self, ls= ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]):
         scores = []
         for l in ls:
             if l == "PHD YEAR":
-                scores.append("phd year score")
+                scores.append("phd_year_score")
                 if self.phd == False:
                     self.get_phd_year_score()
             if l == "PHD UNIVERSITY":
-                scores.append("phd university score")
+                scores.append("phd_school_score")
                 if self.phdUni == False:
                     self.get_phd_uni_score()
             if l == "PROMO YEAR":
-                scores.append("promo year score")
+                scores.append("promotion_year_score")
                 if self.promo == False:
                     self.get_promo_year_score()
             if l ==  "RESEARCH AREA SIMILARITY":
-                scores.append("research score")
+                scores.append("research_area_score")
                 if self.research == False:
                     self.get_research_sim_score()
-        self.data["final score"] = self.data[scores].mean(0)
+        self.data["final_score"] = self.data[scores].mean(axis = 1)
 
-    def get_top(self, uni, n=5):
-        return self.data[self.data["uni"] == uni].sort_values("final score").head(n)
+    def get_top(self, tag, n=5):
+        return self.data[self.data["tag"] == tag].sort_values("final_score", ascending = False).head(n)
 
     def get_phd_year_score(self):
-        self.data["phd year diff"] = self.data["phd year"].apply(lambda x: abs(x - self.nus["phd year"]))
-        mean_diff = self.data["phd year diff"].mean()
-        max_diff = self.data["phd year diff"].max()
-        self.data["phd year score"] = self.data["phd year diff"].apply(lambda x: 1- (x - mean_diff) / max_diff)
+        self.data["phd_year_diff"] = self.data["phd_year"].apply(lambda x: abs(int(x) - self.nus["phd_year"]) if x != "Unknown" else np.nan)
+        max_diff = self.data["phd_year_diff"].max()
+        self.data["phd_year_score"] = self.data["phd_year_diff"].apply(lambda x: 1 - x / max_diff)
         self.phd = True
 
     def get_promo_year_score(self):
-        self.data["promo year diff"] = self.data["promo year"].apply(lambda x: abs(x - self.nus["promo year"]))
-        mean_diff = self.data["promo year diff"].mean()
-        max_diff = self.data["promo year diff"].max()
-        self.data["promo year score"] = self.data["promo year diff"].apply(lambda x: 1- (x - mean_diff) / max_diff)
+        self.data["promotion_year_diff"] = self.data["promotion_year"].apply(lambda x: abs(int(x) - self.nus["promotion_year"]) if x != "Unknown" else np.nan)
+        max_diff = self.data["promotion_year_diff"].max()
+        self.data["promotion_year_score"] = self.data["promotion_year_diff"].apply(lambda x: 1 - x / max_diff)
         self.promo = True
 
     def get_phd_uni_score(self):
-        nus_rank = get_uni_rank(self.nus["phd univeristy"], self.university)
-        self.data["phd univeristy rank"] = self.data["phd univeristy"].apply(lambda x: get_uni_rank(x, self.university) - nus_rank)
-        self.data["phd univeristy rank diff"] = np.where(self.data["phd univeristy rank"] != -1, 
-                                                      abs(self.data["phd univeristy rank"] - nus_rank), 
+        nus_rank = get_uni_rank(self.nus["phd_school"], self.university)
+        self.data["phd_school_rank"] = self.data["phd_school"].apply(lambda x: get_uni_rank(x, self.university))
+        self.data["phd_school_rank_diff"] = np.where(self.data["phd_school_rank"] != -1,
+                                                      abs(self.data["phd_school_rank"] - nus_rank),
                                                       np.nan)
-        mean_diff = self.data["phd univeristy rank diff"].mean()
-        max_diff = self.data["phd univeristy rank diff"].max()
-        self.data["phd univeristy score"] = self.data["phd univeristy rank diff"].apply(lambda x: 1- (x - mean_diff) / max_diff)
-        self.data["phd univeristy score"].fillna(0)
+        max_diff = self.data["phd_school_rank_diff"].max()
+        self.data["phd_school_score"] = self.data["phd_school_rank_diff"].apply(lambda x: 1 - x / max_diff)
         self.phdUni = True
 
     def get_research_sim_score(self):
-        sim = Similarity(self.data)
-        sim.add_nus_info(self.nus)
-        col = sim.get_avg_score()
-        self.data["research score"] = sim.get_data()[col]
+        sim = Similarity.Similarity(self.data)
+        sim.add_nus_info(pd.DataFrame.from_dict([self.nus]))
+        self.data = self.data.merge(sim.get_avg_score(), right_index = True, left_index = True)
         self.research = True
 
 

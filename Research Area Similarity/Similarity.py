@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 from gensim.corpora import Dictionary
 from gensim.models import ldamodel
@@ -63,18 +62,20 @@ def get_n_similarity(sentences_1, sentences_2, model):
     score = 0
     for s1 in sentences_1:
         for s2 in sentences_2:
-            temp_score = model.wv.n_similarity(s1, s2)
-            if temp_score > score:
-                score = temp_score
+            try:
+                temp_score = model.wv.n_similarity(s1, s2)
+                if temp_score > score:
+                    score = temp_score
+            except ZeroDivisionError:
+                pass
     return score
 
 
 class Similarity:
-
     def __init__(self, data, seed = 124):
         self.data = data
-        self.data["Relevant Research Area"] = self.data["Relevant Research Area"].apply(
-            lambda x: '. '.join(y.lstrip('()0123456789.-') for y in x.split('\n')))
+        self.data["text_raw"] = self.data["text_raw"].apply(lambda x: x if x != "Unknown" else u"")
+            #lambda x: '. '.join(y.lstrip('()0123456789.-') for y in x.split('\n')) if x != "Unknown" else "")
         self.nlp = spacy.load("en_core_web_md")
         self.seed = seed
         self.nus = None
@@ -82,22 +83,20 @@ class Similarity:
         self.keyword_score = False
         self.word2vec_score = False
 
-    def add_nus_info(self, info):
-        self.data = info.append(self.data).reset_index()
-        self.nus = info
+    def add_nus_info(self, nus_info):
+        self.data = self.data.append(self.nus).reset_index()
+        self.nus = nus_info
 
     def get_data(self):
         return self.data.copy()
 
     def apply_nlp(self):
-        self.data["nlp"] = self.data["Relevant Research Area"].apply(self.nlp)
+        self.data["nlp"] = self.data["text_raw"].apply(self.nlp)
 
     def apply_bigram(self):
         if "nlp" not in self.data.columns.tolist():
             self.apply_nlp()
         self.data["sentences"] = self.data["nlp"].apply(separate_sentence)
-        self.data["sentences_bigram"] = self.data["sentences"].apply(
-            lambda doc: [bigram[sentence] for sentence in doc])
         phrases = Phrases(self.data["sentences"].sum())
         bigram = Phraser(phrases)
         self.data["sentences_bigram"] = self.data["sentences"].apply(
@@ -155,15 +154,18 @@ class Similarity:
         return cols
 
     def get_avg_score(self, scores = "top2"):
-        self.get_all_scores(self)
+        self.get_all_scores()
         score_cols = self.scores()
+        col = "research_area_score"
+        self.data["score_list"] = self.data[score_cols].values.tolist()
         if scores == "all":
-            col = "score_all"
-            self.data[col] = self.data[score_cols].values.tolist().apply(lambda x:get_n_avg(x, 3))
+            self.data[col] = self.data["score_list"].apply(lambda x:get_n_avg(x, 3))
         else:# scores == "TOP2":
-            col = "score_top2"
-            self.data[col] = self.data[score_cols].values.tolist().apply(lambda x:get_n_avg(x, 2))
-        return col
+            self.data[col] = self.data["score_list"].apply(lambda x:get_n_avg(x, 2))
+        if "keyword_score" in score_cols:
+            return self.data[1:].reset_index()[[col, "keywords"]]
+        else:
+            return self.data[1:].reset_index()[[col]]
 
 
 
