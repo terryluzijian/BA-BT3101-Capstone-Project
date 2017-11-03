@@ -1,4 +1,3 @@
-import data
 import en_core_web_md
 import re
 import sys
