@@ -26,7 +26,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     # pages identifiable as department/staff directory for personal profile extraction purpose
 
     # Initiate name for calling and department links for subsequent shuffling and yielding of request
-    name = 'refined'
+    name = 'core'
     custom_settings = {
         # Override custom settings preset by scrapy
         # Take a depth-first search algorithm by setting a negative priority or positive otherwise

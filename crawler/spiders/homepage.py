@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 class UniversityHomepageCrawler(scrapy.Spider):
 
-    name = 'university_homepage_spider'
+    name = 'homepage'
     PREVIOUS_URL = 'https://www.timeshighereducation.com/world-university-rankings/'
     FILE_NAME = 'UNIVERSITY_LINK_PRE.json'
     NEW_FILE_NAME = 'UNIVERSITY_LINK.json'
