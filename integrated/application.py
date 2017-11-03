@@ -1,8 +1,11 @@
-from flask import Flask, session, render_template, request, redirect, url_for, g, flash
+from flask import Flask, session, render_template, request, redirect, url_for, g, flash, jsonify
 import sqlite3
 import click
 import helper
 import pandas as pd
+import datetime
+import json
+from forms import BenchmarkerForm
 
 DATABASE = 'database.db'
 
@@ -66,7 +69,7 @@ def login():
     cursor.execute(statement)
     users = cursor.fetchall()
     if len(users) == 1:
-        session['username'] = request.form['username']
+        session['username'] = request.form.get('username')
         return redirect(url_for('main'))
     else:
         print('No user found')
@@ -93,7 +96,7 @@ def crawler_preview(dep='bme', length=9):
         length = request.args.get('length', type=int)
     if request.args.get('dep'):
         dep = request.args.get('dep')
-    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
+    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)[:length]
     in_db_peer = preview[preview['tag'] == 'peer']['university'].unique() 
     in_db_asp =  preview[preview['tag'] == 'aspirant']['university'].unique()
     return render_template(
@@ -140,6 +143,7 @@ def start_crawler():
         selected_asp=selected_asp,
         progress=0))
 
+##### Get crawler result
 @app.route('/crawler/result')
 def get_crawler_result():
     dep = request.args.get('dep')
@@ -189,11 +193,46 @@ def edit_database():
     print(preview[preview['profile_link'] == profile_link][field])
     return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
 
-
 ##### Benchmarker page
 @app.route('/benchmarker/')
 def benchmarker():
     return render_template('benchmarker.html')
+
+##### Start benchmarker
+@app.route('/benchmarker/benchmark', methods=['POST'])
+def start_benchmarker():
+    form = BenchmarkerForm(request.form)
+    if form.validate():
+        nus = {
+            'name': form.name.data,
+            'department': form.department.data,
+            'phd_year': form.phd_year.data,
+            'phd_school': form.phd_school.data,
+            'text_raw': form.text_raw.data,
+            'position':form.position.data,
+            'metrics': form.metrics.data,
+            'promotion_year': datetime.datetime.now().year
+        }
+        result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
+        result = pd.concat([result], ignore_index=True)
+        result.to_excel('../benchmarker_result.xlsx', index=False)
+        return render_template(
+            'benchmarker_result.html',
+            name=form.name.data,
+            department=form.department.data,
+            phd_year=form.phd_year.data,
+            phd_school=form.phd_school.data,
+            text_raw=form.text_raw.data,
+            position=form.position.data,
+            metrics=form.metrics.data,
+            length=20,
+            result=result)
+    else:
+        for field in form:
+            if field.errors:
+                for err in field.errors:
+                    flash('%s: %s' % (field.label.text, err))
+        return redirect(url_for('benchmarker'))
 
 ##### Initialize app
 if __name__ == "__main__":
