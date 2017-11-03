@@ -1,6 +1,8 @@
+import io
 import os
 import pandas
 import re
+import requests
 import scrapy
 from crawler.items import ProfilePageItem
 from crawler.profile_info_analyzer import get_key_information
@@ -16,7 +18,6 @@ from scrapy import Request
 from scrapy.linkextractors import LinkExtractor, IGNORED_EXTENSIONS
 from scrapy.utils.url import parse_url, url_has_any_extension
 from tld import get_tld
-from urllib.request import urlretrieve
 
 
 class UniversityWebCrawlerRefined(scrapy.Spider):
@@ -612,7 +613,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             for pdf_title, pdf_link in pdf_links.items():
                 # Assume that resume contains more accurate information and overwrite
                 self.logger.info('Found resume link: %s' % pdf_link)
-                reader = PdfFileReader(urlretrieve(response.urljoin(pdf_link))[0])
+                pdf_response = requests.get(response.urljoin(pdf_link))
+                reader = PdfFileReader(io.BytesIO(pdf_response.content))
                 text_content_list = []
                 for page_number in range(reader.getNumPages()):
                     text_content_list.append(reader.getPage(page_number).extractText().split())

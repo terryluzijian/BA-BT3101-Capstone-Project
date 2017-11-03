@@ -1,5 +1,6 @@
+import data
+import en_core_web_md
 import re
-import spacy
 import sys
 from difflib import SequenceMatcher
 from .xpath_generic_extractor import get_menu, get_general
@@ -33,7 +34,7 @@ class SimilarityNavigator(object):
                                                'event', 'calendar', 'map', 'article', 'blog', 'student'])
 
     def __init__(self):
-        self.model_en = spacy.load('en_core_web_md')
+        self.model_en = en_core_web_md.load()
 
     def get_content(self, response, target, target_class, extract_func, ratio=0.8, top=3):
 
