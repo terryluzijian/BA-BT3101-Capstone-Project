@@ -99,3 +99,4 @@ ENV/
 .idea/workspace.xml
 *.pyc
 *.pyc
+.project
