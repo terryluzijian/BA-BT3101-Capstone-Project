@@ -7,4 +7,4 @@ spacy==1.9.0
 Scrapy==1.4.0
 pandas==0.20.3
 PyPDF2==1.26.0
-crawler/data
+https://github.com/explosion/spacy-models/releases/download/en_core_web_md-1.2.1/en_core_web_md-1.2.1.tar.gz
