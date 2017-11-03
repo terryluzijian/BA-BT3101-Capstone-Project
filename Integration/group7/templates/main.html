@@ -47,7 +47,7 @@
                       <i class="fa fa-user fa-lg"></i>
                     </label>
                     <div class="col-10">  
-                      <input type="text" class="form-control form-control-sm" id="username_signin" placeholder="Username">
+                      <input type="text" class="form-control form-control-sm" name="username" id="username_signin" placeholder="Username">
                     </div>
                   </div>
                   <div class="form-group row d-flex mx-auto">
@@ -55,7 +55,7 @@
                       <i class="fa fa-lock fa-lg"></i>
                     </label>
                     <div class="col-10">
-                      <input type="password" class="form-control form-control-sm" id="password_signin" placeholder="Password">
+                      <input type="password" class="form-control form-control-sm" name="password" id="password_signin" placeholder="Password">
                     </div>
                   </div>
                   <button type="submit" class="btn btn-outline-primary btn-sm d-block mx-auto">Submit</button>
@@ -160,11 +160,41 @@
       </div>
     </footer>
 
-    <!-- Optional JavaScript -->
+    <!-- Modal for login error -->
+    <div class="modal" tabindex="-1" role="dialog" id="loginErrorModal">
+      <div class="modal-dialog role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login failed</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Your username/password combination is not found.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <script>
+          $(window).on('load',function(){
+            $('#loginErrorModal').modal('show');
+          });
+        </script>
+      {% endif %}
+    {% endwith %}
 
   </body>
 </html>

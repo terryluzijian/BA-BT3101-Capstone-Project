@@ -1,38 +1,83 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, g, flash
+import sqlite3
+import click
 import helper
 import pandas as pd
+
+DATABASE = 'database.db'
+
 app = Flask(__name__)
+app.secret_key = 'shhhhh'
+
+##### Functions to init database
+# Connect to database
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+
+def init_db():
+    """Initializes the database."""
+    db = get_db()
+    cursor = db.cursor()
+    with app.open_resource('schema.sql', mode='r') as f:
+        cursor.executescript(f.read())
+    db.commit()
+    print('Database initiated')
+
+@app.cli.command('initdb')
+def initdb():
+    """Creates the database tables."""
+    init_db()
+    click.echo('Init the db')
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 ##### Main homepage (not signed in)
 @app.route('/')
 def main():
-    return render_template('main.html')
+    if 'username' in session:
+        return render_template('main_loggedin.html', username=session['username'])
+    else:
+        return render_template('main.html')
 
 ##### About page
 @app.route("/about/")
 def about():
-    return render_template("about.html")
+    if 'username' in session:
+        return render_template('about_loggedin.html')
+    else:
+        return render_template("about.html")
 
 ##### Login (for main homepage and about page)
 @app.route('/login/', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        return redirect(url_for('main_loggedin'))
+    username = request.form.get('username')
+    password = request.form.get('password')
+    statement = "SELECT username, password FROM users WHERE username = '%s' AND password = '%s'" % (username, password)
+    print(statement)
+    
+    cursor = get_db().cursor()
+    cursor.execute(statement)
+    users = cursor.fetchall()
+    if len(users) == 1:
+        session['username'] = request.form['username']
+        return redirect(url_for('main'))
+    else:
+        print('No user found')
+        flash('Your username/password is not valid.')
+        return redirect(url_for('main'))
 
 ##### Logout
-@app.route('/logout/', methods=['GET'])
+@app.route('/logout/')
 def logout():
+    session.pop('username', None)
     return redirect(url_for('main'))
-
-##### Main homepage (signed in)
-@app.route("/main_loggedin/")
-def main_loggedin():
-    return render_template('main_loggedin.html')
-
-##### About page (signed in)
-@app.route('/about_loggedin/')
-def about_loggedin():
-    return render_template('about_loggedin.html')
 
 ##### Profile page
 @app.route("/profile/")
@@ -114,6 +159,36 @@ def get_crawler_result():
 @app.route("/database/")
 def database():
     return render_template("database.html")
+
+@app.route('/database/show')
+def retrieve_database():
+    dep = request.args.get('dep')
+    incomplete = request.args.get('incomplete', type=bool)
+    print(incomplete)
+    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
+    if incomplete:
+        preview = preview[(preview['phd_year'] == 'Unknown') | 
+        (preview['phd_school'] == 'Unknown') | 
+        (preview['promotion_year'] == 'Unknown') | 
+        (preview['text_raw'] == 'Unknown')]
+    return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+
+##### Edit database field
+# Superficial method which keeps on passing the modified database around
+# Need to modify and update database instead
+@app.route('/database/edit', methods=['POST'])
+def edit_database():
+    print(request.form)
+    dep = request.form.get('dep')
+    incomplete = request.form.get('incomplete', type=bool)
+    profile_link = request.form.get('profile_link')
+    field = request.form.get('field')
+    new_value = request.form.get('new_value')
+    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
+    preview.loc[preview['profile_link'] == profile_link, field] = new_value
+    print(preview[preview['profile_link'] == profile_link][field])
+    return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+
 
 ##### Benchmarker page
 @app.route('/benchmarker/')
