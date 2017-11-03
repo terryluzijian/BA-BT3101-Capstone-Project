@@ -23,11 +23,24 @@ def get_db():
 def init_db():
     """Initializes the database."""
     db = get_db()
-    cursor = db.cursor()
+    cur = db.cursor()
     with app.open_resource('schema.sql', mode='r') as f:
-        cursor.executescript(f.read())
+        cur.executescript(f.read())
     db.commit()
     print('Database initiated')
+
+def query_db(query, args=(), one=False):
+    db = get_db()
+    db.row_factory = sqlite3.Row
+    cur = db.cursor().execute(query, args)
+    rv = cur.fetchall()
+    return (rv[0] if rv else None) if one else rv
+
+def insert_db(query, args=()):
+    db = get_db()
+    cur = db.cursor().execute(query, args)
+    db.commit()
+    print('Values inserted')
 
 @app.cli.command('initdb')
 def initdb():
@@ -62,17 +75,15 @@ def about():
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
-    statement = "SELECT username, password FROM users WHERE username = '%s' AND password = '%s'" % (username, password)
-    print(statement)
     
-    cursor = get_db().cursor()
-    cursor.execute(statement)
-    users = cursor.fetchall()
-    if len(users) == 1:
-        session['username'] = request.form.get('username')
+    user = query_db('select user_id, username, password from users where username = ? and password = ?', (username, password), one=True)
+    if user is not None:
+        # store username into session
+        session['username'] = username
+        insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), user[0], 'login', 'none'))
         return redirect(url_for('main'))
     else:
-        print('No user found')
         flash('Your username/password is not valid.')
         return redirect(url_for('main'))
 
@@ -85,7 +96,10 @@ def logout():
 ##### Profile page
 @app.route("/profile/")
 def profile():
-    return render_template("profile.html")
+    username = session['username']
+    user_id = query_db('select user_id from users where username = ?', (username,), one=True)[0]
+    activities = query_db('select activity_timestamp, activity_name, remark from activities where user_id = ? order by datetime(activity_timestamp) desc limit 5', (user_id,))
+    return render_template("profile.html", activities=activities)
 
 ##### Crawler page
 @app.route('/crawler/')

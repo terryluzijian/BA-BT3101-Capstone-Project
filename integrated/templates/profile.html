@@ -83,11 +83,13 @@
               </tr>
             </thead>
             <tbody>
+              {% for row in activities %}
               <tr>
-                <td>7:42:47 PM 2017-09-29</td>
-                <td>User Log in</td>
-                <td>User Login to the website normally.</td>
+                <td>{{ row['activity_timestamp'] }}</td>
+                <td>{{ row['activity_name'] | capitalize }}</td>
+                <td>{{ row['remark'] | capitalize }}</td>
               </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>

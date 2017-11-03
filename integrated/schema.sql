@@ -1,6 +1,6 @@
 drop table if exists users;
 create table users (
-  id integer primary key autoincrement,
+  user_id integer primary key autoincrement,
   username text not null,
   password text not null,
   first_name text not null,
@@ -28,3 +28,22 @@ values (
   'REA Team',
   'dprcindy@nus.edu.sg',
   '123xxxx');
+drop table if exists activities;
+create table activities (
+  activity_id integer primary key autoincrement,
+  activity_timestamp text not null,
+  user_id integer not null,
+  activity_name text not null,
+  remark text not null
+);
+drop table if exists benchmarks;
+create table benchmarks (
+  benchmark_id integer primary key autoincrement,
+  benchmark_timestamp text not null,
+  user_id integer not null,
+  benchmark_name text not null,
+  benchmark_department text not null,
+  benchmark_position text not null,
+  benchmark_metrics text not null
+);
+
