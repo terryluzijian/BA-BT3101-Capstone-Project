@@ -14,8 +14,9 @@ class DatabasePipeline(object):
     crawler_name = 'core'
 
     def __init__(self):
-        path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        self.connection = sqlite3.connect(path + '/integrated/database.db')
+        parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        database_path = parent_path + '\integrated\database.db'
+        self.connection = sqlite3.connect(database_path)
         self.cursor = self.connection.cursor()
 
         self.cursor.execute('CREATE TABLE IF NOT EXISTS process'

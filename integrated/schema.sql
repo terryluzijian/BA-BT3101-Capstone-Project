@@ -47,3 +47,21 @@ create table benchmarks (
   metrics text not null
 );
 
+CREATE TABLE IF NOT EXISTS process (
+  crawler_name TEXT PRIMARY KEY,
+  processing INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS profiles (
+  profile_link TEXT PRIMARY KEY,
+  name TEXT,
+  department TEXT,
+  university TEXT,
+  tag TEXT,
+  position TEXT,
+  phd_year TEXT,
+  phd_school TEXT,
+  promotion_year TEXT,
+  text_raw TEXT,
+  user_updated INTEGER
+);
