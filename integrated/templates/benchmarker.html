@@ -150,8 +150,16 @@
             <small class="form-text text-muted">This field is required. Please choose at least one metric for benchmarking.</small>
           </div>
         </div>
-        <button type="submit" class="btn btn-outline-danger d-block mx-auto">Start Benchmarking</button>
+        <button type="submit" class="btn btn-outline-danger d-block mx-auto" id="benchmark">Start Benchmarking</button>
       </form>
+    </div>
+
+    <div class="container py-5 text-center" id="loading" style="display: none">
+      <h4>Benchmarker is running... Please do not refresh this page.</h4>
+      <div class="container">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
 
     <!-- Footer -->
@@ -184,13 +192,18 @@
         </div>
       </div>
     </footer>
-
-    <!-- Optional JavaScript -->
     
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
+    <!-- Optional JavaScript -->
+    <script>
+      $("#benchmark").on("click", function() {
+        var form = $(this);
+        $("#loading").show();
+      });
+    </script>
   </body>
 </html>
