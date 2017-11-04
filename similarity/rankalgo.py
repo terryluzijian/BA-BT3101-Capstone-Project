@@ -1,5 +1,5 @@
 import pandas as pd
-from similarity.Similarity import Similarity
+from similarity.similarity import Similarity
 from fuzzywuzzy import process
 import numpy as np
 from datetime import datetime

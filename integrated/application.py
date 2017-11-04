@@ -10,6 +10,8 @@ from forms import BenchmarkerForm
 
 sys.path.append('../')
 from crawler.scripts.run_crawler import run_crawler
+from similarity.rankalgo import run_benchmarker
+
 
 DATABASE = 'database.db'
 
@@ -299,6 +301,7 @@ def start_benchmarker():
                 'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
                     form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
+            run_benchmarker(nus, metrics)
             return render_template(
                 'benchmarker_result.html',
                 name=form.name.data,
