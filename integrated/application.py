@@ -264,8 +264,20 @@ def start_benchmarker():
                 'phd_school': form.phd_school.data,
                 'text_raw': form.text_raw.data,
                 'position':form.position.data,
-                'promotion_year': datetime.datetime.now().year
+                'promotion_year': datetime.datetime.now().year,
+                'university': "University of Singapore",
+                'profile_link' : ""
             }
+            # nus = {u'department': u'Geography',
+            #              u'name': u'Prof Clive Agnew research profile - personal details   ',
+            #              u'phd_school': u'University of East Anglia, School of Development Studies',
+            #              u'phd_year': 1980,
+            #              u'position': u'Professor',
+            #              u'profile_link': u'http://www.manchester.ac.uk/research/Clive.agnew/',
+            #              u'promotion_year': 1999,
+            #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
+            #              u'university': u'The University of Manchester'
+            # }
             metrics = form.metrics.data#list
             result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
             result = pd.concat([result], ignore_index=True)
