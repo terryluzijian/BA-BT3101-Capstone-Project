@@ -41,7 +41,7 @@ def get_asp_unis(dep):
     
     biochem_asp = [
         'University of California, San Francisco',
-        'University of College London',
+        'UCL (University College London)',
         'University of Illinois at Urbana-Champaign',
         'McGill University'
     ]
