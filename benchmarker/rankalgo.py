@@ -7,8 +7,10 @@ import sqlite3
 import os
 import sys
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
+if int(sys.version[0]) < 3:
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+
 
 def get_uni_rank(uni, uni_dict):
     if uni == "Unknown":
@@ -73,9 +75,10 @@ class Rank:
 
 
     def get_top_preview(self): # for preview purpose
-       peer = self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending=False)[self.cols].head(6)
-       asp = self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending=False)[self.cols].head(4)
-       return [peer, asp]
+        known = self.data[self.data["name"] != "Unknown"]
+        peer = known[known["tag"] == "peer"].sort_values("final_score", ascending=False)[self.cols].head(6)
+        asp = known[known["tag"] == "aspirant"].sort_values("final_score", ascending=False)[self.cols].head(4)
+        return [peer, asp]
 
     def export_ranked_result(self, filename = ""):
         if filename == "":
