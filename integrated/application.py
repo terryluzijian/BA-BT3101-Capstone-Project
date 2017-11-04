@@ -186,12 +186,7 @@ def start_crawler():
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
         run_crawler('PRIORITIZE_PAR', selected_peer+selected_asp, dep_name)
-        return redirect(url_for(
-            'get_crawler_result', 
-            dep=dep,
-            selected_peer=selected_peer, 
-            selected_asp=selected_asp,
-            progress=0))
+        return redirect(url_for('crawler', dep=dep))
     else:
         return redirect(url_for('main'))
 
