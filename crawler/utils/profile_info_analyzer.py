@@ -59,7 +59,8 @@ def get_key_information(response, debug=False):
     prof_string = list(filter(lambda sub_list: search_sublist_regex(sub_list, prof_regex), text_list_pre_final))
     prof_year = list(filter(lambda sub_list: search_sublist_regex(sub_list, year_regex) and not search_sublist_regex(sub_list, year_regex_html), prof_string))
 
-    main_content = list(map(lambda sub_list: ' '.join(sub_list), text_list_pre_final))
+    main_content = list(filter(lambda sub_list: max(list(map(lambda x: len(x.split(' ')), sub_list))) >= 20, text_list_pre_final))
+    main_content = list(map(lambda sub_list: ' '.join(sub_list), main_content))
     main_content = list(filter(lambda strings: not search_string_regex(strings, publication_regex, ignore_case=False, is_filter=True), main_content))
     main_content = list(filter(lambda strings: not search_string_regex(strings, phd_regex, is_filter=True), main_content))
     main_content = set(list(filter(lambda strings: len(strings.split(' ')) >= 20, main_content)))
