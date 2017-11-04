@@ -112,7 +112,7 @@ def profile():
 @app.route('/crawler/')
 # Set default department as bme as it is the first department on the list
 # Automatically display the preview of that department
-def crawler_preview(dep='bme', length=9):
+def crawler(dep='bme', length=9):
     if 'username' in session:
         if request.args.get('length'):
             length = request.args.get('length', type=int)

@@ -31,13 +31,13 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="/main_loggedin/">WELCOME</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('main') }}">WELCOME</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="/about_loggedin/">ABOUT</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('about') }}">ABOUT</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="/profile/">PROFILE</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('profile') }}">PROFILE</a>
           </li>
         </ul>
       </div>
@@ -46,16 +46,16 @@
     <!-- Function Button Group -->
     <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
       <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
-        <a class="btn btn-light btn-menu active" href="/crawler/">
+        <a class="btn btn-light btn-menu active" href="{{ url_for('crawler') }}">
           <img src="../static/img/Crawl.svg">Crawler
         </a>
-        <a class="btn btn-light btn-menu" href="/database/">
+        <a class="btn btn-light btn-menu" href="{{ url_for('database') }}">
           <img src="../static/img/Menu.svg">Database
         </a>
-        <a class="btn btn-light btn-menu" href="/benchmarker/">
+        <a class="btn btn-light btn-menu" href="{{ url_for('benchmarker') }}">
           <img src="../static/img/Database.svg">Benchmarker
         </a>
-        <a class="btn btn-light btn-menu" href="/">
+        <a class="btn btn-light btn-menu" href="{{ url_for('logout') }}">
           <img src="../static/img/Logout.svg">Log Out
         </a>
       </div>
@@ -68,9 +68,9 @@
           <div class="form-group col-4">
             <label for="department"><i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;Chose Department</label>
             <select id="department" class="form-control custom-select" onchange="javascript:location.href = this.value;">
-              <option {% if dep == 'bme' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='bme') }}">Biomedical Engineering</option>
-              <option {% if dep == 'biochem' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='biochem') }}">Biochemistry</option>
-              <option {% if dep == 'geo' %} selected {% endif %} value="{{ url_for('crawler_preview', dep='geo') }}">Geography</option>
+              <option {% if dep == 'bme' %} selected {% endif %} value="{{ url_for('crawler', dep='bme') }}">Biomedical Engineering</option>
+              <option {% if dep == 'biochem' %} selected {% endif %} value="{{ url_for('crawler', dep='biochem') }}">Biochemistry</option>
+              <option {% if dep == 'geo' %} selected {% endif %} value="{{ url_for('crawler', dep='geo') }}">Geography</option>
             </select>
           </div>
           <div class="form-group col-4">
@@ -144,7 +144,7 @@
           {% endfor %}
         </div>
         <div class="text-center py-5" id="loadMore">
-          <a type="button" class="btn btn-primary" href="{{ url_for('crawler_preview', dep=dep, length=length+9) }}">Load More</a>
+          <a type="button" class="btn btn-primary" href="{{ url_for('crawler', dep=dep, length=length+9) }}">Load More</a>
           <button type="butoon" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">Export Database</button>
         </div>
       </div>
