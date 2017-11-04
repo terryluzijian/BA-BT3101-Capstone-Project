@@ -106,7 +106,7 @@
           <tbody>
             {% for key, value in preview.iterrows() %}
               <tr>
-                <td>{{ value['tag'] }}</td>
+                <td>{{ value['tag'] | capitalize }}</td>
                 <td>{{ value['name'] }}</td>
                 <td>{{ value['university'] }}</td>
                 <td>{{ value['phd_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"></a></td>

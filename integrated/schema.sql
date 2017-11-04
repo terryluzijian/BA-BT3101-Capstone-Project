@@ -41,9 +41,9 @@ create table benchmarks (
   benchmark_id integer primary key autoincrement,
   benchmark_timestamp text not null,
   user_id integer not null,
-  benchmark_name text not null,
-  benchmark_department text not null,
-  benchmark_position text not null,
-  benchmark_metrics text not null
+  name text not null,
+  department text not null,
+  position text not null,
+  metrics text not null
 );
 

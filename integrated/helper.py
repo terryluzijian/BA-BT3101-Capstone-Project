@@ -58,6 +58,14 @@ def get_asp_unis(dep):
 
     return departments[dep]
 
+def get_full_name(dep):
+    names = {
+        'bme': 'Biomedical Engineering',
+        'biochem': 'Biochemistry',
+        'geo': 'Geography'
+    }
+    return names[dep]
+
 def get_preview_json(filename, dep):
     preview = pd.read_json(filename, orient='records')
     preview = preview[preview['position'].isin(['Professor', 'Associate Professor'])]

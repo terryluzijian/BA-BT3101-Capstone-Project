@@ -50,12 +50,12 @@
           <img src="../static/img/Crawl.svg">Crawler
         </a>
         <a class="btn btn-light btn-menu" href="/database/">
-          <img src="../static/img/Database.svg">Database
+          <img src="../static/img/Menu.svg">Database
         </a>
-        <a class="btn btn-light btn-menu" href="/database/">
+        <a class="btn btn-light btn-menu" href="/benchmarker/">
           <img src="../static/img/Database.svg">Benchmarker
         </a>
-        <a class="btn btn-light btn-menu" href="/">
+        <a class="btn btn-light btn-menu" href="{{ url_for('logout') }}">
           <img src="../static/img/Logout.svg">Log Out
         </a>
       </div>
@@ -67,10 +67,10 @@
         <div class="col-5 border text-center py-2 profile-box shadowed">
           <p class="text-right"><a href="#"><i class="fa fa-lg fa-pencil"></i></a></p>
           <img class="img-fluid" src="../static/img/Profile Icon.png" alt="User Profile Pic">
-          <h4>Cindy Tay</h4>
-          <p><i class="fa fa-sitemap"></i>&nbsp; REA Team</p>
-          <p><i class="fa fa-envelope-o"></i>&nbsp; cindytay@nus.edu.sg</p>
-          <p><i class="fa fa-university"></i>&nbsp; National University of Singapore</p>
+          <h4>{{ user['first_name'] }} {{ user['last_name'] }}</h4>
+          <p><i class="fa fa-sitemap"></i>&nbsp; {{ user['team'] }}</p>
+          <p><i class="fa fa-envelope-o"></i>&nbsp; {{ user['email'] }}</p>
+          <p><i class="fa fa-university"></i>&nbsp; {{ user['institution'] }}</p>
         </div>
         <div class="col-7 pt-2">
           <h4>Recent Activities</h4>
@@ -84,12 +84,12 @@
             </thead>
             <tbody>
               {% for row in activities %}
-              <tr>
-                <td>{{ row['activity_timestamp'] }}</td>
-                <td>{{ row['activity_name'] | capitalize }}</td>
-                <td>{{ row['remark'] | capitalize }}</td>
-              </tr>
-            {% endfor %}
+                <tr>
+                  <td>{{ row['activity_timestamp'] }}</td>
+                  <td>{{ row['activity_name'] | capitalize }}</td>
+                  <td>{{ row['remark'] }}</td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -99,27 +99,27 @@
     <!-- Database Query History -->
     <div class="container py-4">
       <div class="row">
-        <h4>Database Query History</h4>
+        <h4>Benchmark Query History</h4>
         <table class="table border profile-box shadowed">
           <thead>
             <tr>
               <th scope="col">Timestamp</th>
               <th scope="col">Professor Name</th>
-              <th scope="col">Faculty</th>
+              <th scope="col">Department</th>
+              <th scope="col">Desired Promotion Level</th>
               <th scope="col">Benchmarking Metrics</th>
-              <th scope="col">Search Again</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>8:30:12 PM 2017-09-29</td>
-              <td>Best Prof Ever</td>
-              <td>Geography</td>
-              <td>PhD Year; Phd University; Research Area Similarity; Promotion Year</td>
-              <td class="text-center"><a href="#">
-                <i class="fa fa-lg fa-search"></i></a>
-              </td>
-            </tr>
+            {% for row in benchmarks %}
+              <tr>
+                <td>{{ row['benchmark_timestamp'] }}</td>
+                <td>{{ row['name'] }}</td>
+                <td>{{ row['department'] }}</td>
+                <td>{{ row['position'] }}
+                <td>{{ row['metrics'] }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

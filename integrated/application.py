@@ -76,12 +76,13 @@ def login():
     username = request.form.get('username')
     password = request.form.get('password')
     
-    user = query_db('select user_id, username, password from users where username = ? and password = ?', (username, password), one=True)
+    user = query_db('select user_id, username from users where username = ? and password = ?', (username, password), one=True)
     if user is not None:
         # store username into session
-        session['username'] = username
+        session['user_id'] = user['user_id']
+        session['username'] = user['username']
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
-            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), user[0], 'login', 'none'))
+            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), user['user_id'], 'login', 'None'))
         return redirect(url_for('main'))
     else:
         flash('Your username/password is not valid.')
@@ -90,163 +91,210 @@ def login():
 ##### Logout
 @app.route('/logout/')
 def logout():
+    session.pop('user_id', None)
     session.pop('username', None)
     return redirect(url_for('main'))
 
 ##### Profile page
 @app.route("/profile/")
 def profile():
-    username = session['username']
-    user_id = query_db('select user_id from users where username = ?', (username,), one=True)[0]
-    activities = query_db('select activity_timestamp, activity_name, remark from activities where user_id = ? order by datetime(activity_timestamp) desc limit 5', (user_id,))
-    return render_template("profile.html", activities=activities)
+    if 'username' in session:
+        user_id = session['user_id']
+        full_user = query_db('select username, first_name, last_name, institution, team, email, staff_id from users where user_id = ?', (user_id,), one=True)
+        activities = query_db('select activity_timestamp, activity_name, remark from activities where user_id = ? order by datetime(activity_timestamp) desc limit 5', (user_id,))
+        benchmarks = query_db('select benchmark_timestamp, name, department, position, metrics from benchmarks where user_id = ? order by datetime(benchmark_timestamp) desc limit 5', (user_id,))
+        return render_template("profile.html", user=full_user, activities=activities, benchmarks=benchmarks)
+    else:
+        return redirect(url_for('main'))
+
 
 ##### Crawler page
 @app.route('/crawler/')
 # Set default department as bme as it is the first department on the list
 # Automatically display the preview of that department
 def crawler_preview(dep='bme', length=9):
-    if request.args.get('length'):
-        length = request.args.get('length', type=int)
-    if request.args.get('dep'):
-        dep = request.args.get('dep')
-    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)[:length]
-    in_db_peer = preview[preview['tag'] == 'peer']['university'].unique() 
-    in_db_asp =  preview[preview['tag'] == 'aspirant']['university'].unique()
-    return render_template(
-        "crawler.html",
-        dep=dep,
-        length=length,
-        peer_unis=helper.get_peer_unis(dep),
-        asp_unis=helper.get_asp_unis(dep),
-        selected_peer=in_db_peer,
-        selected_asp=in_db_asp,
-        preview=preview)
+    if 'username' in session:
+        if request.args.get('length'):
+            length = request.args.get('length', type=int)
+        if request.args.get('dep'):
+            dep = request.args.get('dep')
+        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)[:length]
+        in_db_peer = preview[preview['tag'] == 'peer']['university'].unique() 
+        in_db_asp =  preview[preview['tag'] == 'aspirant']['university'].unique()
+        return render_template(
+            "crawler.html",
+            dep=dep,
+            length=length,
+            peer_unis=helper.get_peer_unis(dep),
+            asp_unis=helper.get_asp_unis(dep),
+            selected_peer=in_db_peer,
+            selected_asp=in_db_asp,
+            preview=preview)
+    else:
+        return redirect(url_for('main'))
 
 ##### Export crawl database to local directory
 @app.route('/crawler/export', methods=['POST'])
 def crawler_export():
-    dep = request.form.get('dep')
-    export = helper.export_db('SAMPLE_JSON.json', dep, '../%s.xlsx' % (dep))
-    return redirect(url_for('crawler_preview', dep=dep))
+    if 'username' in session:
+        dep = request.form.get('dep')
+        export = helper.export_db('SAMPLE_JSON.json', dep, '../%s.xlsx' % (dep))
+        insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'export database', helper.get_full_name(dep)))
+        return redirect(url_for('crawler_preview', dep=dep))
+    else:
+        return redirect(url_for('main'))
 
 ##### Choose universities to be crawled by crawler
 @app.route('/crawler/choose_unis')
 def crawler_choose_unis():
-    dep = request.args['dep']
-    return(render_template(
-        'crawler_choose_unis.html',
-        dep=dep,
-        peer_unis = helper.get_peer_unis(dep),
-        asp_unis = helper.get_asp_unis(dep)))
+    if 'username' in session:
+        dep = request.args['dep']
+        return(render_template(
+            'crawler_choose_unis.html',
+            dep=dep,
+            peer_unis = helper.get_peer_unis(dep),
+            asp_unis = helper.get_asp_unis(dep)))
+    else:
+        return redirect(url_for('main'))
 
 ##### Initiate crawling process
 @app.route('/crawler/crawl', methods=['POST'])
 def start_crawler():
-    dep = request.form.get('dep')
-    selected_peer = request.form.getlist('selected_peer')
-    selected_asp = request.form.getlist('selected_asp')
-    print(dep)
-    print(selected_peer)
-    print(selected_asp)
-    print("CRAWL!")
-    return redirect(url_for(
-        'get_crawler_result', 
-        dep=dep,
-        selected_peer=selected_peer, 
-        selected_asp=selected_asp,
-        progress=0))
+    if 'username' in session:
+        dep = request.form.get('dep')
+        selected_peer = request.form.getlist('selected_peer')
+        selected_asp = request.form.getlist('selected_asp')
+        print(dep)
+        print(selected_peer)
+        print(selected_asp)
+        print("CRAWL!")
+        insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
+        return redirect(url_for(
+            'get_crawler_result', 
+            dep=dep,
+            selected_peer=selected_peer, 
+            selected_asp=selected_asp,
+            progress=0))
+    else:
+        return redirect(url_for('main'))
 
 ##### Get crawler result
 @app.route('/crawler/result')
 def get_crawler_result():
-    dep = request.args.get('dep')
-    selected_peer = request.args.getlist('selected_peer')
-    selected_asp = request.args.getlist('selected_asp')
-    progress = int(request.args.get('progress'))
-    return(render_template(
-        'crawler_result.html',
-        dep=dep,
-        peer_unis=helper.get_peer_unis(dep),
-        asp_unis=helper.get_asp_unis(dep),
-        selected_peer=selected_peer,
-        selected_asp=selected_asp,
-        progress=helper.check_crawler_progress(progress)))
+    if 'username' in session:
+        dep = request.args.get('dep')
+        selected_peer = request.args.getlist('selected_peer')
+        selected_asp = request.args.getlist('selected_asp')
+        progress = int(request.args.get('progress'))
+        return(render_template(
+            'crawler_result.html',
+            dep=dep,
+            peer_unis=helper.get_peer_unis(dep),
+            asp_unis=helper.get_asp_unis(dep),
+            selected_peer=selected_peer,
+            selected_asp=selected_asp,
+            progress=helper.check_crawler_progress(progress)))
+    else:
+        return redirect(url_for('main'))
 
 ##### Database manager page
 @app.route("/database/")
 def database():
-    return render_template("database.html")
+    if 'username' in session:
+        return render_template('database.html')
+    else:
+        return redirect(url_for('main'))
 
 @app.route('/database/show')
 def retrieve_database():
-    dep = request.args.get('dep')
-    incomplete = request.args.get('incomplete', type=bool)
-    print(incomplete)
-    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
-    if incomplete:
-        preview = preview[(preview['phd_year'] == 'Unknown') | 
-        (preview['phd_school'] == 'Unknown') | 
-        (preview['promotion_year'] == 'Unknown') | 
-        (preview['text_raw'] == 'Unknown')]
-    return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+    if 'username' in session:
+        dep = request.args.get('dep')
+        incomplete = request.args.get('incomplete', type=bool)
+        print(incomplete)
+        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
+        if incomplete:
+            preview = preview[(preview['phd_year'] == 'Unknown') | 
+            (preview['phd_school'] == 'Unknown') | 
+            (preview['promotion_year'] == 'Unknown') | 
+            (preview['text_raw'] == 'Unknown')]
+        return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+    else:
+        return redirect(url_for('main'))
 
 ##### Edit database field
 # Superficial method which keeps on passing the modified database around
 # Need to modify and update database instead
 @app.route('/database/edit', methods=['POST'])
 def edit_database():
-    print(request.form)
-    dep = request.form.get('dep')
-    incomplete = request.form.get('incomplete', type=bool)
-    profile_link = request.form.get('profile_link')
-    field = request.form.get('field')
-    new_value = request.form.get('new_value')
-    preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
-    preview.loc[preview['profile_link'] == profile_link, field] = new_value
-    print(preview[preview['profile_link'] == profile_link][field])
-    return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+    if 'username' in session:
+        print(request.form)
+        dep = request.form.get('dep')
+        incomplete = request.form.get('incomplete', type=bool)
+        profile_link = request.form.get('profile_link')
+        field = request.form.get('field')
+        new_value = request.form.get('new_value')
+        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
+        preview.loc[preview['profile_link'] == profile_link, field] = new_value
+        insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'edit database', helper.get_full_name(dep)))
+        return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+    else:
+        return redirect(url_for('main'))
 
 ##### Benchmarker page
 @app.route('/benchmarker/')
 def benchmarker():
-    return render_template('benchmarker.html')
+    if 'username' in session:
+        return render_template('benchmarker.html')
+    else:
+        return redirect(url_for('main'))
 
 ##### Start benchmarker
 @app.route('/benchmarker/benchmark', methods=['POST'])
 def start_benchmarker():
-    form = BenchmarkerForm(request.form)
-    if form.validate():
-        nus = {
-            'name': form.name.data,
-            'department': form.department.data,
-            'phd_year': form.phd_year.data,
-            'phd_school': form.phd_school.data,
-            'text_raw': form.text_raw.data,
-            'position':form.position.data,
-            'metrics': form.metrics.data,
-            'promotion_year': datetime.datetime.now().year
-        }
-        result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
-        result = pd.concat([result], ignore_index=True)
-        result.to_excel('../benchmarker_result.xlsx', index=False)
-        return render_template(
-            'benchmarker_result.html',
-            name=form.name.data,
-            department=form.department.data,
-            phd_year=form.phd_year.data,
-            phd_school=form.phd_school.data,
-            text_raw=form.text_raw.data,
-            position=form.position.data,
-            metrics=form.metrics.data,
-            length=20,
-            result=result)
+    if 'username' in session:
+        form = BenchmarkerForm(request.form)
+        if form.validate():
+            nus = {
+                'name': form.name.data,
+                'department': form.department.data,
+                'phd_year': form.phd_year.data,
+                'phd_school': form.phd_school.data,
+                'text_raw': form.text_raw.data,
+                'position':form.position.data,
+                'metrics': form.metrics.data,
+                'promotion_year': datetime.datetime.now().year
+            }
+            result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
+            result = pd.concat([result], ignore_index=True)
+            result.to_excel('../benchmarker_result.xlsx', index=False)
+            insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'benchmark request', form.department.data))
+            insert_db(
+                'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
+                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
+                    form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
+            return render_template(
+                'benchmarker_result.html',
+                name=form.name.data,
+                department=form.department.data,
+                phd_year=form.phd_year.data,
+                phd_school=form.phd_school.data,
+                text_raw=form.text_raw.data,
+                position=form.position.data,
+                metrics=form.metrics.data,
+                length=20,
+                result=result)
+        else:
+            for field in form:
+                if field.errors:
+                    for err in field.errors:
+                        flash('%s: %s' % (field.label.text, err))
+            return redirect(url_for('benchmarker'))
     else:
-        for field in form:
-            if field.errors:
-                for err in field.errors:
-                    flash('%s: %s' % (field.label.text, err))
-        return redirect(url_for('benchmarker'))
+        return redirect(url_for('main'))
 
 ##### Initialize app
 if __name__ == "__main__":
