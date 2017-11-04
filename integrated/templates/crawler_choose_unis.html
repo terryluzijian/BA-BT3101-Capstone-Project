@@ -63,6 +63,21 @@
 
     <!-- Crawler Criteria Picker -->
     <div class="container-fluid border py-2 criteria-box shadowed">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-danger" role="alert">
+            <strong>Form submission failed!</strong> Your form has the following error(s):
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endwith %}
       <form action="{{ url_for('start_crawler') }}" method="post">
         <div class="form-row">
           <div class="form-group col-4">

@@ -6,7 +6,7 @@ import pandas as pd
 import datetime
 import json
 import sys
-from forms import BenchmarkerForm
+from forms import BenchmarkerForm, ChangePasswordForm
 
 sys.path.append('../')
 from crawler.scripts.run_crawler import run_crawler
@@ -113,6 +113,27 @@ def profile():
     else:
         return redirect(url_for('main'))
 
+##### Change password modal
+@app.route('/profile/change_password', methods=['POST'])
+def change_password():
+    if 'username' in session:
+        form = ChangePasswordForm(request.form)
+        if form.validate():
+            old_password = query_db('select password from users where user_id = ?', (session['user_id'],), one=True)[0]
+            if old_password == form.old_password.data:
+                insert_db('update users set password = ? where user_id = ?', (form.new_password.data, session['user_id']))
+                insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+                    (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'change password', 'None'))
+            else:
+                flash('Old Password: Old password must match current password')
+        else:
+            for field in form:
+                if field.errors:
+                    for err in field.errors:
+                        flash('%s: %s' % (field.label.text, err))
+        return redirect(url_for('profile'))
+    else:
+        return redirect(url_for('main'))
 
 ##### Crawler page
 @app.route('/crawler/')
@@ -179,14 +200,18 @@ def start_crawler():
         dep_name = helper.get_full_name(dep)
         selected_peer = request.form.getlist('selected_peer')
         selected_asp = request.form.getlist('selected_asp')
-        print(dep)
-        print(selected_peer)
-        print(selected_asp)
-        print("CRAWL!")
-        insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
-            (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
-        run_crawler('PRIORITIZE_PAR', selected_peer+selected_asp, dep_name)
-        return redirect(url_for('crawler', dep=dep))
+        if len(selected_peer) == 0 and len(selected_asp) == 0:
+            flash('You need to select at least one university from either Peer University List or Aspirant University List to start crawling!')
+            return redirect(url_for('crawler_choose_unis', dep=dep))
+        else:
+            print(dep_name)
+            print(selected_peer)
+            print(selected_asp)
+            print("CRAWL!")
+            insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
+            run_crawler('PRIORITIZE_PAR', selected_peer+selected_asp, dep_name)
+            return redirect(url_for('crawler', dep=dep))
     else:
         return redirect(url_for('main'))
 
@@ -291,15 +316,13 @@ def start_benchmarker():
             # }
             # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
             metrics = form.metrics.data
-            result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
-            result = pd.concat([result], ignore_index=True)
+            peer, asp = run_benchmarker(nus, metrics)
             insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'benchmark request', form.department.data))
             insert_db(
                 'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
                     form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
-            peer, asp = run_benchmarker(nus, metrics)
             return render_template(
                 'benchmarker_result.html',
                 name=form.name.data,

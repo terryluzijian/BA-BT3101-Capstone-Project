@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, SelectField, SelectMultipleField, IntegerField, validators
+from wtforms import Form, StringField, SelectField, SelectMultipleField, IntegerField, PasswordField, validators
 
 class BenchmarkerForm(Form):
     name = StringField('Professor Name', validators=[validators.input_required()])
@@ -12,3 +12,8 @@ class BenchmarkerForm(Form):
     metrics = SelectMultipleField('Benchmarking Metrics', validators=[validators.input_required()], 
         choices=[('PHD YEAR', 'PhD Year'), ('PHD UNIVERSITY', 'Phd University'), 
             ('PROMO YEAR', 'Promotion Year'), ('RESEARCH AREA SIMILARITY', 'Research Area Similarity')])
+
+class ChangePasswordForm(Form):
+    old_password = PasswordField('Old Password', validators=[validators.input_required()])
+    new_password = PasswordField('New Password', validators=[validators.input_required(), validators.equal_to('confirm', message='Passwords must match')])
+    confirm = PasswordField('Repeat Password')

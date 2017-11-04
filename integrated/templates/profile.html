@@ -63,9 +63,24 @@
 
     <!-- Profile Card and Activity History-->
     <div class="container pt-5">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-danger" role="alert">
+            <strong>Form submission failed!</strong> Your form has the following error(s):
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endwith %}
       <div class="row">
         <div class="col-5 border text-center py-2 profile-box shadowed">
-          <p class="text-right"><a href="#"><i class="fa fa-lg fa-pencil"></i></a></p>
+          <p class="text-right"><a href="#changePasswordModal" data-toggle="modal"><i class="fa fa-lg fa-pencil"></i></a></p>
           <img class="img-fluid" src="../static/img/Profile Icon.png" alt="User Profile Pic">
           <h4>{{ user['first_name'] }} {{ user['last_name'] }}</h4>
           <p><i class="fa fa-sitemap"></i>&nbsp; {{ user['team'] }}</p>
@@ -122,6 +137,39 @@
             {% endfor %}
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- Modal for editing information -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Change your password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ url_for('change_password') }}" method="post" id="changePasswordForm">
+              <div class="form-group">
+                <label id="label" class="col-form-label">Old password</label>
+                <input id="old_password" type="password" class="form-control" name="old_password" value=""/>
+              </div>
+              <div class="form-group">
+                <label id="label" class="col-form-label">New password</label>
+                <input id="new_password" type="password" class="form-control" name="new_password" value=""/>
+              </div>
+              <div class="form-group">
+                <label id="label" class="col-form-label">Confirm new password</label>
+                <input id="confirm" type="password" class="form-control" name="confirm" value=""/>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" form="changePasswordForm">Confirm change</button>
+          </div>
+        </div>
       </div>
     </div>
 
