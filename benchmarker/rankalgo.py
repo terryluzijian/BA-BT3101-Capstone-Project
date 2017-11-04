@@ -1,13 +1,9 @@
 import pandas as pd
-from similarity.similarity import Similarity
+from similarity import Similarity
 from fuzzywuzzy import process
 import numpy as np
 from datetime import datetime
 import sqlite3
-
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 def get_uni_rank(uni, uni_dict):
     if uni == "Unknown":

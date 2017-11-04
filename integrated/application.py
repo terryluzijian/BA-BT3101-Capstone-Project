@@ -10,7 +10,7 @@ from forms import BenchmarkerForm
 
 sys.path.append('../')
 from crawler.scripts.run_crawler import run_crawler
-from similarity.rankalgo import run_benchmarker
+from benchmarker.rankalgo import run_benchmarker
 
 
 DATABASE = 'database.db'
