@@ -1,6 +1,6 @@
 import pandas as pd
 from similarity.Similarity import Similarity
-from fuzzywuzzy import fuzz, process
+from fuzzywuzzy import process
 import numpy as np
 from datetime import datetime
 
@@ -32,6 +32,7 @@ class Rank:
         #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
         #              u'university': u'National university of Singapore'
         # }
+        # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
         self.data = pd.read_json(DATA_FILENAME)
         self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"]\
             .apply(lambda x: int(x.split("=")[-1])).to_dict()
@@ -104,7 +105,8 @@ class Rank:
 
     def get_research_sim_score(self):
         sim = Similarity(self.data)
-        sim.add_nus_info(pd.DataFrame.from_dict([self.nus]))
+        nus_df = pd.DataFrame.from_dict([self.nus])
+        sim.add_nus_info(nus_df)
         self.data = self.data.merge(sim.get_avg_score(), right_index = True, left_index = True)
         self.research = True
 

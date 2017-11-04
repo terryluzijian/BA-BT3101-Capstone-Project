@@ -278,7 +278,8 @@ def start_benchmarker():
             #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
             #              u'university': u'The University of Manchester'
             # }
-            metrics = form.metrics.data#["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
+            # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
+            metrics = form.metrics.data
             result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
             result = pd.concat([result], ignore_index=True)
             result.to_excel('../benchmarker_result.xlsx', index=False)

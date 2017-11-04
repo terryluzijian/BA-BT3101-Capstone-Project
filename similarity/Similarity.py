@@ -73,19 +73,17 @@ def get_n_similarity(sentences_1, sentences_2, model):
 
 class Similarity:
     def __init__(self, data, seed = 124):
-        self.data = data
+        self.data = data.copy()
         self.data["text_raw"] = self.data["text_raw"].apply(lambda x: x if x != "Unknown" else u"")
             #lambda x: '. '.join(y.lstrip('()0123456789.-') for y in x.split('\n')) if x != "Unknown" else "")
         self.nlp = spacy.load("en_core_web_md")
         self.seed = seed
-        self.nus = None
         self.lda_score = False
         self.keyword_score = False
         self.word2vec_score = False
 
     def add_nus_info(self, nus_info):
-        self.data = self.data.append(self.nus).reset_index()
-        self.nus = nus_info
+        self.data = self.data.append(nus_info)
 
     def get_data(self):
         return self.data.copy()
@@ -107,7 +105,7 @@ class Similarity:
             self.data["keywords"] = self.data["nlp"].apply(get_keywords)
             # compare the similarities of each row to the first row
             self.data["keyword_score"] = self.data["keywords"].apply(
-                lambda x: get_similarity(self.data["keywords"][0], x))
+                lambda x: get_similarity(self.data[self.data["tag"].isnull()]["keywords"][0], x))
             self.keyword_score = True
 
 
@@ -117,7 +115,7 @@ class Similarity:
             model = Word2Vec(self.data["sentences_bigram"].sum(), min_count=1, iter=200)
             # use gensim phrases and phrases to model bigram
             self.data["word2vec_score"] = self.data["sentences_bigram"].apply(
-                lambda x: get_n_similarity(self.data["sentences_bigram"][0], x, model))
+                lambda x: get_n_similarity(self.data[self.data["tag"].isnull()]["sentences_bigram"][0], x, model))
             self.word2vec_score = True
 
     def get_lda_score(self):
@@ -130,7 +128,7 @@ class Similarity:
             np.random.seed(self.seed)  # setting random seed to get the same results each time.
             model_lda = ldamodel.LdaModel(corpus, id2word = dictionary, num_topics=25)
 
-            doc = dictionary.doc2bow(sum(self.data["sentences_bigram"][0], []))
+            doc = dictionary.doc2bow(sum(self.data[self.data["tag"].isnull()]["sentences_bigram"][0], []))
             doc_lda = model_lda[doc]
             # find the most similar documents from all the documents in the corpus
             index = similarities.MatrixSimilarity(model_lda[corpus])
@@ -163,9 +161,9 @@ class Similarity:
         else:# scores == "TOP2":
             self.data[col] = self.data["score_list"].apply(lambda x:get_n_avg(x, 2))
         if "keyword_score" in score_cols:
-            return self.data[1:].reset_index()[[col, "keywords"]]
+            return self.data[self.data["tag"].notnull()][[col, "keywords"]]
         else:
-            return self.data[1:].reset_index()[[col]]
+            return self.data[self.data["tag"].notnull()][[col]]
 
 
 
