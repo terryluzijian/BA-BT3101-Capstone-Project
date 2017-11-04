@@ -19,7 +19,7 @@ def get_uni_rank(uni, uni_dict):
     if best_match[1] >= 85:  # similar enough
         return uni_dict[best_match[0]]
 
-#DATA_FILENAME = "./crawler/data/SAMPLE_JSON.json"
+#DATA_FILENAME = "../crawler/data/SAMPLE_JSON.json"
 UNI_FILENAME = "../crawler/data/UNIVERSITY_LINK.json"
 
 
@@ -45,6 +45,7 @@ class Rank:
         self.cols = self.data.columns.tolist()
         self.nus = nus
         self.data = self.data[(self.data["department"] == nus["department"]) & (self.data["position"] == nus["position"])]
+        self.data["name"] = self.data["name"].str.title()
         self.promo = False
         self.phd = False
         self.phdUni = False
