@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import re
 import scrapy
-from crawler.xpath_generic_extractor import generic_get_anchor_and_text
+from crawler.utils.xpath_generic_extractor import generic_get_anchor_and_text
 from crawler.items import DepartmentItem
 from scrapy import Request
 

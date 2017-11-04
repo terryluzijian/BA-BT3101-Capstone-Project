@@ -1,6 +1,6 @@
 import en_core_web_md
+import logging
 import re
-import sys
 from difflib import SequenceMatcher
 from .xpath_generic_extractor import get_menu, get_general
 
@@ -115,8 +115,8 @@ class SimilarityNavigator(object):
         # Fallback to general href crawling and try again
         if fall_back_to_general:
             if (len(result_list) == 0) and (extract_func != get_general):
-                sys.stdout.write('Returning empty result for response %s and falling back to general crawl' % response)
-                sys.stdout.write('\n')
+                logging.log(logging.INFO,
+                            'Returning empty result for response %s and falling back to general crawl' % response)
                 return self.get_target_content(response,
                                                parse_only_people=parse_only_people,
                                                parse_only_department=parse_only_department,

@@ -5,9 +5,9 @@ import re
 import requests
 import scrapy
 from crawler.items import ProfilePageItem
-from crawler.profile_info_analyzer import get_key_information
-from crawler.similarity_navigator import SimilarityNavigator
-from crawler.xpath_generic_extractor import get_title_h1_h2_h3, get_main_content_unique, generic_get_unique_content
+from crawler.utils.profile_info_analyzer import get_key_information
+from crawler.utils.similarity_navigator import SimilarityNavigator
+from crawler.utils.xpath_generic_extractor import get_title_h1_h2_h3, get_main_content_unique, generic_get_unique_content
 from difflib import SequenceMatcher
 from lxml import html
 from PyPDF2 import PdfFileReader
