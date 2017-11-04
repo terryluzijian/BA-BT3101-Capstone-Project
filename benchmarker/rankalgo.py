@@ -81,8 +81,8 @@ class Rank:
         return [peer, asp]
 
     def export_ranked_result(self, filename = ""):
-        if not os.path.exists("./results"):
-            os.mkdir("./results")
+        if not os.path.exists("../results"):
+            os.mkdir("../results")
         if filename == "":
             filename = "../results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
         writer = pd.ExcelWriter(filename)
