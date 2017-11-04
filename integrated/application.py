@@ -294,14 +294,13 @@ def start_benchmarker():
             metrics = form.metrics.data
             result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
             result = pd.concat([result], ignore_index=True)
-            result.to_excel('../benchmarker_result.xlsx', index=False)
             insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'benchmark request', form.department.data))
             insert_db(
                 'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
                     form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
-            run_benchmarker(nus, metrics)
+            peer, asp = run_benchmarker(nus, metrics)
             return render_template(
                 'benchmarker_result.html',
                 name=form.name.data,
@@ -311,8 +310,9 @@ def start_benchmarker():
                 text_raw=form.text_raw.data,
                 position=form.position.data,
                 metrics=form.metrics.data,
-                length=20,
-                result=result)
+                peer = peer,
+                asp = asp
+            )
         else:
             for field in form:
                 if field.errors:

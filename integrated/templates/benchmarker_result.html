@@ -148,7 +148,7 @@
       <div class="row">
         <div class="col-6">
           <h4 class="text-center">Peer University Candidates</h4>
-          {% for key, value in result.iterrows() %}
+          {% for key, value in peer.iterrows() %}
             <div class="card mb-3 shadowed">
               <div class="card-body">
                 <h4 class="card-title text-center">{{ value['name'] }}</h4>
@@ -157,7 +157,7 @@
                   <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;{{ value['university'] }}</li>
                   <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;{{ value['phd_year'] }} - {{ value['phd_school'] }}</li>
                   <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;{{ value['promotion_year'] }}</li>
-                  <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ value['text_raw'][:100] }}</li>
+                  <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ value['text_raw'] | truncate(100) }}</li>
                 </ul>
               </div>
             </div>
@@ -165,7 +165,7 @@
         </div>
         <div class="col-6">
           <h4 class="text-center">Aspirant University Candidates</h4>
-          {% for key, value in result.iterrows() %}
+          {% for key, value in asp.iterrows() %}
             <div class="card mb-3 shadowed">
               <div class="card-body">
                 <h4 class="card-title text-center">{{ value['name'] }}</h4>
