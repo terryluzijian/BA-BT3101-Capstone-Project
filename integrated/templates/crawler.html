@@ -24,7 +24,7 @@
 
     <!-- Navigation -->
     <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
-      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="{{ url_for('static', filename='img/Logo.svg') }}"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,16 +47,16 @@
     <div class="container-fluid border text-center mt-5 pt-5 pb-3 shadowed function-button">
       <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
         <a class="btn btn-light btn-menu active" href="{{ url_for('crawler') }}">
-          <img src="../static/img/Crawl.svg">Crawler
+          <img src="{{ url_for('static', filename='img/Crawl.svg') }}">Crawler
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('database') }}">
-          <img src="../static/img/Menu.svg">Database
+          <img src="{{ url_for('static', filename='img/Menu.svg') }}">Database
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('benchmarker') }}">
-          <img src="../static/img/Database.svg">Benchmarker
+          <img src="{{ url_for('static', filename='img/Database.svg') }}">Benchmarker
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('logout') }}">
-          <img src="../static/img/Logout.svg">Log Out
+          <img src="{{ url_for('static', filename='img/Logout.svg') }}">Log Out
         </a>
       </div>
     </div>

@@ -24,7 +24,7 @@
 
     <!-- Navigation -->
     <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
-      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="{{ url_for('static', filename='img/Logo.svg') }}"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -70,10 +70,9 @@
     <div class="jumbotron jumbotron-fluid shadowed">
       <div class="container my-4 text-center">
         <h1 class="font-weight-bold">EXPERIENCE FAST INFORMATION RETRIEVAL</h1>
-        <img src="../static/img/Arrow.svg" alt="Arrow" class="my-4">
+        <img src="{{ url_for('static', filename='img/Arrow.svg') }}" alt="Arrow" class="my-4">
         <p class="pb-2">Our product eliminates routinely manual work of going through each school website for personal profile extraction.</p>
-        <img src="../static/img/Mine.svg" class="img-fluid" alt="About">
-        <!--<img src="{{ url_for('static', filename='img/about.png') }}" class="img-fluid" alt="" height="300" width="700">-->
+        <img src="{{ url_for('static', filename='img/Mine.svg') }}" class="img-fluid" alt="About">
       </div>
     </div>
 

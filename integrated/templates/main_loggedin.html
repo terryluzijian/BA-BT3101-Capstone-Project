@@ -24,7 +24,7 @@
 
     <!-- Navigation -->
     <header class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4C5586;">
-      <a class="navbar-brand" href="#"><img class="img-fluid" src="../static/img/Logo.svg"></a>
+      <a class="navbar-brand" href="#"><img class="img-fluid" src="{{ url_for('static', filename='img/Logo.svg') }}"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,9 +47,9 @@
     <div class="jumbotron jumbotron-fluid shadowed">
       <div class="container mt-4 text-center">
         <h1 class="font-weight-bold">WELCOME BACK, {{ username }}</h1>
-        <img src="../static/img/Arrow.svg" alt="Arrow" class="my-4">
+        <img src="{{ url_for('static', filename='img/Arrow.svg') }}" alt="Arrow" class="my-4">
         <p class="pb-2">Select the product function below and start exploring the information that you need.</p>
-        <img src="../static/img/Landing.svg" class="img-fluid" alt="Landing">
+        <img src="{{ url_for('static', filename='img/Landing.svg') }}" class="img-fluid" alt="Landing">
       </div>
     </div>
 
@@ -57,16 +57,16 @@
     <div class="container-fluid border text-center py-4 shadowed overlay">
       <div class="btn-group btn-group-lg" role="group" aria-label="Function buttons">
         <a class="btn btn-light btn-menu" href="{{ url_for('crawler') }}">
-          <img src="../static/img/Crawl.svg">Crawler
+          <img src="{{ url_for('static', filename='img/Crawl.svg') }}">Crawler
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('database') }}">
-          <img src="../static/img/Menu.svg">Database
+          <img src="{{ url_for('static', filename='img/Menu.svg') }}">Database
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('benchmarker') }}">
-          <img src="../static/img/Database.svg">Benchmarker
+          <img src="{{ url_for('static', filename='img/Database.svg') }}">Benchmarker
         </a>
         <a class="btn btn-light btn-menu" href="{{ url_for('logout') }}">
-          <img src="../static/img/Logout.svg">Log Out
+          <img src="{{ url_for('static', filename='img/Logout.svg') }}">Log Out
         </a>
       </div>
     </div>
