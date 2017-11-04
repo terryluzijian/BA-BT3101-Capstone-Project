@@ -160,10 +160,8 @@ class Similarity:
             self.data[col] = self.data["score_list"].apply(lambda x:get_n_avg(x, 3))
         else:# scores == "TOP2":
             self.data[col] = self.data["score_list"].apply(lambda x:get_n_avg(x, 2))
-        if "keyword_score" in score_cols:
-            return self.data[self.data["tag"].notnull()][[col, "keywords"]]
-        else:
-            return self.data[self.data["tag"].notnull()][[col]]
+        return self.data[self.data["tag"].notnull()]
+
 
 
 

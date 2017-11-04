@@ -107,7 +107,7 @@ class Rank:
         sim = Similarity(self.data)
         nus_df = pd.DataFrame.from_dict([self.nus])
         sim.add_nus_info(nus_df)
-        self.data = self.data.merge(sim.get_avg_score(), right_index = True, left_index = True)
+        self.data = sim.get_avg_score()
         self.research = True
 
 
