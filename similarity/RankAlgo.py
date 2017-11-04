@@ -3,6 +3,7 @@ from similarity.Similarity import Similarity
 from fuzzywuzzy import process
 import numpy as np
 from datetime import datetime
+import sqlite3
 
 import sys
 reload(sys)
@@ -15,7 +16,7 @@ def get_uni_rank(uni, uni_dict):
     if best_match[1] >= 85:  # similar enough
         return uni_dict[best_match[0]]
 
-DATA_FILENAME = "./crawler/data/SAMPLE_JSON.json"
+#DATA_FILENAME = "./crawler/data/SAMPLE_JSON.json"
 UNI_FILENAME = "./crawler/data/UNIVERSITY_LINK.json"
 
 
@@ -33,9 +34,10 @@ class Rank:
         #              u'university': u'National university of Singapore'
         # }
         # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
-        self.data = pd.read_json(DATA_FILENAME)
-        self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"]\
-            .apply(lambda x: int(x.split("=")[-1])).to_dict()
+        #self.data = pd.read_json(DATA_FILENAME)
+        con = sqlite3.connect("./integrated/database.db")
+        self.data = pd.read_sql("select * from profiles", con)
+        self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"].apply(lambda x: int(x.split("=")[-1])).to_dict()
         self.cols = self.data.columns.tolist()
         self.nus = nus
         self.data = self.data[(self.data["department"] == nus["department"]) & (self.data["position"] == nus["position"])]
