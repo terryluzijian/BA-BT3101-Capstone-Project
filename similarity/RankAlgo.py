@@ -21,23 +21,23 @@ UNI_FILENAME = "./crawler/data/UNIVERSITY_LINK.json"
 
 class Rank:
 
-    def __int__(self, nus):
+    def __init__(self, nus):
         # nus = {u'department': u'Geography',
         #              u'name': u'Prof Clive Agnew research profile - personal details   ',
         #              u'phd_school': u'University of East Anglia, School of Development Studies',
         #              u'phd_year': 1980,
         #              u'position': u'Professor',
-        #              u'profile_link': u'http://www.manchester.ac.uk/research/Clive.agnew/',
+        #              u'profile_link': u'',
         #              u'promotion_year': 1999,
         #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
-        #              u'university': u'The University of Manchester'
+        #              u'university': u'National university of Singapore'
         # }
         self.data = pd.read_json(DATA_FILENAME)
         self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"]\
             .apply(lambda x: int(x.split("=")[-1])).to_dict()
         self.cols = self.data.columns.tolist()
         self.nus = nus
-        self.data = self.data[self.data["position"] == nus["position"]]
+        self.data = self.data[(self.data["department"] == nus["department"]) & (self.data["position"] == nus["position"])]
         self.promo = False
         self.phd = False
         self.phdUni = False
@@ -74,7 +74,7 @@ class Rank:
 
     def export_ranked_result(self, filename = ""):
         if filename == "":
-            filename = self.nus["name"].replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
+            filename = "./Results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
         writer = pd.ExcelWriter(filename)
         self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "PEER", index = False)
         self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "ASPIRANT", index = False)
@@ -111,10 +111,11 @@ class Rank:
 
 
 def run_benchmarker(nus, metrics):
-    process = Rank(nus)
-    process.get_rank_scores(metrics)
-    process.get_top_preview()# [peer_dataframe, aspirant_df]
-    process.export_ranked_result()
+    rank = Rank(nus)
+    rank.get_rank_scores(metrics)
+    rank.export_ranked_result()
+    return rank.get_top_preview()# [peer_dataframe, aspirant_df]
+
 
 
 
