@@ -45,6 +45,11 @@ def run_crawler(crawler_type, *args):
         assert len(args) == 1
         process.start_crawl(args[0])
 
-
-if __name__ == '__main__':
-    run_crawler('GENERIC_BROAD')
+# Example:
+# if __name__ == '__main__':
+#    run_crawler('GENERIC_BROAD')
+#    run_crawler('PRIORITIZE_BROAD')
+#    run_crawler('TEST')
+#    run_crawler('PRIORITIZE_PAR', ['Queen Mary University of London', 'University of British Columbia'], 'Geography')
+#    run_crawler('GENERIC_PAR', 'https://economics.stanford.edu/')
+#
