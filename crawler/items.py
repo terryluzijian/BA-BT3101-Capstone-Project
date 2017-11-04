@@ -9,16 +9,6 @@ from scrapy.item import Item, Field
 from scrapy.loader.processors import TakeFirst
 
 
-class DirectoryItem(Item):
-    url = Field()
-    depth = Field()
-    school_name = Field()
-    page_title = Field()
-    initial_url = Field()
-    href = Field()
-    text = Field()
-
-
 class DepartmentItem(Item):
     url = Field()
     school_name = Field()
