@@ -264,9 +264,9 @@ def start_benchmarker():
                 'phd_school': form.phd_school.data,
                 'text_raw': form.text_raw.data,
                 'position':form.position.data,
-                'metrics': form.metrics.data,
                 'promotion_year': datetime.datetime.now().year
             }
+            metrics = form.metrics.data#list
             result = helper.get_preview_json('SAMPLE_JSON.json', 'geo')[:50]
             result = pd.concat([result], ignore_index=True)
             result.to_excel('../benchmarker_result.xlsx', index=False)

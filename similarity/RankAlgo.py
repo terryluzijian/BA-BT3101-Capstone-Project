@@ -2,7 +2,7 @@ import pandas as pd
 from similarity.Similarity import Similarity
 from fuzzywuzzy import fuzz, process
 import numpy as np
-import json
+from datetime import datetime
 
 import sys
 reload(sys)
@@ -15,12 +15,13 @@ def get_uni_rank(uni, uni_dict):
     if best_match[1] >= 85:  # similar enough
         return uni_dict[best_match[0]]
 
+DATA_FILENAME = "./crawler/data/SAMPLE_JSON.json"
+UNI_FILENAME = "./crawler/data/UNIVERSITY_LINK.json"
+
 
 class Rank:
 
-    def __int__(self, filename, nus, univeristy_filename):
-        # filename = "./crawler/data/SAMPLE_JSON.json"
-        # univeristy_filename = "./crawler/data/UNIVERSITY_LINK.json"
+    def __int__(self, nus):
         # nus = {u'department': u'Geography',
         #              u'name': u'Prof Clive Agnew research profile - personal details   ',
         #              u'phd_school': u'University of East Anglia, School of Development Studies',
@@ -31,8 +32,8 @@ class Rank:
         #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
         #              u'university': u'The University of Manchester'
         # }
-        self.data = pd.read_json(filename)
-        self.university = pd.read_json(univeristy_filename, orient = "index")["Rank"]\
+        self.data = pd.read_json(DATA_FILENAME)
+        self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"]\
             .apply(lambda x: int(x.split("=")[-1])).to_dict()
         self.cols = self.data.columns.tolist()
         self.nus = nus
@@ -42,7 +43,7 @@ class Rank:
         self.phdUni = False
         self.research = False
 
-    def get_rank_scores(self, metrics= ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]):
+    def get_rank_scores(self, metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]):
         scores = []
         for l in metrics:
             if l == "PHD YEAR":
@@ -66,17 +67,14 @@ class Rank:
         self.cols.append("final_score")
 
 
-    def get_top_preview(self, tag, n = -1): # for preview purpose
-        if n < 1:
-            if tag == "peer":
-                n = 6
-            if tag == "aspirant":
-                n = 4
-            else:
-                n = 5
-        return self.data[self.data["tag"] == tag].sort_values("final_score", ascending = False)[self.cols].head(n)
+    def get_top_preview(self): # for preview purpose
+       peer = self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending=False)[self.cols].head(6)
+       asp = self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending=False)[self.cols].head(4)
+       return [peer, asp]
 
-    def export_ranked_result(self, filename = "./SAMPLE_RANKS.xlsx"):
+    def export_ranked_result(self, filename = ""):
+        if filename == "":
+            filename = self.nus["name"].replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
         writer = pd.ExcelWriter(filename)
         self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "PEER", index = False)
         self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "ASPIRANT", index = False)
@@ -112,5 +110,12 @@ class Rank:
 
 
 
-    
+def run_benchmarker(nus, metrics):
+    process = Rank(nus)
+    process.get_rank_scores(metrics)
+    process.get_top_preview()# [peer_dataframe, aspirant_df]
+    process.export_ranked_result()
+
+
+
         
