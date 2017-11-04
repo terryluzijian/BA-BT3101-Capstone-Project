@@ -81,8 +81,10 @@ class Rank:
         return [peer, asp]
 
     def export_ranked_result(self, filename = ""):
+        if not os.path.exists("./results"):
+            os.mkdir("./results")
         if filename == "":
-            filename = "../Results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
+            filename = "../results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
         writer = pd.ExcelWriter(filename)
         self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "PEER", index = False)
         self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "ASPIRANT", index = False)
