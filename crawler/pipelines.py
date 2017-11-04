@@ -7,7 +7,6 @@
 
 import os
 import sqlite3
-import datetime
 
 
 class DatabasePipeline(object):
@@ -40,7 +39,8 @@ class DatabasePipeline(object):
                             'phd_year TEXT,'
                             'phd_school TEXT,'
                             'promotion_year TEXT,'
-                            'text_raw TEXT)')
+                            'text_raw TEXT,'
+                            'user_updated INTEGER)')
 
     def process_item(self, item, spider):
         self.cursor.execute("SELECT * FROM profiles WHERE profile_link=?", (item['profile_link'], ))
@@ -48,9 +48,18 @@ class DatabasePipeline(object):
         if not result:
             self.cursor.execute(
                 "INSERT INTO profiles (profile_link, name, department, university, tag, position, phd_year, phd_school, "
-                "promotion_year, text_raw) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "promotion_year, text_raw, user_updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (item['profile_link'], item['name'], item['department'], item['university'], item['tag'],
-                 item['position'], item['phd_year'], item['phd_school'], item['promotion_year'], ' '.join(item['text_raw'])))
+                 item['position'], item['phd_year'], item['phd_school'], item['promotion_year'],
+                 ' '.join(item['text_raw']), 0))
+            self.connection.commit()
+        else:
+            self.cursor.execute(
+                "UPDATE profiles SET name = ?, department = ?, university = ?, tag = ?, position = ?, phd_year = ?, phd_school = ?, "
+                "promotion_year = ?, text_raw = ? WHERE profile_link = ? and user_updated = 0",
+                (item['name'], item['department'], item['university'], item['tag'],
+                 item['position'], item['phd_year'], item['phd_school'], item['promotion_year'],
+                 ' '.join(item['text_raw']), item['profile_link']))
             self.connection.commit()
         return item
 

@@ -100,4 +100,3 @@ ENV/
 *.pyc
 *.pyc
 .project
-*.db
