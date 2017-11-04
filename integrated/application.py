@@ -5,6 +5,7 @@ import helper
 import pandas as pd
 import datetime
 import json
+#from .crawler.scripts.run_crawler import run_crawler
 from forms import BenchmarkerForm
 
 DATABASE = 'database.db'
@@ -118,9 +119,12 @@ def crawler(dep='bme', length=9):
             length = request.args.get('length', type=int)
         if request.args.get('dep'):
             dep = request.args.get('dep')
-        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)[:length]
-        in_db_peer = preview[preview['tag'] == 'peer']['university'].unique() 
-        in_db_asp =  preview[preview['tag'] == 'aspirant']['university'].unique()
+        dep_name = helper.get_full_name(dep)
+        preview = query_db('select * from profiles where department = ?', ('Geography',))
+        db_peer = query_db('select distinct university from profiles where department = ? and tag = ?', ('Geography', 'peer'))
+        in_db_peer = [row['university'] for row in db_peer]
+        db_asp = query_db('select distinct university from profiles where department = ? and tag = ?', ('Geography', 'aspirant'))
+        in_db_asp = [row['university'] for row in db_asp]
         return render_template(
             "crawler.html",
             dep=dep,
@@ -141,7 +145,7 @@ def crawler_export():
         export = helper.export_db('SAMPLE_JSON.json', dep, '../%s.xlsx' % (dep))
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'export database', helper.get_full_name(dep)))
-        return redirect(url_for('crawler_preview', dep=dep))
+        return redirect(url_for('crawler', dep=dep))
     else:
         return redirect(url_for('main'))
 
@@ -163,6 +167,7 @@ def crawler_choose_unis():
 def start_crawler():
     if 'username' in session:
         dep = request.form.get('dep')
+        dep_name = helper.get_full_name(dep)
         selected_peer = request.form.getlist('selected_peer')
         selected_asp = request.form.getlist('selected_asp')
         print(dep)
@@ -171,6 +176,7 @@ def start_crawler():
         print("CRAWL!")
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
+        #run_crawler('PRIORITIZE_PAR', selected_peer+selected_asp, dep_name)
         return redirect(url_for(
             'get_crawler_result', 
             dep=dep,
@@ -211,6 +217,7 @@ def database():
 def retrieve_database():
     if 'username' in session:
         dep = request.args.get('dep')
+        dep_name = helper.get_full_name(dep)
         incomplete = request.args.get('incomplete', type=bool)
         print(incomplete)
         preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
@@ -219,7 +226,7 @@ def retrieve_database():
             (preview['phd_school'] == 'Unknown') | 
             (preview['promotion_year'] == 'Unknown') | 
             (preview['text_raw'] == 'Unknown')]
-        return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+        return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview, dep_name=dep_name)
     else:
         return redirect(url_for('main'))
 

@@ -104,7 +104,7 @@
       </form>
     </div>
 
-    {% if preview.shape[0] > 0 %}
+    {% if preview | length > 0 %}
       <div class="container py-5">
         <h4 class="text-center">An existing database for this department is found. Displaying preview</h4>
         <div class="text-center pt-2">
@@ -114,7 +114,7 @@
 
       <div class="container pt-2">
         <div class="row">
-          {% for key, value in preview[:length].iterrows() %}
+          {% for value in preview[:length] %}
             <div class="col-4">
               <div class="card mb-3 shadowed">
                 <div class="card-body">
@@ -135,7 +135,7 @@
                     <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;{{ value['university'] }}</li>
                     <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;{{ value['phd_year'] }} - {{ value['phd_school'] }}</li>
                     <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;{{ value['promotion_year'] }}</li>
-                    <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Science</li>
+                    <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ value['text_raw'] | truncate(100) }}</li>
                     <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="{{ value['profile_link'] }}" target="_blank">Profile Page</a></li>
                   </ul>
                 </div>
