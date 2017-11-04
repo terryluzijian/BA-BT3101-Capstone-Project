@@ -147,7 +147,11 @@ def crawler(dep='bme', length=9):
 def crawler_export():
     if 'username' in session:
         dep = request.form.get('dep')
-        export = helper.export_db('SAMPLE_JSON.json', dep, '../%s.xlsx' % (dep))
+        dep_name = helper.get_full_name(dep)
+        result = query_db('select name, department, university, tag, position, phd_year, phd_school, promotion_year, text_raw as research_area from profiles where department = ?', (dep_name,))
+        result_list = [list(row) for row in result]
+        df = pd.DataFrame.from_records(result_list, columns = result[0].keys())
+        df.to_excel('../Results/%s %s.xlsx' % (dep_name, datetime.datetime.now().strftime('%Y-%m-%d')), index=False)
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'export database', helper.get_full_name(dep)))
         return redirect(url_for('crawler', dep=dep))
@@ -247,8 +251,8 @@ def edit_database():
         profile_link = request.form.get('profile_link')
         field = request.form.get('field')
         new_value = request.form.get('new_value')
-        insert_str = 'update profiles set %s = ? where profile_link = ?' % (field)
-        insert_db(insert_str, (new_value, profile_link))
+        insert_str = 'update profiles set %s = ?, user_updated = ? where profile_link = ?' % (field)
+        insert_db(insert_str, (new_value, 1, profile_link))
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'edit database', helper.get_full_name(dep)))
         return redirect(url_for('retrieve_database', dep=dep, incomplete=incomplete))
