@@ -152,7 +152,7 @@
       <div class="container py-5">
         <h4 class="text-center">There is no database for this faculty yet!</h4>
         <div class="text-center pt-2">
-          <button type="button" class="btn btn-lg btn-danger">Crawl Now</button>
+          <a href="{{ url_for('crawler_choose_unis', dep=dep) }}" type="button" class="btn btn-lg btn-danger">Crawl Now</a>
         </div>
       </div>
     {% endif %}

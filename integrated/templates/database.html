@@ -75,7 +75,7 @@
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" name="incomplete" value="True" {% if incomplete %} checked {% endif %}>Retrieve only incomplete records
+              <input type="checkbox" class="form-check-input" name="incomplete" value="true" {% if incomplete == 'true' %} checked {% endif %}>Retrieve only incomplete records
             </label>
           </div>
           <button type="submit" class="btn btn-outline-danger d-block mx-auto">Retrieve Data</button>
@@ -104,15 +104,31 @@
             </tr>
           </thead>
           <tbody>
-            {% for key, value in preview.iterrows() %}
+            {% for value in preview %}
               <tr>
                 <td>{{ value['tag'] | capitalize }}</td>
                 <td>{{ value['name'] }}</td>
                 <td>{{ value['university'] }}</td>
-                <td>{{ value['phd_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"></a></td>
-                <td>{{ value['phd_school'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_school" data-label="Phd University" data-old="{{ value['phd_school'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
-                <td>{{ value['promotion_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="promotion_year" data-label="Promotion Year" data-old="{{ value['promotion_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
-                <td>{{ value['text_raw'][:100] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="text_raw" data-label="Research Areas" data-old="{{ value['text_raw'][:100] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
+                <td>{{ value['phd_year'] }}
+                  {% if value['phd_year'] == 'Unknown' %}
+                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
+                  {% endif %}
+                </td>
+                <td>{{ value['phd_school'] }}
+                  {% if value['phd_school'] == 'Unknown' %}
+                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_school" data-label="Phd University" data-old="{{ value['phd_school'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
+                  {% endif %}
+                </td>
+                <td>{{ value['promotion_year'] }}
+                  {% if value['promotion_year'] == 'Unknown' %}
+                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="promotion_year" data-label="Promotion Year" data-old="{{ value['promotion_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
+                  {% endif %}
+                </td>
+                <td>{{ value['text_raw'] | truncate(100) }}
+                  {% if value['text_raw'] == '' %}
+                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="text_raw" data-label="Research Areas" data-old="{{ value['text_raw'][:100] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
+                  {% endif %}
+                </td>
                 <td class="text-center">
                   <a href="{{ value['profile_link'] }}" target="_blank"><i class="fa fa-lg fa-link"></i>&nbsp;Profile page</a>
                 </td>
@@ -143,7 +159,6 @@
               <input type="hidden" name="dep" value="{{ dep }}"/>
               <input type="hidden" name="incomplete" value="{{ incomplete }}"/>
               <input id="profile" type="hidden" name="profile_link" value=""/>
-
             </form>
           </div>
           <div class="modal-footer">

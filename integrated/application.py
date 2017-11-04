@@ -42,11 +42,11 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     return (rv[0] if rv else None) if one else rv
 
+# used for both insert and update statements
 def insert_db(query, args=()):
     db = get_db()
     cur = db.cursor().execute(query, args)
     db.commit()
-    print('Values inserted')
 
 @app.cli.command('initdb')
 def initdb():
@@ -125,10 +125,10 @@ def crawler(dep='bme', length=9):
         if request.args.get('dep'):
             dep = request.args.get('dep')
         dep_name = helper.get_full_name(dep)
-        preview = query_db('select * from profiles where department = ?', ('Geography',))
-        db_peer = query_db('select distinct university from profiles where department = ? and tag = ?', ('Geography', 'peer'))
+        preview = query_db('select * from profiles where department = ?', (dep_name,))
+        db_peer = query_db('select distinct university from profiles where department = ? and tag = ?', (dep_name, 'peer'))
         in_db_peer = [row['university'] for row in db_peer]
-        db_asp = query_db('select distinct university from profiles where department = ? and tag = ?', ('Geography', 'aspirant'))
+        db_asp = query_db('select distinct university from profiles where department = ? and tag = ?', (dep_name, 'aspirant'))
         in_db_asp = [row['university'] for row in db_asp]
         return render_template(
             "crawler.html",
@@ -223,14 +223,15 @@ def retrieve_database():
     if 'username' in session:
         dep = request.args.get('dep')
         dep_name = helper.get_full_name(dep)
-        incomplete = request.args.get('incomplete', type=bool)
-        print(incomplete)
-        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
-        if incomplete:
-            preview = preview[(preview['phd_year'] == 'Unknown') | 
-            (preview['phd_school'] == 'Unknown') | 
-            (preview['promotion_year'] == 'Unknown') | 
-            (preview['text_raw'] == 'Unknown')]
+        incomplete = request.args.get('incomplete')
+        if incomplete == 'true':
+            query_str = ''.join(["select * from profiles where department = ? and phd_year = 'Unknown'",
+                " union all select * from profiles where department = ? and phd_school = 'Unknown'",
+                " union all select * from profiles where department = ? and promotion_year = 'Unknown'",
+                " union all select * from profiles where department = ? and text_raw = '' order by name asc"])
+            preview = query_db(query_str, (dep_name, dep_name, dep_name, dep_name))
+        else:
+            preview = query_db('select * from profiles where department = ? order by name asc', (dep_name,))
         return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview, dep_name=dep_name)
     else:
         return redirect(url_for('main'))
@@ -241,17 +242,16 @@ def retrieve_database():
 @app.route('/database/edit', methods=['POST'])
 def edit_database():
     if 'username' in session:
-        print(request.form)
         dep = request.form.get('dep')
-        incomplete = request.form.get('incomplete', type=bool)
+        incomplete = request.form.get('incomplete')
         profile_link = request.form.get('profile_link')
         field = request.form.get('field')
         new_value = request.form.get('new_value')
-        preview = helper.get_preview_json('SAMPLE_JSON.json', dep)
-        preview.loc[preview['profile_link'] == profile_link, field] = new_value
+        insert_str = 'update profiles set %s = ? where profile_link = ?' % (field)
+        insert_db(insert_str, (new_value, profile_link))
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'edit database', helper.get_full_name(dep)))
-        return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview)
+        return redirect(url_for('retrieve_database', dep=dep, incomplete=incomplete))
     else:
         return redirect(url_for('main'))
 
