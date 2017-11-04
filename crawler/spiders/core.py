@@ -7,16 +7,15 @@ import scrapy
 from crawler.items import ProfilePageItem
 from crawler.profile_info_analyzer import get_key_information
 from crawler.similarity_navigator import SimilarityNavigator
-from crawler.xpath_generic_extractor import check_word_filter, get_title_h1_h2_h3, get_main_content, \
-                                            get_main_content_text, get_main_content_excluding_menu, \
-                                            get_header, get_menu, get_main_content_unique, generic_get_unique_content
+from crawler.xpath_generic_extractor import get_title_h1_h2_h3, get_main_content_unique, generic_get_unique_content
 from difflib import SequenceMatcher
 from lxml import html
 from PyPDF2 import PdfFileReader
 from random import shuffle
 from scrapy import Request
 from scrapy.linkextractors import LinkExtractor, IGNORED_EXTENSIONS
-from scrapy.utils.url import parse_url, url_has_any_extension
+from scrapy.utils.project import get_project_settings
+from scrapy.utils.url import parse_url, url_has_any_extension, is_url
 from tld import get_tld
 
 
@@ -35,20 +34,14 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         'DEPTH_STATS_VERBOSE': True,
 
         # Limit the concurrent request per domain and moderate the server load
-        'CONCURRENT_REQUESTS': 256,
+        'CONCURRENT_REQUESTS': 32,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 8,
-        'DOWNLOAD_DELAY': 2,
+        'DOWNLOAD_DELAY': 0.5,
     }
 
     # Set it to be true for debugging
-    PRINT_VERBOSE = False
-
-    # Set it to be true for crawling single specified department
-    TESTING = False
-
-    # Set it to be true to enable broad crawling
-    GENERIC = False
-    PRIORITIZED = True
+    SETTINGS = get_project_settings()
+    IS_PRINT_VERBOSE = SETTINGS['PRINT_VERBOSE']
 
     # Get department link from the file name stored as a class attribute using pandas
     # Shuffle the link for a random start to avoid over-frequent crawling
@@ -63,17 +56,6 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     department_data_index = department_data.index
     department_data_prioritized = pandas.read_csv(data_file_path + DEPARTMENT_DATA_PRIORITIZED)
 
-    # Get top domain by iterating through the department links to avoid going beyond the allowed domain
-    # Do minor change in accordance with custom variables
-    allowed_domains_pre = set()
-    if GENERIC:
-        department_url = department_data['url']
-    else:
-        department_url = department_data_prioritized['url']
-    for url in department_url:
-        allowed_domains_pre.add(get_tld(url))
-    allowed_domains = list(allowed_domains_pre)
-
     # Import and initiate similarity navigator
     SIMILARITY_NAVIGATOR = SimilarityNavigator()
 
@@ -84,7 +66,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                                'event', 'calendar', 'map', 'article', 'blog', 'student', 'library'])
     ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty', 'menu', 'copyright'
                                        'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header',
-                                       'department', 'view', 'profile'])
+                                       'department', 'view', 'profile', 'human', 'resources'])
 
     # Create a class attribute to store corresponding patterns that match a profile page under certain
     # department site
@@ -92,15 +74,38 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
     POSSIBLE_PROFILE_PAGE = {}
     PROFILE_THRESHOLD = 10
 
-    # Testing params
+    # Params for testing
     test_link = 'https://chemistry.uchicago.edu'
     test_tag = 'department'
     test_title = 'Test Department'
-    allowed_domains.append(get_tld(test_link))
 
-    def __init__(self, start_university=None, start_department=None, *args, **kwargs):
+    def __init__(self, start_university=None, start_department=None, particular_url=None, *args, **kwargs):
+        # Set it to be true for crawling single specified department
+        self.testing = kwargs.get('TESTING', False)
+        self.generic = kwargs.get('GENERIC', False)
+        self.prioritize = kwargs.get('PRIORITIZED', False)
+
         # Initiate spider object and shuffling urls to start crawling
+        if self.generic:
+            UniversityWebCrawlerRefined.custom_settings.update({'CONCURRENT_REQUESTS': 128})
         super(UniversityWebCrawlerRefined, self).__init__(*args, **kwargs)
+
+        # Get top domain by iterating through the department links to avoid going beyond the allowed domain
+        # Do minor change in accordance with custom variables
+        allowed_domains_pre = set()
+        department_url = []
+        if self.generic:
+            department_url = UniversityWebCrawlerRefined.department_data['url']
+        elif self.prioritize:
+            department_url = UniversityWebCrawlerRefined.department_data_prioritized['url']
+        elif self.testing:
+            department_url = [UniversityWebCrawlerRefined.test_link]
+        elif particular_url is not None:
+            department_url = [particular_url]
+
+        for url in department_url:
+            allowed_domains_pre.add(get_tld(url))
+        self.allowed_domains = list(allowed_domains_pre)
 
         # TODO: Log basic information
 
@@ -108,10 +113,11 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         self.iframe_extractor = LinkExtractor(allow=self.allowed_domains, tags=['iframe'], attrs=['src'],
                                               unique=False, canonicalize=False)
         self.start_domain = (start_university, start_department)
+        self.particular_url = particular_url
 
         # Get the index of the data frame for shuffling, available only for broad crawling
         self.shuffled_index = list(UniversityWebCrawlerRefined.department_data_index)
-        if UniversityWebCrawlerRefined.GENERIC:
+        if self.generic:
             shuffle(self.shuffled_index)
 
         # Get file extensions to deny and read the profile threshold from class attribute
@@ -122,7 +128,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Use normal request by default for department homepage for faster loading speed
         # Use splash request by default otherwise for possible AJAX-inclusive pages with rendering
         # For testing:
-        if UniversityWebCrawlerRefined.TESTING:
+        if self.testing:
             test_link = UniversityWebCrawlerRefined.test_link
             request = Request(test_link, callback=self.parse_menu, errback=self.errback_report)
             request.meta['depth'] = 0
@@ -134,7 +140,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             request.meta['Is Department'] = UniversityWebCrawlerRefined.test_tag
             yield request
 
-        elif UniversityWebCrawlerRefined.PRIORITIZED:
+        elif self.prioritize & (None in self.start_domain):
             for index, value in UniversityWebCrawlerRefined.department_data_prioritized.iterrows():
                 # Get data from the specific row
                 university_name = value['school_name']
@@ -160,12 +166,15 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 yield request
 
         elif self.start_domain[0] is not None and self.start_domain[1] is not None:
-            assert self.start_domain[0] in UniversityWebCrawlerRefined.department_data_prioritized['school_name']
-            assert self.start_domain[1] in UniversityWebCrawlerRefined.department_data_prioritized['title']
+            assert type(self.start_domain[0]) is list
+            school_list = set(UniversityWebCrawlerRefined.department_data_prioritized['school_name'])
+            for element in self.start_domain[0]:
+                assert element in school_list
+            assert self.start_domain[1] in set(UniversityWebCrawlerRefined.department_data_prioritized['title'])
             df = UniversityWebCrawlerRefined.department_data_prioritized
             university_name = self.start_domain[0]
             link_title = self.start_domain[1]
-            df_locate = df.loc[(df['school_name'] == university_name) & (df['title'] == link_title)]
+            df_locate = df.loc[(df['school_name'].apply(lambda x: x in university_name)) & (df['title'] == link_title)]
             for index, value in df_locate.iterrows():
                 # Get data from the specific row
                 url_link = value['url']
@@ -181,14 +190,14 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 request.meta['depth'] = 0
 
                 # Some basic record-based data
-                request.meta['University Name'] = university_name
+                request.meta['University Name'] = value['school_name']
                 request.meta['Original Start'] = (url_link, link_title)
                 request.meta['Previous Link'] = ''
                 request.meta['Is Department'] = department_or_faculty
                 request.meta['tag'] = tag
                 yield request
 
-        else:
+        elif self.generic & (self.particular_url is None):
             for individual_index in self.shuffled_index:
                 # Get data from the specific row
                 individual_data = UniversityWebCrawlerRefined.department_data.loc[individual_index]
@@ -212,6 +221,26 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 request.meta['Is Department'] = department_or_faculty
                 yield request
 
+        elif self.particular_url is not None:
+            if is_url(self.particular_url):
+                dept_df = UniversityWebCrawlerRefined.department_data
+                department_url_tld = dept_df['url'].apply(lambda x: get_tld(x))
+                url_tld = get_tld(self.particular_url)
+                if url_tld in department_url_tld:
+                    school_name = dept_df.loc[url_tld in dept_df['url'].apply(lambda x: get_tld(x)), 'school_name'][0]
+                else:
+                    school_name = 'Unknown'
+                request = Request(self.particular_url, callback=self.parse_menu, errback=self.errback_report)
+                request.meta['depth'] = 0
+                request.meta['Link'] = self.particular_url
+                request.meta['Title'] = 'Department'
+                request.meta['University Name'] = school_name
+                request.meta['Original Start'] = (self.particular_url, 'Department')
+                request.meta['Previous Link'] = ''
+                request.meta['Is Department'] = 'department'
+                request.meta['From parse_department'] = True
+                yield request
+
     def parse_menu(self, response):
         # Parse menu content of the current page to locate department or people components
         # Stop crawling if encountered 404 error and report
@@ -230,7 +259,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                                                                                  parse_only_people=True,
                                                                                                  threshold=0.85)
 
-        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+        if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
             # Print current callback-level information
             self.logger.info('Requesting %s (%s) at depth %s with content %s at parse_menu from %s'
                              % (response.url, response.meta['Is Department'], response.meta['depth'], target_content,
@@ -304,7 +333,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             previous_parsed = self.get_netloc_and_path_level(response.meta['Previous Link'])
             if (current_parsed[2] < previous_parsed[2]) | (current_parsed[0] != previous_parsed[0]):
                 # If the link is actually redirected and might lead to a new sub-domain or new path
-                if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
                     # Print redirection information
                     self.logger.info('Going back to parse_menu from parse_department for %s at depth %s' %
                                      (response.url, response.meta['depth']))
@@ -321,7 +350,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 yield target_request
                 return
 
-        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+        if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
             # Print current callback-level information
             self.logger.info('Requesting %s at depth %s at parse_people from %s' %
                              (response.url, response.meta['depth'], response.meta['Previous Link']))
@@ -443,7 +472,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 if profile_dict['Total'] < self.profile_threshold:
                     profile_dict['Pattern'].append(response.url)
 
-                    if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                    if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
                         # Log information
                         self.logger.info('FOUND 1 ITEM at %s (depth: %s, item: %s, start: %s)' %
                                          (response.url, current_depth,
@@ -460,7 +489,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
                     # If the number of items exceeds threshold, only yield item when the link matches the pattern
                     if self.match_pattern(profile_dict['Compiled'], response.url):
-                        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+                        if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
                             # Log information
                             self.logger.info('FOUND 1 ITEM at %s (depth: %s, item: %s, start: %s)' %
                                              (response.url, current_depth, profile_dict['Total'],
@@ -486,7 +515,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                               errback=self.errback_report)
                 return
 
-        if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+        if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
             # Print current callback-level information
             self.logger.info('Requesting %s at depth %s at parse_people from %s' %
                              (response.url, response.meta['depth'], response.meta['Previous Link']))
@@ -658,10 +687,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
             def match_school_name(school_a_name, school_b_name):
                 return SequenceMatcher(None, school_a_name, school_b_name).ratio()
             college_name = UniversityWebCrawlerRefined.college_list
-            school_list_filter = list(filter(lambda x: re.search(r'univ|insti', x) or
-                                                       (max(list(map(lambda y: match_school_name(y.lower(),
-                                                                                                 x.lower()),
-                                                                     college_name))) >= 0.5), school_list))
+            school_list_filter = list(filter(lambda x: re.search(r'univ|insti', x) or (max(list(map(lambda y: match_school_name(y.lower(), x.lower()), college_name))) >= 0.5), school_list))
             return sorted(school_list_filter, key=lambda x: school_list_filter.count(x), reverse=True)
 
         def find_neighbors(target_list, original_list):
@@ -794,14 +820,14 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         is_redirected = (response.url != response_meta['Link'])
         is_404 = (response.status == 404)
         if is_redirected:
-            if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+            if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
                 self.logger.info('Redirecting from %s to %s for %s, %s' % (response_meta['Link'], response.url,
                                                                            response_meta['Title'],
                                                                            response_meta['University Name']))
 
         # Report 404 Error
         if is_404:
-            if UniversityWebCrawlerRefined.PRINT_VERBOSE:
+            if UniversityWebCrawlerRefined.IS_PRINT_VERBOSE:
                 self.logger.info('404 Visiting Error for link %s (%s, %s)' % (response.url, response_meta['Title'],
                                                                               response_meta['University Name']))
 

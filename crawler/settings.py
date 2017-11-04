@@ -9,11 +9,17 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+# Some custom settings that will be imported by core.py
+PRINT_VERBOSE = False
+
 BOT_NAME = 'crawler'
 LOG_LEVEL = 'INFO'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
+EXTENSIONS = {
+    'scrapy.extensions.closespider.CloseSpider': 1,
+}
 
 # SPLASH_URL = 'http://localhost:8050'
 
