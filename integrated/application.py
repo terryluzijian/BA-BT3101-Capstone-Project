@@ -252,10 +252,10 @@ def retrieve_database():
         incomplete = request.args.get('incomplete')
         if incomplete == 'true':
             query_str = ''.join(["select * from profiles where department = ? and name = 'Unknown'",
-                " union all select * from profiles where department = ? and phd_year = 'Unknown'",
-                " union all select * from profiles where department = ? and phd_school = 'Unknown'",
-                " union all select * from profiles where department = ? and promotion_year = 'Unknown'",
-                " union all select * from profiles where department = ? and text_raw = '' order by name asc"])
+                " union select * from profiles where department = ? and phd_year = 'Unknown'",
+                " union select * from profiles where department = ? and phd_school = 'Unknown'",
+                " union select * from profiles where department = ? and promotion_year = 'Unknown'",
+                " union select * from profiles where department = ? and text_raw = '' order by name asc"])
             preview = query_db(query_str, (dep_name, dep_name, dep_name, dep_name, dep_name))
         else:
             preview = query_db('select * from profiles where department = ? order by name asc', (dep_name,))
