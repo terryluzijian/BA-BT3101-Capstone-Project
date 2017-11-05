@@ -9,26 +9,26 @@ import os
 import sqlite3
 
 
-class DatabasePipeline(object):
+class DatabaseIOPipeline(object):
 
     crawler_name = 'core'
 
     def __init__(self):
         parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        database_path = parent_path + '\database.db'
+        database_path = os.path.join(parent_path, 'database.db')
         self.connection = sqlite3.connect(database_path)
         self.cursor = self.connection.cursor()
 
         self.cursor.execute('CREATE TABLE IF NOT EXISTS process'
                             '(crawler_name TEXT PRIMARY KEY, '
                             'processing INT NOT NULL )')
-        self.cursor.execute('SELECT * FROM process WHERE crawler_name=?', (DatabasePipeline.crawler_name, ))
+        self.cursor.execute('SELECT * FROM process WHERE crawler_name=?', (DatabaseIOPipeline.crawler_name, ))
         crawler_exist = self.cursor.fetchone()
         if not crawler_exist:
             self.cursor.execute('INSERT INTO process (crawler_name, processing) values (?, ?)',
-                                (DatabasePipeline.crawler_name, 1))
+                                (DatabaseIOPipeline.crawler_name, 1))
         else:
-            self.cursor.execute('UPDATE process SET processing = ? WHERE crawler_name = ?', (1, DatabasePipeline.crawler_name))
+            self.cursor.execute('UPDATE process SET processing = ? WHERE crawler_name = ?', (1, DatabaseIOPipeline.crawler_name))
 
         self.cursor.execute('CREATE TABLE IF NOT EXISTS profiles '
                             '(profile_link TEXT PRIMARY KEY, '
@@ -66,6 +66,6 @@ class DatabasePipeline(object):
 
     def close_spider(self, spider):
         self.cursor.execute('UPDATE process SET processing = ? WHERE crawler_name = ?',
-                            (0, DatabasePipeline.crawler_name))
+                            (0, DatabaseIOPipeline.crawler_name))
         self.connection.commit()
         self.connection.close()

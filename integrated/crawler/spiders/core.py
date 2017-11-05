@@ -646,14 +646,14 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 reader = PdfFileReader(io.BytesIO(pdf_response.content))
                 text_content_list = []
                 for page_number in range(reader.getNumPages()):
-                    text_content_list.append(reader.getPage(page_number).extractText().split())
+                    text_content_list.extend(reader.getPage(page_number).extractText().split())
                 year_info_new = self.parse_year_info(main_text=text_content_list, len_lim=len_lim)
                 if year_info_new.count('Unknown') < year_info.count('Unknown'):
                     year_info = year_info_new
 
             profile = ProfilePageItem()
             name_before = re.sub(r'\(\d+\)', '', name).split(' ')
-            if len(name_before.split()) <= 0:
+            if len(name_before) <= 0:
                 name_before = 'Unknown'
             try:
                 if name_before[0].lower() in ['prof.', 'dr.', 'prof', 'dr', 'professor']:

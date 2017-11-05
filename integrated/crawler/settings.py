@@ -91,7 +91,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'crawler.pipelines.DatabasePipeline': 100
+    'crawler.pipelines.DatabaseIOPipeline': 100
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

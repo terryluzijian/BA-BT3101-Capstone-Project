@@ -53,3 +53,5 @@ def run_crawler(crawler_type, *args):
 #    run_crawler('PRIORITIZE_PAR', ['Queen Mary University of London', 'University of British Columbia'], 'Geography')
 #    run_crawler('GENERIC_PAR', 'https://economics.stanford.edu/')
 #
+
+run_crawler('PRIORITIZE_BROAD')
