@@ -149,7 +149,7 @@ def crawler(dep='bme', length=9):
         preview = query_db('select * from profiles where department = ?', (dep_name,))
         db_peer = query_db('select distinct university from profiles where department = ? and tag = ?', (dep_name, 'peer'))
         in_db_peer = [row['university'] for row in db_peer]
-        db_asp = query_db('select distinct university from profiles where department = ? and tag = ?', (dep_name, 'aspirant'))
+        db_asp = query_db('select distinct university from profiles where department = ? and tag = ? and name != "Unknown"' , (dep_name, 'aspirant'))
         in_db_asp = [row['university'] for row in db_asp]
         return render_template(
             "crawler.html",
