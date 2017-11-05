@@ -248,11 +248,12 @@ def retrieve_database():
         dep_name = helper.get_full_name(dep)
         incomplete = request.args.get('incomplete')
         if incomplete == 'true':
-            query_str = ''.join(["select * from profiles where department = ? and phd_year = 'Unknown'",
+            query_str = ''.join(["select * from profiles where department = ? and name = 'Unknown'",
+                " union all select * from profiles where department = ? and phd_year = 'Unknown'",
                 " union all select * from profiles where department = ? and phd_school = 'Unknown'",
                 " union all select * from profiles where department = ? and promotion_year = 'Unknown'",
                 " union all select * from profiles where department = ? and text_raw = '' order by name asc"])
-            preview = query_db(query_str, (dep_name, dep_name, dep_name, dep_name))
+            preview = query_db(query_str, (dep_name, dep_name, dep_name, dep_name, dep_name))
         else:
             preview = query_db('select * from profiles where department = ? order by name asc', (dep_name,))
         return render_template('database.html', dep=dep, incomplete=incomplete, preview=preview, dep_name=dep_name)
