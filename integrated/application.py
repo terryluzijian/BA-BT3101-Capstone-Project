@@ -150,7 +150,7 @@ def crawler(dep='bme', length=9):
         preview = query_db('select * from profiles where department = ?', (dep_name,))
         db_peer = query_db('select distinct university from profiles where department = ? and tag = ?', (dep_name, 'peer'))
         in_db_peer = [row['university'] for row in db_peer]
-        db_asp = query_db('select distinct university from profiles where department = ? and tag = ? and name != "Unknown"' , (dep_name, 'aspirant'))
+        db_asp = query_db('select distinct university from profiles where department = ? and tag = ?' , (dep_name, 'aspirant'))
         in_db_asp = [row['university'] for row in db_asp]
         return render_template(
             "crawler.html",
@@ -299,48 +299,54 @@ def start_benchmarker():
     if 'username' in session:
         form = BenchmarkerForm(request.form)
         if form.validate():
-            nus = {
-                'name': form.name.data,
-                'department': form.department.data,
-                'phd_year': form.phd_year.data,
-                'phd_school': form.phd_school.data,
-                'text_raw': form.text_raw.data,
-                'position':form.position.data,
-                'promotion_year': datetime.datetime.now().year,
-                'university': "University of Singapore",
-                'profile_link' : ""
-            }
-            # nus = {u'department': u'Geography',
-            #              u'name': u'Prof Clive Agnew research profile - personal details   ',
-            #              u'phd_school': u'University of East Anglia, School of Development Studies',
-            #              u'phd_year': 1980,
-            #              u'position': u'Professor',
-            #              u'profile_link': u'http://www.manchester.ac.uk/research/Clive.agnew/',
-            #              u'promotion_year': 1999,
-            #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
-            #              u'university': u'The University of Manchester'
-            # }
-            # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
-            metrics = form.metrics.data
-            peer, asp = run_benchmarker(nus, metrics)
-            insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
-                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'benchmark request', form.department.data))
-            insert_db(
-                'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
-                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
-                    form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
-            return render_template(
-                'benchmarker_result.html',
-                name=form.name.data,
-                department=form.department.data,
-                phd_year=form.phd_year.data,
-                phd_school=form.phd_school.data,
-                text_raw=form.text_raw.data,
-                position=form.position.data,
-                metrics=form.metrics.data,
-                peer = peer,
-                asp = asp
-            )
+            # check that database for the department is populated
+            preview = query_db('select * from profiles where department = ?', (form.department.data,))
+            if len(preview) == 0:
+                flash('The database for %s is empty. Please populate the database by running the crawler first' % (form.department.data))
+                return redirect(url_for('benchmarker'))
+            else:
+                nus = {
+                    'name': form.name.data,
+                    'department': form.department.data,
+                    'phd_year': form.phd_year.data,
+                    'phd_school': form.phd_school.data,
+                    'text_raw': form.text_raw.data,
+                    'position':form.position.data,
+                    'promotion_year': datetime.datetime.now().year,
+                    'university': "University of Singapore",
+                    'profile_link' : ""
+                }
+                # nus = {u'department': u'Geography',
+                #              u'name': u'Prof Clive Agnew research profile - personal details   ',
+                #              u'phd_school': u'University of East Anglia, School of Development Studies',
+                #              u'phd_year': 1980,
+                #              u'position': u'Professor',
+                #              u'profile_link': u'http://www.manchester.ac.uk/research/Clive.agnew/',
+                #              u'promotion_year': 1999,
+                #              u'text_raw': u'The water balance approach to the development of rainfed agriculture in South West Niger.',
+                #              u'university': u'The University of Manchester'
+                # }
+                # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
+                metrics = form.metrics.data
+                peer, asp = run_benchmarker(nus, metrics)
+                insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
+                    (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'benchmark request', form.department.data))
+                insert_db(
+                    'insert into benchmarks (benchmark_timestamp, user_id, name, department, position, metrics) values (?, ?, ?, ?, ?, ?)',
+                    (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 
+                        form.name.data, form.department.data, form.position.data, ', '.join(form.metrics.data)))
+                return render_template(
+                    'benchmarker_result.html',
+                    name=form.name.data,
+                    department=form.department.data,
+                    phd_year=form.phd_year.data,
+                    phd_school=form.phd_school.data,
+                    text_raw=form.text_raw.data,
+                    position=form.position.data,
+                    metrics=form.metrics.data,
+                    peer = peer,
+                    asp = asp
+                )
         else:
             for field in form:
                 if field.errors:
