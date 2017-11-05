@@ -20,7 +20,7 @@ def get_uni_rank(uni, uni_dict):
         return uni_dict[best_match[0]]
 
 #DATA_FILENAME = "../crawler/data/SAMPLE_JSON.json"
-UNI_FILENAME = "../crawler/data/UNIVERSITY_LINK.json"
+UNI_FILENAME = "./crawler/data/UNIVERSITY_LINK.json"
 
 
 class Rank:
@@ -39,7 +39,7 @@ class Rank:
         # metrics = ["PHD YEAR", "PHD UNIVERSITY", "RESEARCH AREA SIMILARITY", "PROMO YEAR"]
         #self.data = pd.read_json(DATA_FILENAME)
         print(os.getcwd())
-        con = sqlite3.connect("./database.db")
+        con = sqlite3.connect("database.db")
         self.data = pd.read_sql("select * from profiles", con)
         self.university = pd.read_json(UNI_FILENAME, orient = "index")["Rank"].apply(lambda x: int(x.split("=")[-1])).to_dict()
         self.cols = self.data.columns.tolist()
@@ -82,10 +82,10 @@ class Rank:
         return [peer, asp]
 
     def export_ranked_result(self, filename = ""):
-        if not os.path.exists("../results"):
-            os.mkdir("../results")
+        if not os.path.exists("results"):
+            os.mkdir("results")
         if filename == "":
-            filename = "../results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
+            filename = "results/" + self.nus["name"].strip().replace(" ", "_") + " " + datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
         writer = pd.ExcelWriter(filename)
         self.data[self.data["tag"] == "peer"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "PEER", index = False)
         self.data[self.data["tag"] == "aspirant"].sort_values("final_score", ascending = False)[self.cols].to_excel(writer, sheet_name= "ASPIRANT", index = False)
