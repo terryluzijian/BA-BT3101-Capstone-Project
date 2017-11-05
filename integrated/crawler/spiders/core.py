@@ -66,7 +66,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                                                'event', 'calendar', 'map', 'article', 'blog', 'student', 'library'])
     ENTITY_FILTER_KEYWORD = frozenset(['library', 'university', 'department', 'faculty', 'menu', 'copyright'
                                        'college', 'staff', 'student', 'lab', 'footer', 'impact', 'header',
-                                       'department', 'view', 'profile', 'human', 'resources'])
+                                       'department', 'view', 'profile', 'human', 'resources', 'hub', 'scholar'])
 
     # Create a class attribute to store corresponding patterns that match a profile page under certain
     # department site
