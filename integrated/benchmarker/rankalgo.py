@@ -77,9 +77,17 @@ class Rank:
 
     def get_top_preview(self): # for preview purpose
         known = self.data[self.data["name"] != "Unknown"]
-        peer = known[known["tag"] == "peer"].sort_values("final_score", ascending=False)[self.cols].head(6)
-        asp = known[known["tag"] == "aspirant"].sort_values("final_score", ascending=False)[self.cols].head(4)
-        return [peer, asp]
+        peer = known[known["tag"] == "peer"].sort_values("final_score", ascending=False)[self.cols]
+        asp = known[known["tag"] == "aspirant"].sort_values("final_score", ascending=False)[self.cols]
+        n_peer = len(peer)
+        n_asp = len(asp)
+        if n_peer >= 6 and n_asp >= 4:
+            return [peer.head(6), asp.head(4)]
+        elif n_peer < 6:
+            return [peer, asp.head(10 - n_peer)]
+        elif n_asp < 4:
+            return [peer.head(10 - n_asp), asp]
+
 
     def export_ranked_result(self, filename = ""):
         if not os.path.exists("results"):
