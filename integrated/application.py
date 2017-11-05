@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, redirect, url_for, g, flash, jsonify
+from flask import Flask, session, render_template, request, redirect, url_for, g, flash, jsonify, send_from_directory
 import sqlite3
 import click
 import helper
@@ -175,10 +175,11 @@ def crawler_export():
         df = pd.DataFrame.from_records(result_list, columns = result[0].keys())
         if not os.path.exists("results"):
             os.mkdir("results")
-        df.to_excel('results/%s %s.xlsx' % (dep_name.replace(' ', '_'), datetime.datetime.now().strftime('%Y-%m-%d')), index=False)
+        file_name = '%s %s.xlsx' % (dep_name.replace(' ', '_'), datetime.datetime.now().strftime('%Y-%m-%d'))
+        df.to_excel(file_name, index=False)
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'export database', helper.get_full_name(dep)))
-        return redirect(url_for('crawler', dep=dep))
+        return send_from_directory(directory='results', filename=file_name, as_attachment=True)
     else:
         return redirect(url_for('main'))
 
@@ -345,7 +346,8 @@ def start_benchmarker():
                     position=form.position.data,
                     metrics=form.metrics.data,
                     peer = peer,
-                    asp = asp
+                    asp = asp,
+                    filename=nus["name"].strip().replace(" ", "_") + " " + datetime.datetime.now().date().strftime("%Y-%m-%d") +".xlsx"
                 )
         else:
             for field in form:
@@ -355,6 +357,10 @@ def start_benchmarker():
             return redirect(url_for('benchmarker'))
     else:
         return redirect(url_for('main'))
+
+@app.route('/benchmarker/benchmark/<filename>')
+def benchmark_download(filename):
+    return send_from_directory('results', filename)
 
 ##### Initialize app
 if __name__ == "__main__":
