@@ -653,8 +653,10 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
 
             profile = ProfilePageItem()
             name_before = re.sub(r'\(\d+\)', '', name).split(' ')
+            if len(name_before.split()) <= 0:
+                name_before = 'Unknown'
             try:
-                if name_before[0].lower() in ['prof.', 'dr.', 'prof', 'dr']:
+                if name_before[0].lower() in ['prof.', 'dr.', 'prof', 'dr', 'professor']:
                     profile['name'] = ' '.join(name_before[1:3])
                 else:
                     profile['name'] = ' '.join(name_before[:3])

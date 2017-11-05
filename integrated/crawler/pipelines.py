@@ -15,7 +15,7 @@ class DatabasePipeline(object):
 
     def __init__(self):
         parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        database_path = parent_path + '\integrated\database.db'
+        database_path = parent_path + '\database.db'
         self.connection = sqlite3.connect(database_path)
         self.cursor = self.connection.cursor()
 
