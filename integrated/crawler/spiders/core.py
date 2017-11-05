@@ -8,6 +8,7 @@ from crawler.items import ProfilePageItem
 from crawler.utils.profile_info_analyzer import get_key_information
 from crawler.utils.similarity_navigator import SimilarityNavigator
 from crawler.utils.xpath_generic_extractor import get_title_h1_h2_h3, get_main_content_unique, generic_get_unique_content
+from datetime import datetime
 from difflib import SequenceMatcher
 from lxml import html
 from PyPDF2 import PdfFileReader
@@ -83,7 +84,7 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Set it to be true for crawling single specified department
         self.testing = kwargs.get('TESTING', False)
         self.generic = kwargs.get('GENERIC', False)
-        self.prioritize = kwargs.get('PRIORITIZED', False)
+        self.prioritize = bool(kwargs.get('PRIORITIZED', False))
 
         # Initiate spider object and shuffling urls to start crawling
         if self.generic:
@@ -112,7 +113,10 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
         # Initiate iframe link extractor
         self.iframe_extractor = LinkExtractor(allow=self.allowed_domains, tags=['iframe'], attrs=['src'],
                                               unique=False, canonicalize=False)
-        self.start_domain = (start_university, start_department)
+        if start_university is not None:
+            self.start_domain = (start_university.split('<SEP>'), start_department)
+        else:
+            self.start_domain = (start_university, start_department)
         self.particular_url = particular_url
 
         # Get the index of the data frame for shuffling, available only for broad crawling
@@ -651,6 +655,14 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                 if year_info_new.count('Unknown') < year_info.count('Unknown'):
                     year_info = year_info_new
 
+            if year_info[0] != 'Unknown':
+                if int(year_info[0]) > datetime.now().year:
+                    year_info[0] = 'Unknown'
+
+            if year_info[2] != 'Unknown':
+                if int(year_info[2]) > datetime.now().year:
+                    year_info[2] = 'Unknown'
+
             profile = ProfilePageItem()
             name_before = re.sub(r'\(\d+\)', '', name).split(' ')
             if len(name_before) <= 0:
@@ -660,6 +672,8 @@ class UniversityWebCrawlerRefined(scrapy.Spider):
                     profile['name'] = ' '.join(name_before[1:3])
                 else:
                     profile['name'] = ' '.join(name_before[:3])
+                if len(name.strip()) <= 0:
+                    profile['name'] = 'Unknown'
                 profile['department'] = response.meta['Original Start'][1]
                 profile['university'] = response.meta['University Name']
                 profile['profile_link'] = response.url

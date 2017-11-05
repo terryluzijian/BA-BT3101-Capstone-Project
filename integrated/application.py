@@ -7,6 +7,7 @@ import datetime
 import json
 import sys
 import os
+from subprocess import call
 from forms import BenchmarkerForm, ChangePasswordForm
 
 from crawler.scripts.run_crawler import run_crawler
@@ -209,10 +210,12 @@ def start_crawler():
             print(dep_name)
             print(selected_peer)
             print(selected_asp)
-            print("CRAWL!")
             insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
                 (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'crawl database', helper.get_full_name(dep)))
-            run_crawler('PRIORITIZE_PAR', selected_peer+selected_asp, dep_name)
+            university_joined = '<SEP>'.join(selected_asp + selected_peer)
+            print(' '.join(["scrapy", "crawl", "core", "-a", 'start_university="%s"' % university_joined, "-a", 'start_department="%s"' % dep_name, "-a", 'PRIORITIZED=True']))
+            print("CRAWL!")
+            call(["scrapy", "crawl", "core", "-a", 'start_university=%s' % university_joined, "-a", 'start_department=%s' % dep_name, "-a", 'PRIORITIZED=True'])
             return redirect(url_for('crawler', dep=dep))
     else:
         return redirect(url_for('main'))
