@@ -6,6 +6,7 @@ import pandas as pd
 import datetime
 import json
 import sys
+import os
 from forms import BenchmarkerForm, ChangePasswordForm
 
 from crawler.scripts.run_crawler import run_crawler
@@ -171,7 +172,9 @@ def crawler_export():
         result = query_db('select name, department, university, tag, position, phd_year, phd_school, promotion_year, text_raw as research_area from profiles where department = ?', (dep_name,))
         result_list = [list(row) for row in result]
         df = pd.DataFrame.from_records(result_list, columns = result[0].keys())
-        df.to_excel('../results/%s %s.xlsx' % (dep_name, datetime.datetime.now().strftime('%Y-%m-%d')), index=False)
+        if not os.path.exists("results"):
+            os.mkdir("results")
+        df.to_excel('results/%s %s.xlsx' % (dep_name.replace(' ', '_'), datetime.datetime.now().strftime('%Y-%m-%d')), index=False)
         insert_db('insert into activities (activity_timestamp, user_id, activity_name, remark) values (?, ?, ?, ?)',
             (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), session['user_id'], 'export database', helper.get_full_name(dep)))
         return redirect(url_for('crawler', dep=dep))
