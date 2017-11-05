@@ -8,7 +8,6 @@ import json
 import sys
 from forms import BenchmarkerForm, ChangePasswordForm
 
-sys.path.append('../')
 from crawler.scripts.run_crawler import run_crawler
 from benchmarker.rankalgo import run_benchmarker
 
