@@ -107,7 +107,10 @@
             {% for value in preview %}
               <tr>
                 <td>{{ value['tag'] | capitalize }}</td>
-                <td>{{ value['name'] }}</td>
+                <td>{{ value['name'] }}
+                  {% if value['name'] == 'Unknown' %}
+                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="name" data-label="Professor Name" data-old="{{ value['name'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
+                  {% endif %}
                 <td>{{ value['university'] }}</td>
                 <td>{{ value['phd_year'] }}
                   {% if value['phd_year'] == 'Unknown' %}
