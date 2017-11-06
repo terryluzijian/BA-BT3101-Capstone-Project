@@ -107,30 +107,15 @@
             {% for value in preview %}
               <tr>
                 <td>{{ value['tag'] | capitalize }}</td>
-                <td>{{ value['name'] }}
-                  {% if value['name'] == 'Unknown' %}
-                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="name" data-label="Professor Name" data-old="{{ value['name'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
-                  {% endif %}
+                <td>{{ value['name'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="name" data-label="Professor Name" data-old="{{ value['name'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
                 <td>{{ value['university'] }}</td>
-                <td>{{ value['phd_year'] }}
-                  {% if value['phd_year'] == 'Unknown' %}
-                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
-                  {% endif %}
+                <td>{{ value['phd_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
                 </td>
-                <td>{{ value['phd_school'] }}
-                  {% if value['phd_school'] == 'Unknown' %}
-                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_school" data-label="Phd University" data-old="{{ value['phd_school'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
-                  {% endif %}
+                <td>{{ value['phd_school'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_school" data-label="Phd University" data-old="{{ value['phd_school'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
                 </td>
-                <td>{{ value['promotion_year'] }}
-                  {% if value['promotion_year'] == 'Unknown' %}
-                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="promotion_year" data-label="Promotion Year" data-old="{{ value['promotion_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
-                  {% endif %}
+                <td>{{ value['promotion_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="promotion_year" data-label="Promotion Year" data-old="{{ value['promotion_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
                 </td>
-                <td>{{ value['text_raw'] | truncate(100) }}
-                  {% if value['text_raw'] == '' %}
-                    &nbsp;<a href="#editModal" data-toggle="modal" data-field="text_raw" data-label="Research Areas" data-old="{{ value['text_raw'][:100] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
-                  {% endif %}
+                <td>{{ value['text_raw'] | truncate(500) }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="text_raw" data-label="Research Areas" data-old="{{ value['text_raw'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
                 </td>
                 <td class="text-center">
                   <a href="{{ value['profile_link'] }}" target="_blank"><i class="fa fa-lg fa-link"></i>&nbsp;Profile page</a>
@@ -156,7 +141,7 @@
             <form action="{{ url_for('edit_database') }}" method="post" id="editForm">
               <div class="form-group">
                 <label id="label" class="col-form-label"></label>
-                <input id="new_value" type="text" class="form-control" name="new_value" placeholder="" value=""/>
+                <textarea id="new_value" class="form-control" name="new_value"/></textarea>
               </div>
               <input id="field" type="hidden" name="field" value=""/>
               <input type="hidden" name="dep" value="{{ dep }}"/>
@@ -210,7 +195,7 @@
         var profile = button.data('profile') // profile_link as key
         var modal = $(this)
         modal.find('#label').text('New ' + label)
-        modal.find('#new_value').attr('placeholder', old_value)
+        modal.find('#new_value').val(old_value)
         modal.find('#field').attr('value', field)
         modal.find('#profile').attr('value', profile)
     })

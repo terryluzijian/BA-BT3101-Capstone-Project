@@ -135,7 +135,7 @@
                     <li class="list-group-item"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;{{ value['university'] }}</li>
                     <li class="list-group-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;{{ value['phd_year'] }} - {{ value['phd_school'] }}</li>
                     <li class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;{{ value['promotion_year'] }}</li>
-                    <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ value['text_raw'] | truncate(100) }}</li>
+                    <li class="list-group-item"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{ value['text_raw'] | truncate(200) }}</li>
                     <li class="list-group-item"><i class="fa fa-link"></i>&nbsp;<a href="{{ value['profile_link'] }}" target="_blank">Profile Page</a></li>
                   </ul>
                 </div>
@@ -144,8 +144,8 @@
           {% endfor %}
         </div>
         <div class="text-center py-5" id="loadMore">
-          <a type="button" class="btn btn-primary" href="{{ url_for('crawler', dep=dep, length=length+9) }}">Load More</a>
-          <button type="butoon" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">Export Database</button>
+          <a class="btn btn-primary" href="{{ url_for('crawler', dep=dep, length=length+9) }}" role="button">Load More</a>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">Export Database</button>
         </div>
       </div>
     {% else %}
