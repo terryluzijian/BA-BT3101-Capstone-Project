@@ -95,6 +95,7 @@
             <tr>
               <th scope="col">Type</th>
               <th scope="col">Professor Name</th>
+              <th scope="col">Position</th>
               <th scope="col">University</th>
               <th scope="col">PhD Year</th>
               <th scope="col">PhD University</th>
@@ -108,6 +109,7 @@
               <tr>
                 <td>{{ value['tag'] | capitalize }}</td>
                 <td>{{ value['name'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="name" data-label="Professor Name" data-old="{{ value['name'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
+                <td>{{ value['position'] }}<a href="#editModal" data-toggle="modal" data-field="position" data-label="Professor Position" data-old="{{ value['position'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a></td>
                 <td>{{ value['university'] }}</td>
                 <td>{{ value['phd_year'] }}&nbsp;<a href="#editModal" data-toggle="modal" data-field="phd_year" data-label="PhD Year" data-old="{{ value['phd_year'] }}" data-profile="{{ value['profile_link'] }}"><i class="fa fa-pencil"></i></a>
                 </td>
