@@ -89,7 +89,7 @@ class Similarity:
         return self.data.copy()
 
     def apply_nlp(self):
-        self.data["nlp"] = self.data["text_raw"].apply(lambda x:self.nlp(x.decode('utf-8')))
+        self.data["nlp"] = self.data["text_raw"].apply(lambda x:self.nlp(x))
 
     def apply_bigram(self):
         if "nlp" not in self.data.columns.tolist():
