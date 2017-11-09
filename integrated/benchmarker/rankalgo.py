@@ -16,8 +16,10 @@ def get_uni_rank(uni, uni_dict):
     if uni == "Unknown":
         return np.nan
     best_match = process.extractOne(uni, uni_dict.keys())
-    if best_match[1] >= 85:  # similar enough
+    if best_match[1] >= 90:  # similar enough
         return uni_dict[best_match[0]]
+    else:
+        return -1
 
 #DATA_FILENAME = "./crawler/data/SAMPLE_JSON.json"
 UNI_FILENAME = "./crawler/data/UNIVERSITY_LINK.json"
@@ -113,12 +115,15 @@ class Rank:
 
     def get_phd_uni_score(self):
         nus_rank = get_uni_rank(self.nus["phd_school"], self.university)
-        self.data["phd_school_rank"] = self.data["phd_school"].apply(lambda x: get_uni_rank(x, self.university))
-        self.data["phd_school_rank_diff"] = np.where(self.data["phd_school_rank"] != -1,
-                                                      abs(self.data["phd_school_rank"] - nus_rank),
-                                                      np.nan)
-        max_diff = self.data["phd_school_rank_diff"].max()
-        self.data["phd_school_score"] = self.data["phd_school_rank_diff"].apply(lambda x: 1 - x / max_diff)
+        if nus_rank >= 0:
+            self.data["phd_school_rank"] = self.data["phd_school"].apply(lambda x: get_uni_rank(x, self.university))
+            self.data["phd_school_rank_diff"] = np.where(self.data["phd_school_rank"] != -1,
+                                                          abs(self.data["phd_school_rank"] - nus_rank),
+                                                          np.nan)
+            max_diff = self.data["phd_school_rank_diff"].max()
+            self.data["phd_school_score"] = self.data["phd_school_rank_diff"].apply(lambda x: 1 - x / max_diff)
+        else:
+            self.data["phd_school_score"] = np.nan
         self.phdUni = True
 
     def get_research_sim_score(self):
